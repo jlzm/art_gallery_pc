@@ -1,0 +1,475 @@
+<template>
+  <div class="details">
+    <div class="detail-content">
+      <div class="ctn basis-info">
+        <div class="title">
+          基本信息
+        </div>
+        <div class="detail-inline">
+          <div class="info-ctn">
+            <div class="info">
+              <div class="inline-label">
+                学员id:
+              </div>
+              <div>
+                <el-input
+                  placeholder="请输入内容"
+                  v-model="detail.sid"
+                  size="small"
+                  disabled
+                  v-if="editable">
+                </el-input>
+                <span v-else>{{detail.sid}}</span>
+              </div>
+            </div>
+            <div class="info">
+              <div class="inline-label">
+                学员姓名:
+              </div>
+              <div>
+                <el-input
+                  placeholder="请输入内容"
+                  v-model="detail.sname"
+                  size="small"
+                  v-if="editable">
+                </el-input>
+                <span v-else>{{detail.sname}}</span>
+              </div>
+            </div>
+            <div class="info">
+              <div class="inline-label">
+                学员性别:
+              </div>
+              <div>
+                <el-select v-model="detail.sex" placeholder="请选择" v-if="editable"
+                size="small">
+                  <el-option
+                    label="男"
+                    value="1">
+                  </el-option>
+                  <el-option
+                    label="女"
+                    value="2">
+                  </el-option>
+                </el-select>
+                <span v-else>{{parseInt(detail.sex) === 1 ? '男' : '女'}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="info-ctn">
+            <div class="info">
+              <div class="inline-label">
+                学员年龄:
+              </div>
+              <div>
+                <el-input-number
+                  placeholder="请输入内容"
+                  v-model="detail.age"
+                  size="small"
+                  :min="0"
+                  :max="60"
+                  v-if="editable">
+                </el-input-number>
+                <span v-else>{{detail.age}}</span>
+              </div>
+            </div>
+            <div class="info">
+              <div class="inline-label">
+                家长姓名:
+              </div>
+              <div>
+                <el-input
+                  placeholder="请输入内容"
+                  v-model="detail.parent"
+                  size="small"
+                  v-if="editable">
+                </el-input>
+                <span v-else>{{detail.parent}}</span>
+              </div>
+            </div>
+            <div class="info">
+              <div class="inline-label">
+                联系电话:
+              </div>
+              <div>
+                <el-input
+                  placeholder="请输入内容"
+                  v-model="detail.sphone"
+                  size="small"
+                  v-if="editable">
+                </el-input>
+                <span v-else>{{detail.sphone}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="info-ctn">
+            
+            <div class="info">
+              <div class="inline-label">
+                家住地址:
+              </div>
+              <div>
+                <el-input
+                  placeholder="请输入内容"
+                  v-model="detail.home_address"
+                  size="small"
+                  v-if="editable">
+                </el-input>
+                <span v-else>{{detail.home_address}}</span>
+              </div>
+            </div>
+            <div class="info">
+              <div class="inline-label">
+                就读学校:
+              </div>
+              <div>
+                <el-input
+                  placeholder="请输入内容"
+                  v-model="detail.school"
+                  size="small"
+                  v-if="editable">
+                </el-input>
+                <span v-else>{{detail.school}}</span>
+              </div>
+            </div>
+            <div class="info">
+              <div class="inline-label">
+               在读培训班:
+              </div>
+              <div>
+                <el-input
+                  placeholder="请输入内容"
+                  v-model="detail.train_class"
+                  size="small"
+                  v-if="editable">
+                </el-input>
+                <span v-else>{{detail.train_class}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ctn">
+        <div class="title">
+          报名信息
+        </div>
+        <div class="detail-inline">
+          <div class="info-ctn">
+            <div class="info">
+              <div class="inline-label">
+                报名班级:
+              </div>
+              <div>
+                <el-select v-model="detail.clasz" placeholder="请选择" size="small" :disabled="!editable">
+                  <el-option
+                    v-for="item in claszOption"
+                    :key="item.clid"
+                    :value="item.clid"
+                    :label="item.clname">
+                  </el-option>
+                </el-select>
+              </div>
+            </div>
+            <div class="info">
+              <div class="inline-label">
+                报名课时:
+              </div>
+              <div>
+                <el-input-number
+                  placeholder="请输入内容"
+                  v-model="detail.period_total"
+                  size="small"
+                  v-if="editable"
+                  :min="1">
+                </el-input-number>
+                <span v-else>{{detail.period_total}}  节</span>
+              </div>
+            </div>
+            <div class="info">
+              <div class="inline-label">
+                剩余课时:
+              </div>
+              <div>
+                <el-input-number
+                  placeholder="请输入内容"
+                  v-model="detail.period_surplus"
+                  :min="0"
+                  :max="detail.period_total"
+                  size="small"
+                  v-if="editable">
+                </el-input-number>
+                <span v-else>{{detail.period_surplus}}  节</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ctn">
+        <div class="title">
+          上课信息
+        </div>
+        <div class="tables">
+          <tables
+            :tableOption ="tableOption"
+            :tableData="tableData"
+            :backData ='tableData'
+            @pageChange="pageChange"
+            :total = "total"
+            pageType = 'back'></tables>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <div class="edit" v-if="!isEditing">
+        <el-form :inline="true">
+          <el-form-item class="oprator">
+            <el-button type="primary" icon="el-icon-edit"  size="small" class="sys-corlor" @click="edit">修改</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div class="save" v-else>
+        <el-form :inline="true">
+          <el-form-item class="oprator">
+            <el-button type="primary" icon="el-icon-document"  size="small" class="sys-corlor" @click="save">保存</el-button>
+            <!-- <el-button type="primary" icon="el-icon-edit"  size="small" class="sys-corlor-plain" @click="cancel">取消</el-button> -->
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import mixin from '../../mixins/tableMixin'
+export default {
+  name: 'detail',
+  mixins: [mixin],
+  mounted () {
+    this.initTable()
+    this.claszOption = this.$store.state.classroom
+    this.getClass()
+    this.getCourseRecordBystu()
+    if (this.$route.query && this.$route.query.type && this.$route.query.type === 'edit') {
+      this.edit()
+    }
+  },
+  data() {
+    return {
+      claszOption: [],
+      detail: {
+        sid: '',
+        sname: '',
+        sex: '',
+        age: '',
+        parent: '',
+        sphone: '',
+        home_address: '',
+        school: '',
+        clasz: '',
+        period_total: 0,
+        period_surplus: 0
+      },
+      editable: false,
+      tableOption: {},
+      tableData: [],
+      // 是否正在保存
+      isEditing: false,
+      // 分页属性
+      pageJSON: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 10
+      },
+    }
+  },
+  methods: {
+    initTable () {
+      this.tableOption = {
+        isMutiple: false,
+        showOpr: false,
+        showIndex: true,
+        
+        column: [
+          {
+            prop: 'cdate',
+            label: '日期'
+          },
+          {
+            prop: 'weeknum',
+            label: '星期'
+          },
+          {
+            prop: 'times',
+            label: '时间段',
+            formatter(row) {
+              return row.begintime + ' ~ ' + row.endtime 
+            }
+          },
+          {
+            prop: 'cname',
+            label: '课程名称'
+          },
+          {
+            prop: 'tname',
+            label: '老师姓名'
+          },
+          {
+            prop: 'room',
+            label: '上课教室'
+          },
+          {
+            prop: 'ctype',
+            label: '课程类型',
+            formatter(row) {
+              return parseInt(row.ctype) === 1 ? '普通课程' : '活动课程'
+            }
+          },
+          {
+            prop: 'signtime',
+            label: '签到时间',
+            formatter(row) {
+              return row.signtime ? row.signtime.slice(0,-2) : '尚未签到'
+            }
+          },
+          {
+            prop: 'period_need',
+            label: '课时'
+          },
+        ]
+      }
+      this.getCourseRecordBystu()
+    },
+    // 表格分页
+    pageChange(val) {
+      this.pageJSON = val
+      this.getCourseRecordBystu()
+    },
+    // 修改与保存
+    edit () {
+      this.isEditing = true
+      this.editable = true
+      // 保存一次副本
+      this.copy = JSON.parse(JSON.stringify(this.detail))
+    },
+    save () {
+      this.isEditing = false
+      this.editable = false
+      this.updateStudent()
+    },
+    cancel () {
+      this.isEditing = false
+      this.editable = false
+      this.detail  = JSON.parse(JSON.stringify(this.copy))
+    },
+    /** API */
+    // 查看学生详情
+    getStudentDetail () {
+      this.$axios.post('/getOneStudent',{sid: this.$route.params.id})
+        .then((res) => {
+          if (res && res.data ) {
+            this.detail = res.data
+          }
+        })
+    },
+    // 更新学生信息
+    updateStudent () {
+      this.$axios.post('/updateStudent',this.detail)
+        .then((res) => {
+          if (res && res.data ) {
+            console.log(res)
+          }
+        })
+    },
+    // 获取班级信息
+    getClass() {
+      this.$axios.post('/getClass')
+        .then((res) => {
+          if (res && res.data && res.data.length) {
+            this.claszOption = res.data
+            this.getStudentDetail()
+          }
+        })
+    },
+    // 根据学生id查上课记录
+    getCourseRecordBystu() {
+      this.tableData = []
+      this.$axios.post('/getCourseRecordBystu', {
+        sid: this.$route.params.id,
+        page: this.pageJSON.currentPage,
+        rows: this.pageJSON.pageSize
+      })
+      .then(res => {
+        if (res.data && res.data.total > 0) {
+          this.tableData = res.data.rows
+          this.pageJSON = {
+            currentPage: data.crrentPage,
+            pageSize: data.pageSize,
+            total: data.total
+          }
+        }
+      })
+    }
+  },
+  watch: {
+    $route: {
+      deep: true,
+      handler(val) {
+      },
+      immediate: true
+    }
+  }
+}
+</script>
+
+<style scope>
+  .details {
+    position: relative;
+  }
+  .detail-content {
+    padding:15px;
+    background: #fff;
+    padding-top:0;
+  }
+  .detail-content .title {
+    font-weight: bold;
+    margin-top: 15px;
+  }
+  .detail-content .detail-inline {
+    margin-top: 15px;
+    /* display: flex; */
+    text-align: left;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #606266;
+    line-height: 35px;
+    padding: 0 12px 20px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+  }
+  .detail-content .detail-inline .info-ctn {
+    display: flex;
+  }
+  .detail-content .detail-inline .info {
+    display: flex;
+    align-items: center;
+    width: 33.3%;
+  }
+  .detail-content .detail-inline .inline-label {
+    margin-right: 15px;
+    width: 75px;
+  }
+  .detail-content .basis-info /deep/  .el-select input {
+    width: 200px;
+  }
+  .detail-content .ctn {
+    padding-top: 15px;
+  }
+  .detail-content .ctn .tables {
+    margin-top: 30px;
+  }
+  .details .buttons {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+</style>
