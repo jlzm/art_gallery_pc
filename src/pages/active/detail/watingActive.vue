@@ -48,7 +48,7 @@
               <span>{{detail.room}}</span>
             </div>
           </div>
-         
+
         </div>
         <div class="info-ctn">
           <div class="info">
@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-     <div class="ctn">
+    <div class="ctn">
       <div class="title">
         学生列表
       </div>
@@ -102,7 +102,8 @@
             label="作品图">
             <template slot-scope="scope" v-if="scope.row.t_eva && scope.row.t_eva.photoUrl">
               <div class="imgs">
-                <img :src="imgUrl + item" alt="" :preview="scope.row.sid"  v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index">
+                <img :src="imgUrl + item" alt="" :preview="scope.row.sid"
+                     v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index">
               </div>
             </template>
           </el-table-column>
@@ -121,70 +122,71 @@
 </template>
 
 <script>
-import mixin from '../../../mixins/tableMixin'
-export default {
-  name: 'watingActive',
-  mixins: [mixin],
-  mounted () {
-    this.getData()
-    this.initTable()
-  },
-  data () {
-    return {
-      crid: '',
-      detail: {
-        course:'',
-        room: "",
-        allarrive: 0,
-        arriveid: "",
-        begintime: "",
-        cdate: "",
-        cdesc: "",
-        clasz: "",
-        cname: "",
-        crid: "",
-        ctype: "",
-        endtime: "",
-        period_need: 12,
-        realarrive: 0,
-        room: "",
-        sid: "",
-        sname: "",
-        status: 0,
-        tid: "",
-        tname: "",
-        weeknum: "",
-      },
-      tableOption: {},
-      tableData: []
-    }
-  },
-  methods:{
-    
-    initTable () {
-     
+  import mixin from '../../../mixins/tableMixin';
+
+  export default {
+    name: 'watingActive',
+    mixins: [mixin],
+    mounted() {
+      this.getData();
+      this.initTable();
     },
-    /** API */
-    getData() {
-      this.$axios.post('/getCourseRecordDetails',{
-        crid: this.crid
-      })
-      .then((res) => {
-        this.detail = res.data.course
-        this.tableData = res.data.evaluation
-      })
-    }
-  },
-  watch: {
-    $route: {
-      deep: true,
-      immediate: true,
-      handler(val) {
-        this.crid = val.params.id
+    data() {
+      return {
+        crid: '',
+        detail: {
+          course: '',
+          room: "",
+          allarrive: 0,
+          arriveid: "",
+          begintime: "",
+          cdate: "",
+          cdesc: "",
+          clasz: "",
+          cname: "",
+          crid: "",
+          ctype: "",
+          endtime: "",
+          period_need: 12,
+          realarrive: 0,
+          room: "",
+          sid: "",
+          sname: "",
+          status: 0,
+          tid: "",
+          tname: "",
+          weeknum: "",
+        },
+        tableOption: {},
+        tableData: []
+      };
+    },
+    methods: {
+
+      initTable() {
+
+      },
+      /** API */
+      getData() {
+        this.$axios.post('/getCourseRecordDetails', {
+          crid: this.crid
+        })
+          .then((res) => {
+            this.detail = res.data.course;
+            this.tableData = res.data.evaluation;
+          });
+      }
+    },
+    watch: {
+      $route: {
+        deep: true,
+        immediate: true,
+        handler(val) {
+          this.crid = val.params.id;
+        }
       }
     }
-  }
-}
+  };
 </script>
 
 <style scope>
@@ -192,14 +194,17 @@ export default {
     padding: 15px;
     background-color: #fff;
   }
+
   .wating-active .title {
     font-weight: bold;
     margin-top: 15px;
   }
-  .wating-active .ctn{
+
+  .wating-active .ctn {
     padding-bottom: 20px;
     border-bottom: 1px solid #eee;
   }
+
   .wating-active .detail-inline {
     margin-top: 15px;
     /* display: flex; */
@@ -211,19 +216,23 @@ export default {
     padding: 0 12px 0 0;
     box-sizing: border-box;
   }
+
   .wating-active .detail-inline .info-ctn {
     display: flex;
   }
+
   .wating-active .detail-inline .info {
     display: flex;
     align-items: center;
     width: 33.3%;
   }
+
   .wating-active .detail-inline .inline-label {
     margin-right: 15px;
     width: 75px;
   }
+
   .ctn-table {
-    margin:0 0 20px 0;
+    margin: 0 0 20px 0;
   }
 </style>

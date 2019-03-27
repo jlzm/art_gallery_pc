@@ -69,159 +69,160 @@
 </template>
 
 <script>
-import mixin from "../../mixins/tableMixin";
-export default {
-  uname: "uid",
-  mixins: [mixin],
-  mounted() {
-    this.initTable();
-    this.tableData = [];
-  },
-  data() {
-    return {
-      // 表格配置
-      tableOption: {},
-      tableData: [],
-      dialogTitle: "新建账号",
-      accountFormVisible: false,
-      searchForm: {
-        uid: "",
-        uname: ""
-      },
-      accountForm: {
-        uid: "",
-        uname: "",
-        password: ""
-      },
-      rule: {
-        uid: [
-          {
-            trigger: "blur",
-            message: "请输入账号",
-            required: true
-          }
-        ],
-        uname: [
-          {
-            trigger: "blur",
-            message: "请输入姓名",
-            required: true
-          }
-        ],
-        password: [
-          {
-            trigger: "blur",
-            message: "请输入密码",
-            required: true
-          }
-        ]
-      },
-      showPas: false
-    };
-  },
-  methods: {
-    initTable() {
-      this.tableOption = {
-        isMutiple: false,
-        showIndex: true,
-        showOpr: true,
-        showDelBtn: true,
-        showEditBtn: true,
-        column: [
-          {
-            prop: "uid",
-            label: "账号"
-          },
-          {
-            prop: "uname",
-            label: "姓名"
-          },
-          {
-            prop: "password",
-            label: "密码",
-            hidden: "hidden"
-          },
-          {
-            prop: "instime",
-            label: "创建时间",
-            formatter(row) {
-              return row.instime && row.instime.slice(0, -2);
-            }
-          }
-        ],
+  import mixin from "../../mixins/tableMixin";
 
-        // 编辑账号
-        editDetail: data => {
-          this.accountFormVisible = true;
-          this.dialogTitle = "编辑账户";
-          this.accountForm.uname = data.row.uname;
-          this.accountForm.uid = data.row.uid;
-          this.accountForm.password = data.row.password;
-        },
-
-        // 删除账号
-        delete() {
-          console.log(1);
-        }
-      };
-      this.getTableData();
-    },
-
-    showModal() {
-      this.accountFormVisible = true;
-      this.accountForm.uid = '';
-      this.accountForm.uname = '';
-      this.accountForm.password = '';
-
-      this.dialogTitle = "新建账户";
-      // this.$nextTick(() => {
-      //   this.$refs.accountForm.resetFields();
-      // });
-    },
-    
-    togglePas() {
-      this.showPas = !this.showPas;
-    },
-
-    /**
-     * 新建用户
-     */
-    insertUser() {
-      this.$refs.accountForm.validate(validate => {
-        if (validate) {
-          this.$axios.post("/insertUser", this.accountForm).then(res => {
-            if (res && res.data && parseInt(res.data.code) === 1) {
-              this.getTableData();
-              this.$message.success("新增用户成功");
-              this.accountFormVisible = false;
-            } else {
-              this.$message.error(res.data.msg);
-            }
-          });
-        }
-      });
-    },
-
-    /**
-     * 获取账号数据
-     *  */
-    getTableData() {
+  export default {
+    uname: "uid",
+    mixins: [mixin],
+    mounted() {
+      this.initTable();
       this.tableData = [];
-      this.$axios.post("/getAllUser", this.searchForm).then(res => {
-        if (res && res.data && res.data.length) {
-          this.tableData = res.data;
-        } else {
-          this.$message.info("没有查到相关数据");
-        }
-      });
+    },
+    data() {
+      return {
+        // 表格配置
+        tableOption: {},
+        tableData: [],
+        dialogTitle: "新建账号",
+        accountFormVisible: false,
+        searchForm: {
+          uid: "",
+          uname: ""
+        },
+        accountForm: {
+          uid: "",
+          uname: "",
+          password: ""
+        },
+        rule: {
+          uid: [
+            {
+              trigger: "blur",
+              message: "请输入账号",
+              required: true
+            }
+          ],
+          uname: [
+            {
+              trigger: "blur",
+              message: "请输入姓名",
+              required: true
+            }
+          ],
+          password: [
+            {
+              trigger: "blur",
+              message: "请输入密码",
+              required: true
+            }
+          ]
+        },
+        showPas: false
+      };
+    },
+    methods: {
+      initTable() {
+        this.tableOption = {
+          isMutiple: false,
+          showIndex: true,
+          showOpr: true,
+          showDelBtn: true,
+          showEditBtn: true,
+          column: [
+            {
+              prop: "uid",
+              label: "账号"
+            },
+            {
+              prop: "uname",
+              label: "姓名"
+            },
+            {
+              prop: "password",
+              label: "密码",
+              hidden: "hidden"
+            },
+            {
+              prop: "instime",
+              label: "创建时间",
+              formatter(row) {
+                return row.instime && row.instime.slice(0, -2);
+              }
+            }
+          ],
+
+          // 编辑账号
+          editDetail: data => {
+            this.accountFormVisible = true;
+            this.dialogTitle = "编辑账户";
+            this.accountForm.uname = data.row.uname;
+            this.accountForm.uid = data.row.uid;
+            this.accountForm.password = data.row.password;
+          },
+
+          // 删除账号
+          delete() {
+            console.log(1);
+          }
+        };
+        this.getTableData();
+      },
+
+      showModal() {
+        this.accountFormVisible = true;
+        this.accountForm.uid = '';
+        this.accountForm.uname = '';
+        this.accountForm.password = '';
+
+        this.dialogTitle = "新建账户";
+        // this.$nextTick(() => {
+        //   this.$refs.accountForm.resetFields();
+        // });
+      },
+
+      togglePas() {
+        this.showPas = !this.showPas;
+      },
+
+      /**
+       * 新建用户
+       */
+      insertUser() {
+        this.$refs.accountForm.validate(validate => {
+          if (validate) {
+            this.$axios.post("/insertUser", this.accountForm).then(res => {
+              if (res && res.data && parseInt(res.data.code) === 1) {
+                this.getTableData();
+                this.$message.success("新增用户成功");
+                this.accountFormVisible = false;
+              } else {
+                this.$message.error(res.data.msg);
+              }
+            });
+          }
+        });
+      },
+
+      /**
+       * 获取账号数据
+       *  */
+      getTableData() {
+        this.tableData = [];
+        this.$axios.post("/getAllUser", this.searchForm).then(res => {
+          if (res && res.data && res.data.length) {
+            this.tableData = res.data;
+          } else {
+            this.$message.info("没有查到相关数据");
+          }
+        });
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scope>
-.uid {
-  padding: 15px;
-  background-color: #fff;
-}
+  .uid {
+    padding: 15px;
+    background-color: #fff;
+  }
 </style>

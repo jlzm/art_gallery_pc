@@ -48,7 +48,7 @@
               <span>{{detail.room}}</span>
             </div>
           </div>
-           <div class="info">
+          <div class="info">
             <div class="inline-label">
               签到时间:
             </div>
@@ -74,7 +74,7 @@
               <span>{{parseInt(detail.status) === 0 ? '未开始' : '已结束'}}</span>
             </div>
           </div>
-         
+
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@
       </div>
       <div class="ctn-img video">
         <div class="img-item " v-for="item in trend.videoList" :key="item.crid">
-          <video :src="videoUrl + item.src" controls ></video>
+          <video :src="videoUrl + item.src" controls></video>
         </div>
       </div>
     </div>
@@ -136,7 +136,8 @@
             label="作品图">
             <template slot-scope="scope" v-if="scope.row.t_eva && scope.row.t_eva.photoUrl">
               <div class="imgs">
-                <img :src="imgUrl + item" alt="" :preview="scope.row.sid"  v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index">
+                <img :src="imgUrl + item" alt="" :preview="scope.row.sid"
+                     v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index">
               </div>
             </template>
           </el-table-column>
@@ -155,103 +156,104 @@
 </template>
 
 <script>
-import global from '@/global/global'
-export default {
-  name: 'done-active',
-  mounted () {
-    this.imgUrl = global.IMGURL
-    this.videoUrl = global.VIDEOURL
-    this.getData()
-    this.getTrend()
-  },
-  data () {
-    return {
-      crid: '',
-      detail: {
-        room: "",
-        allarrive: 0,
-        realarrive: "",
-        begintime: "",
-        cdate: "",
-        cdesc: "",
-        clasz: "",
-        cname: "",
-        crid: "",
-        ctype: "",
-        endtime: "",
-        period_need: 12,
-        realarrive: 0,
-        room: "",
-        sid: "",
-        sname: "",
-        status: 0,
-        tid: "",
-        tname: "",
-        weeknum: "",
-      },
-      tableData: [],
-      trend: { // 活动动态
-        imgList: [],
-        videoList: []
-      },
-      imgUrl: '',
-      videoUrl: ''
-    }
-  },
-  methods: {
-    getData() {
-      this.$axios.post('/getCourseRecordDetails',{
-        crid: this.crid
-      })
-      .then((res) => {
-        this.detail = res.data.course
-        this.tableData = res.data.evaluation
-        this.$previewRefresh()
-      })
+  import global from '@/global/global';
+
+  export default {
+    name: 'done-active',
+    mounted() {
+      this.imgUrl = global.IMGURL;
+      this.videoUrl = global.VIDEOURL;
+      this.getData();
+      this.getTrend();
     },
-    getTrend() {
-      this.trend =  { // 活动动态
-        imgList: [],
-        videoList: []
+    data() {
+      return {
+        crid: '',
+        detail: {
+          room: "",
+          allarrive: 0,
+          realarrive: "",
+          begintime: "",
+          cdate: "",
+          cdesc: "",
+          clasz: "",
+          cname: "",
+          crid: "",
+          ctype: "",
+          endtime: "",
+          period_need: 12,
+          realarrive: 0,
+          room: "",
+          sid: "",
+          sname: "",
+          status: 0,
+          tid: "",
+          tname: "",
+          weeknum: "",
+        },
+        tableData: [],
+        trend: { // 活动动态
+          imgList: [],
+          videoList: []
+        },
+        imgUrl: '',
+        videoUrl: ''
+      };
+    },
+    methods: {
+      getData() {
+        this.$axios.post('/getCourseRecordDetails', {
+          crid: this.crid
+        })
+          .then((res) => {
+            this.detail = res.data.course;
+            this.tableData = res.data.evaluation;
+            this.$previewRefresh();
+          });
+      },
+      getTrend() {
+        this.trend = { // 活动动态
+          imgList: [],
+          videoList: []
+        };
+        this.$axios.post('/getCourseDynamic', {
+          crid: this.crid,
+          ftype: ''
+        })
+          .then(res => {
+            if (res && res.data && res.data.length) {
+              res.data.forEach(item => {
+                if (item.url) {
+                  item.url.split(',').forEach(url => {
+                    if (item.ftype === 'photo') {
+                      this.trend.imgList.push({
+                        src: url,
+                        crid: item.crid
+                      });
+                    } else {
+                      this.trend.videoList.push({
+                        src: url,
+                        crid: item.crid
+                      });
+                    }
+                  });
+                }
+              });
+              this.$previewRefresh();
+            }
+          });
       }
-      this.$axios.post('/getCourseDynamic', {
-        crid: this.crid,
-        ftype: ''
-      })
-      .then(res => {
-        if (res && res.data && res.data.length) {
-          res.data.forEach(item => {
-              if (item.url) {
-                item.url.split(',').forEach(url => {
-                  if (item.ftype === 'photo') {
-                    this.trend.imgList.push({
-                      src: url,
-                      crid: item.crid
-                    })
-                  } else {
-                    this.trend.videoList.push({
-                      src: url,
-                      crid: item.crid
-                    })
-                  }
-                })
-              }
-          })
-          this.$previewRefresh()
+    },
+    watch: {
+      $route: {
+        deep: true,
+        immediate: true,
+        handler(val) {
+          this.crid = val.params.id;
         }
-      })
-    }
-  },
-  watch: {
-    $route: {
-      deep: true,
-      immediate: true,
-      handler(val) {
-        this.crid = val.params.id
       }
     }
-  }
-}
+  };
 </script>
 
 <style scope>
@@ -259,14 +261,17 @@ export default {
     padding: 15px;
     background-color: #fff;
   }
+
   .done-active .title {
     font-weight: bold;
     margin-top: 15px;
   }
-  .done-active .ctn{
+
+  .done-active .ctn {
     padding-bottom: 20px;
     border-bottom: 1px solid #eee;
   }
+
   .done-active .detail-inline {
     margin-top: 15px;
     /* display: flex; */
@@ -278,56 +283,69 @@ export default {
     padding: 0 12px 0 0;
     box-sizing: border-box;
   }
+
   .done-active .detail-inline .info-ctn {
     display: flex;
   }
+
   .done-active .detail-inline .info {
     display: flex;
     align-items: center;
     width: 33.3%;
   }
+
   .done-active .detail-inline .inline-label {
     margin-right: 15px;
     width: 75px;
   }
+
   .done-active .ctn-text {
     margin-top: 15px;
     font-size: 14px;
     color: #606266;
   }
+
   .ctn-img {
     display: flex;
-    margin:15px 0;
+    margin: 15px 0;
     flex-wrap: wrap;
     /* justify-content: space-between; */
   }
+
   .ctn-img .img-item {
     display: flex;
-    margin:0 15px 15px 0;
+    margin: 0 15px 15px 0;
   }
+
   .ctn-img .img-item:first-child {
     margin-left: 0;
   }
+
   .ctn-img .img-item img {
     width: 200px;
     height: 200px;
   }
+
   .video .img-item {
     width: 500px;
     height: 300px;
   }
-  .video .img-item video{
+
+  .video .img-item video {
     width: 100%;
     height: 100%;
-    object-fit: fill; 
+    object-fit: fill;
   }
+
   .ctn-table {
     margin-top: 15px;
   }
+
   .ctn-table /deep/ thead {
     background: #eee;
   }
-  .ctn-table /deep/ thead th,.table /deep/ thead tr{
+
+  .ctn-table /deep/ thead th, .table /deep/ thead tr {
     background: #eee;
   }
 </style>

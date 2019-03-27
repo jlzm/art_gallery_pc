@@ -37,7 +37,7 @@
             message: '请输入密码'
           }]
         }
-      }
+      };
     },
     methods: {
       login() {
@@ -46,18 +46,18 @@
             this.$axios.post('/loginUser', this.loginForm)
               .then(res => {
                 if (res.data && parseInt(res.data.code) === 1) {
-                  this.$message.success('登陆成功')
-                  this.$store.commit('login', res.data.user)
-                  this.$router.push('/home')
+                  this.$message.success('登陆成功');
+                  this.$store.commit('login', res.data.user);
+                  this.$router.push('/home');
                 } else {
-                  this.$message.error(res.data.msg)
+                  this.$message.error(res.data.msg);
                 }
-              })
+              });
           }
-        })
+        });
       }
     }
-  }
+  };
 
 </script>
 

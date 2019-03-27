@@ -1,15 +1,16 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import meta from './routerMeta'
-import store from '../store/index'
-Vue.use(Router)
+import Vue from 'vue';
+import Router from 'vue-router';
+import meta from './routerMeta';
+import store from '../store/index';
+
+Vue.use(Router);
 const router = new Router({
   routes: [{
-      path: '*',
-      redirect: {
-        name: 'login'
-      }
-    },
+    path: '*',
+    redirect: {
+      name: 'login'
+    }
+  },
     {
       path: '/login',
       name: 'login',
@@ -32,16 +33,16 @@ const router = new Router({
       },
       component: resolve => require(['../pages/home'], resolve),
       children: [{
-          name: 'main',
-          path: 'index',
-          component: resolve => require(['../pages/main/index'], resolve),
-          meta: {
-            // title: 面包屑名称
-            // path: 面包屑路径
-            // type用于判断当前类型,不写就一定会渲染
-            breadList: meta.indexMeta
-          }
-        },
+        name: 'main',
+        path: 'index',
+        component: resolve => require(['../pages/main/index'], resolve),
+        meta: {
+          // title: 面包屑名称
+          // path: 面包屑路径
+          // type用于判断当前类型,不写就一定会渲染
+          breadList: meta.indexMeta
+        }
+      },
         {
           name: 'personal',
           path: 'personal/:type',
@@ -67,13 +68,13 @@ const router = new Router({
           path: 'class',
           component: resolve => require(['../pages/class/class'], resolve),
           children: [{
-              name: 'records',
-              path: 'classRecords',
-              component: resolve => require(['../pages/class/records'], resolve),
-              meta: {
-                breadList: meta.classMetaRecordMeta
-              },
+            name: 'records',
+            path: 'classRecords',
+            component: resolve => require(['../pages/class/records'], resolve),
+            meta: {
+              breadList: meta.classMetaRecordMeta
             },
+          },
             {
               name: 'assign',
               path: 'classAssign',
@@ -179,13 +180,13 @@ const router = new Router({
           path: 'system',
           component: resolve => require(['../pages/system/system'], resolve),
           children: [{
-              name: 'systemClassSetting',
-              path: 'systemClassSetting',
-              component: resolve => require(['../pages/system/classSetting'], resolve),
-              meta: {
-                breadList: meta.systemClassSettingMeta
-              }
-            },
+            name: 'systemClassSetting',
+            path: 'systemClassSetting',
+            component: resolve => require(['../pages/system/classSetting'], resolve),
+            meta: {
+              breadList: meta.systemClassSettingMeta
+            }
+          },
             {
               name: 'classroomSetting',
               path: 'classroomSetting',
@@ -197,13 +198,13 @@ const router = new Router({
                 path: '/home/system/classroomSetting/classroomArrange'
               },
               children: [{
-                  name: 'classroomArrange',
-                  path: 'classroomArrange',
-                  component: resolve => require(['../pages/system/classroomSetting/classroomArrange'], resolve),
-                  meta: {
-                    breadList: meta.classSetting
-                  }
-                },
+                name: 'classroomArrange',
+                path: 'classroomArrange',
+                component: resolve => require(['../pages/system/classroomSetting/classroomArrange'], resolve),
+                meta: {
+                  breadList: meta.classSetting
+                }
+              },
                 {
                   name: 'setup',
                   path: 'setup',
@@ -235,7 +236,7 @@ const router = new Router({
       ]
     }
   ]
-})
+});
 router.beforeEach((to, from, next) => {
   let path = to.path;
   const isLogin = store.state.userInfo && store.state.userInfo.uid;
@@ -243,7 +244,7 @@ router.beforeEach((to, from, next) => {
     if (isLogin) {
       next({
         name: 'home'
-      })
+      });
     } else {
       next();
       return;
@@ -254,9 +255,9 @@ router.beforeEach((to, from, next) => {
     } else {
       next({
         name: 'login'
-      })
+      });
     }
   }
 
-})
-export default router
+});
+export default router;
