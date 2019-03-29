@@ -14,7 +14,6 @@
         width="400px"
       >
         <el-form
-
           :model="classSettingForm"
           class="form-inline"
           ref="classSettingForm"
@@ -126,8 +125,6 @@
         if (this.$refs.classSettingForm) {
           this.$refs.classSettingForm.resetFields();
         }
-
-        this.classSettingForm.clname = '';
 
       },
 

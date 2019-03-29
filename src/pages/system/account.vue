@@ -45,17 +45,17 @@
             <el-input
               v-model="accountForm.password"
               size="small"
-              :type="showPas ? 'text': 'password'"
               show-password
             >
-              <i
-                slot="suffix"
-                :title="showPas ? '隐藏密码': '显示密码'"
-                style="cursor:pointer;"
-                :style="showPas&&'color:#5cb6ff;'"
-                @click="togglePas"
-                class="el-input__icon iconfont el-icon-view"
-              ></i>
+            </el-input>
+          </el-form-item>
+          <!-- 确认密码 -->
+          <el-form-item label="确认密码" prop="checkPassword">
+            <el-input
+              v-model="accountForm.checkPassword"
+              size="small"
+              show-password
+            >
             </el-input>
           </el-form-item>
         </el-form>
@@ -79,6 +79,15 @@
       this.tableData = [];
     },
     data() {
+        var ckeckPass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.accountForm.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
       return {
         // 表格配置
         tableOption: {},
@@ -92,7 +101,8 @@
         accountForm: {
           uid: "",
           uname: "",
-          password: ""
+          password: "",
+          checkPassword: "",
         },
         rule: {
           uid: [
@@ -114,6 +124,12 @@
               trigger: "blur",
               message: "请输入密码",
               required: true
+            }
+          ],
+          checkPassword: [
+            {
+              trigger: "blur",
+              validator: ckeckPass
             }
           ]
         },

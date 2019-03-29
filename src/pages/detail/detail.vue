@@ -7,24 +7,26 @@
         </div>
         <div class="detail-inline">
           <div class="info-ctn">
+
+            <!--<div class="info">-->
+            <!--<div class="inline-label">-->
+            <!--学员id:-->
+            <!--</div>-->
+            <!--<div>-->
+            <!--<el-input-->
+            <!--placeholder="请输入内容"-->
+            <!--v-model="detail.sid"-->
+            <!--size="small"-->
+            <!--disabled-->
+            <!--v-if="editable">-->
+            <!--</el-input>-->
+            <!--<span v-else>{{detail.sid}}</span>-->
+            <!--</div>-->
+            <!--</div>-->
+
             <div class="info">
               <div class="inline-label">
-                学员id:
-              </div>
-              <div>
-                <el-input
-                  placeholder="请输入内容"
-                  v-model="detail.sid"
-                  size="small"
-                  disabled
-                  v-if="editable">
-                </el-input>
-                <span v-else>{{detail.sid}}</span>
-              </div>
-            </div>
-            <div class="info">
-              <div class="inline-label">
-                学员姓名:
+                姓名:
               </div>
               <div>
                 <el-input
@@ -38,7 +40,7 @@
             </div>
             <div class="info">
               <div class="inline-label">
-                学员性别:
+                性别:
               </div>
               <div>
                 <el-select v-model="detail.sex" placeholder="请选择" v-if="editable"
@@ -59,7 +61,7 @@
           <div class="info-ctn">
             <div class="info">
               <div class="inline-label">
-                学员年龄:
+                年龄:
               </div>
               <div>
                 <el-input-number
@@ -106,7 +108,7 @@
 
             <div class="info">
               <div class="inline-label">
-                家住地址:
+                联系地址:
               </div>
               <div>
                 <el-input
@@ -134,7 +136,7 @@
             </div>
             <div class="info">
               <div class="inline-label">
-                在读培训班:
+                就读培训班:
               </div>
               <div>
                 <el-input
@@ -157,7 +159,7 @@
           <div class="info-ctn">
             <div class="info">
               <div class="inline-label">
-                报名班级:
+                所属班级:
               </div>
               <div>
                 <el-select v-model="detail.clasz" placeholder="请选择" size="small" :disabled="!editable">
@@ -171,8 +173,8 @@
               </div>
             </div>
             <div class="info">
-              <div class="inline-label">
-                报名课时:
+              <div lass="inline-label">
+                已买课时:
               </div>
               <div>
                 <el-input-number
@@ -313,7 +315,7 @@
             },
             {
               prop: 'tname',
-              label: '老师姓名'
+              label: '上课老师'
             },
             {
               prop: 'room',

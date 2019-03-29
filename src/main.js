@@ -10,6 +10,9 @@ import axios from './global/axiosConfig';
 import BaiduMap from 'vue-baidu-map';
 import global from './global/global';
 
+// css
+import "./assets/css/public.css";
+
 import 'babel-polyfill';
 // import the styles
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';

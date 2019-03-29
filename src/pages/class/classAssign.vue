@@ -3,16 +3,8 @@
     <div class="search" v-if="!isIndex">
       <el-form ref="search">
         <el-form-item label="选择日期" prop="date">
-          <el-date-picker
-            v-model="form.week"
-            type="daterange"
-            range-separator="~"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            @change="changeDate"
-            size="small"
-            :inline-message="true"
-            value-format="yyyy-MM-dd">
+          <el-date-picker v-model="form.week" type="daterange" range-separator="~" start-placeholder="开始日期"
+            end-placeholder="结束日期" @change="changeDate" size="small" :inline-message="true" value-format="yyyy-MM-dd">
           </el-date-picker>
           <el-tooltip class="item" effect="dark" :content="tips" placement="top-start">
             <i class="el-icon-info"></i>
@@ -29,63 +21,27 @@
     </div>
     <!-- <cascader :tree="treeData"></cascader> -->
     <div class="tables">
-      <el-table
-        :data="tableData"
-        :span-method="arraySpanMethod"
-        border
-      >
-        <el-table-column
-          label="crid"
-          align="center"
-          v-if="false">
+      <el-table :data="tableData" :span-method="arraySpanMethod" border>
+        <el-table-column label="crid" align="center" v-if="false">
         </el-table-column>
-        <el-table-column
-          prop="cdate"
-          label="日期"
-          align="center">
+        <el-table-column prop="cdate" label="日期" align="center">
         </el-table-column>
-        <el-table-column
-          prop="weeknum"
-          label="星期"
-          align="center">
+        <el-table-column prop="weeknum" label="星期" align="center">
         </el-table-column>
 
-        <el-table-column
-          prop="room"
-          label="上课教室"
-          align="center">
+        <el-table-column prop="room" label="上课教室" align="center">
         </el-table-column>
-        <el-table-column
-          prop="cname"
-          label="课程名"
-          align="center">
+        <el-table-column prop="cname" label="课程名" align="center">
         </el-table-column>
-        <el-table-column
-          prop="time"
-          label="上课时间"
-          align="center"
-          :formatter="timeformatter">
+        <el-table-column prop="time" label="上课时间" align="center" :formatter="timeformatter">
         </el-table-column>
-        <el-table-column
-          prop="tname"
-          label="上课老师"
-          align="center">
+        <el-table-column prop="tname" label="上课老师" align="center">
         </el-table-column>
-        <el-table-column
-          prop="sname"
-          label="上课学生"
-          align="center"
-          show-overflow-tooltip>
+        <el-table-column prop="sname" label="上课学生" align="center" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column
-          prop="period_need"
-          label="所需课时"
-          align="center"
-          show-overflow-tooltip>
+        <el-table-column prop="period_need" label="所需课时" align="center" show-overflow-tooltip>
         </el-table-column>
-        <el-table-column
-          label="操作"
-          align="center">
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="editClass(scope.row)">编辑</el-button>
             <el-button type="text" size="small" @click="deleteClass(scope.row)">删除</el-button>
@@ -95,13 +51,8 @@
     </div>
     <div class="dialog">
       <el-dialog :title="dialog.dialogTitle" :visible.sync="dialog.assignFormVisible" :close-on-click-modal="false"
-                 width="500px">
-        <el-form
-          :model="assignForm"
-          class="form-inline"
-          ref="assignForm"
-          :label-position="'left'"
-          label-width="95px"
+        width="500px">
+        <el-form :model="assignForm" class="form-inline" ref="assignForm" :label-position="'left'" label-width="95px"
           :rules="rule">
           <el-form-item label="课程名" prop="cname">
             <el-input v-model="assignForm.cname" size="small">
@@ -109,67 +60,51 @@
             </el-input>
           </el-form-item>
           <el-form-item label="选择日期" prop="date">
-            <el-date-picker
-              v-model="assignForm.date"
-              type="date"
-              placeholder="选择日期"
-              size="small"
-
-              :picker-options="{
-                    disabledDate(time) {
-                      return dialog.type === 'new' && time.getTime() < Date.now() - 8.64e7;
-                    }
-                  }"
-            >
+            <el-date-picker v-model="assignForm.date" type="date" placeholder="选择日期" size="small" :picker-options="{
+                          disabledDate(time) {
+                            return dialog.type === 'new' && time.getTime() < Date.now() - 8.64e7;
+                          }
+                        }">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="起始时间段" prop="times">
-            <el-time-picker
-              is-range
-              size="small"
-              v-model="assignForm.times"
-              range-separator="~"
-              format="HH时mm分"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
-              placeholder="选择时间范围">
-            </el-time-picker>
+          <el-form-item label="起始时间段" required>
+            <el-col :span="11">
+              <el-form-item prop="startTime">
+                <el-time-select placeholder="开始时间" v-model="assignForm.startTime" :picker-options="{
+                          start: '06:00',
+                          step: '00:10',
+                          end: '22:00',
+                        }">
+                </el-time-select>
+              </el-form-item>
+            </el-col>
+            <el-col class="tac" :span="2">~</el-col>
+            <el-col :span="11">
+              <el-form-item prop="endTime">
+                <el-time-select placeholder="结束时间" v-model="assignForm.endTime" :picker-options="{
+                          start: '06:00',
+                          step: '00:10',
+                          end: '22:00',
+                          minTime: assignForm.startTime
+                        }">
+                </el-time-select>
+              </el-form-item>
+            </el-col>
           </el-form-item>
           <el-form-item label="上课老师" prop="teacher">
-            <el-select
-              v-model="assignForm.teacher"
-              filterable
-              placeholder="请选择上课老师"
-              size="small"
-            >
-              <el-option
-                v-for="item in assignForm.teacherOption"
-                :key="item.value"
-                :label="item.tname"
+            <el-select v-model="assignForm.teacher" filterable placeholder="请选择上课老师" size="small">
+              <el-option v-for="item in assignForm.teacherOption" :key="item.value" :label="item.tname"
                 :value="item.tid + ',' + item.tname">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="上课学员" prop="treeValue">
-            <treeselect
-              placeholder="请选择上课学员"
-              v-model="assignForm.treeValue"
-              :multiple="true"
-              :options="assignForm.studentOption"
-              :value-consists-of="'LEAF_PRIORITY'"
-              size="small"/>
+            <treeselect placeholder="请选择上课学员" v-model="assignForm.treeValue" :multiple="true"
+              :options="assignForm.studentOption" :value-consists-of="'LEAF_PRIORITY'" size="small" />
           </el-form-item>
           <el-form-item label="上课教室" prop="room">
-            <el-select
-              v-model="assignForm.room"
-              filterable
-              placeholder="请选择上课教室"
-              size="small"
-            >
-              <el-option
-                v-for="item in assignForm.classroomOption"
-                :key="item.rid"
-                :label="item.rname"
+            <el-select v-model="assignForm.room" filterable placeholder="请选择上课教室" size="small">
+              <el-option v-for="item in assignForm.classroomOption" :key="item.rid" :label="item.rname"
                 :value="item.rname">
               </el-option>
             </el-select>
@@ -180,13 +115,10 @@
             </el-input-number>
           </el-form-item>
           <el-form-item label="课程预热" prop="preview">
-            <el-input
-              type="textarea"
-              :rows="5"
-              placeholder="请输入内容"
-              v-model="assignForm.preview">
+            <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="assignForm.preview">
             </el-input>
           </el-form-item>
+
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="resetForm">取 消</el-button>
@@ -226,6 +158,7 @@
         }
       };
       return {
+
         form: {
           week: ''
         },
@@ -249,23 +182,24 @@
           assignFormVisible: false,
           type: 'new'
         },
+
+        // 新建数据
         assignForm: {
+          startTime: '',
+          endTime: '',
           cname: '',
           week: '',
           date: '',
           times: '',
           teacher: '',
-          teacherOption: [
-            {
-              label: '张老师',
-              value: 1
-            }
-          ],
+          teacherOption: [{
+            label: '张老师',
+            value: 1
+          }],
           classNumber: '',
           preview: '',
           treeValue: [],
-          classOption: [
-            {
+          classOption: [{
               label: '大班',
               value: 2
             },
@@ -286,68 +220,64 @@
         tree: null,
         // 校验规则
         rule: {
-          cname: [
-            {
-              trigger: 'blur',
-              message: '请填写课程名称',
-              required: true
-            }
-          ],
-          date: [
-            {
-              trigger: 'blur',
-              message: '请选择排课日期',
-              required: true
-            }
-          ],
-          times: [
-            {
-              trigger: 'blur',
-              message: '请选择起始时间段日期',
-              required: true
-            }
-          ],
-          teacher: [
-            {
-              trigger: 'blur',
-              message: '请选择上课老师',
-              required: true
-            }
-          ],
-          treeValue: [
-            {
-              trigger: 'blur',
-              message: '请选择上课学生',
-              required: true
-            }
-          ],
-          preview: [
-            {
-              trigger: 'change',
-              message: '请输入课堂预热',
-              required: true
-            }
-          ],
-          room: [
-            {
-              trigger: 'change',
-              message: '请选择上课教室',
-              required: true
-            }
-          ],
-          classNumber: [
-            {
-              trigger: 'change',
-              message: '请选择所需课时',
-              required: true
-            }
-          ]
+          cname: [{
+            trigger: 'blur',
+            message: '请填写课程名称',
+            required: true
+          }],
+          date: [{
+            trigger: 'blur',
+            message: '请选择排课日期',
+            required: true
+          }],
+          startTime: [{
+            trigger: 'blur',
+            message: '开始时间必选',
+            required: true
+          }],
+          endTime: [{
+            trigger: 'blur',
+            message: '结束时间必选',
+            required: true
+          }],
+          teacher: [{
+            trigger: 'blur',
+            message: '请选择上课老师',
+            required: true
+          }],
+          treeValue: [{
+            trigger: 'blur',
+            message: '请选择上课学生',
+            required: true
+          }],
+          preview: [{
+            trigger: 'change',
+            message: '请输入课堂预热',
+            required: true
+          }],
+          room: [{
+            trigger: 'change',
+            message: '请选择上课教室',
+            required: true
+          }],
+          classNumber: [{
+            trigger: 'change',
+            message: '请选择所需课时',
+            required: true
+          }]
         }
       };
     },
     methods: {
+
+
       // 合并表格
-      arraySpanMethod({row, column, rowIndex, columnIndex}) {
+      arraySpanMethod({
+        row,
+        column,
+        rowIndex,
+        columnIndex
+      }) {
         let type = ['cdate', 'weeknum', 'room'];
         let _row;
         let _col;
@@ -458,6 +388,9 @@
         if (type === 1) {
           this.dialog.dialogTitle = '新建排课';
           this.dialog.type = 'new';
+          if (this.$refs.assignForm) {
+            this.$refs.assignForm.resetFields();
+          }
         } else { // 修改
           this.dialog.dialogTitle = '编辑排课';
           this.dialog.type = 'edit';
@@ -481,10 +414,10 @@
       // 删除单个排课
       deleteClass(row) {
         this.$confirm('该操作会删除此次排课，是否确认', '确认删除排课', {
-          distinguishCancelAndClose: true,
-          confirmButtonText: '删除',
-          cancelButtonText: '取消'
-        })
+            distinguishCancelAndClose: true,
+            confirmButtonText: '删除',
+            cancelButtonText: '取消'
+          })
           .then(() => {
             this.deleteCourseRecord(row.crid);
           });
@@ -498,8 +431,8 @@
             let json = {
               cname: this.assignForm.cname,
               cdesc: this.assignForm.preview,
-              begintime: util.formatHour(this.assignForm.times[0]),
-              endtime: util.formatHour(this.assignForm.times[1]),
+              begintime: this.assignForm.startTime,
+              endtime: this.assignForm.endTime,
               room: this.assignForm.room,
               tid: this.assignForm.teacher.split(',')[0],
               tname: this.assignForm.teacher.split(',')[1],
@@ -533,8 +466,7 @@
         this.visible = true;
       },
       // 鼠标移入选择器事件
-      overMenu(e) {
-      },
+      overMenu(e) {},
       // 点击自动排课
       autoAssign() {
         if (!this.form.week.length) {
@@ -691,7 +623,9 @@
       deleteCourseRecord(id) {
 
         this.dialog.assignFormVisible = false;
-        this.$axios.post('/deleteCourseRecord', {crid: id})
+        this.$axios.post('/deleteCourseRecord', {
+            crid: id
+          })
           .then((res) => {
             if (res && parseInt(res.data.code) === 1) {
               this.$message({
@@ -711,6 +645,7 @@
       }
     }
   };
+
 </script>
 
 <style scope>
@@ -718,7 +653,8 @@
     background: #eee;
   }
 
-  .tables /deep/ thead th, .table /deep/ thead tr {
+  .tables /deep/ thead th,
+  .table /deep/ thead tr {
     background: #eee;
   }
 
@@ -745,4 +681,5 @@
   .class-assign /deep/ .vue-treeselect {
     line-height: initial;
   }
+
 </style>

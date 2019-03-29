@@ -14,14 +14,8 @@
           <div class="search">
             <el-form :inline="true" :model="watingCourseForm" class="form-inline" ref="">
               <el-form-item label="选择日期">
-                <el-date-picker
-                  v-model="watingCourseForm.date"
-                  type="daterange"
-                  range-separator="~"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  value-format="yyyy-MM-dd"
-                  size="small">
+                <el-date-picker v-model="watingCourseForm.date" type="daterange" range-separator="~"
+                  start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" size="small">
                 </el-date-picker>
               </el-form-item>
               <el-form-item label="课程名称">
@@ -34,20 +28,14 @@
             <el-form :inline="true">
               <el-form-item class="oprator">
                 <el-button type="primary" icon="el-icon-plus" size="small" @click="newActiveCourse">新建</el-button>
-                <el-button type="primary" icon="el-icon-document" size="small">导入</el-button>
-                <el-button type="primary" icon="el-icon-delete" size="small" plain @click="deleteAll">批量删除</el-button>
+                <!--<el-button type="primary" icon="el-icon-document" size="small">导入</el-button>-->
+                <el-button type="danger" icon="el-icon-delete" size="small" plain @click="deleteAll">批量删除</el-button>
               </el-form-item>
             </el-form>
           </div>
           <div class="tables">
-            <tables
-              :tableOption='watingOption'
-              :tableData="watingTableData"
-              :backData='watingTableData'
-              @pageChange="pageChange()"
-              pageType='back'
-              :loading="loading"
-              @handleSelectionChange='selectChange'>
+            <tables :tableOption='watingOption' :tableData="watingTableData" :backData='watingTableData'
+              @pageChange="pageChange()" pageType='back' :loading="loading" @handleSelectionChange='selectChange'>
             </tables>
           </div>
         </div>
@@ -68,15 +56,9 @@
             </el-form>
           </div>
           <div class="tables">
-            <tables
-              :tableOption='doneOption'
-              :tableData="doneTableData"
-              :backData='doneTableData'
-              @pageChange="donePageChange"
-              @handleSelectionChange='selectChange'
-              :total="total"
-              pageType='back'
-            ></tables>
+            <tables :tableOption='doneOption' :tableData="doneTableData" :backData='doneTableData'
+              @pageChange="donePageChange" @handleSelectionChange='selectChange' :total="total" pageType='back'>
+            </tables>
           </div>
         </div>
       </div>
@@ -84,12 +66,7 @@
     <div class="dialogs">
       <div class="activeDialog">
         <el-dialog :title="dialog.title" :visible.sync="dialog.visible" :close-on-click-modal="false" width="500px">
-          <el-form
-            :model="activeForm"
-            class="form-inline"
-            ref="activeForm"
-            :label-position="'left'"
-            label-width="95px"
+          <el-form :model="activeForm" class="form-inline" ref="activeForm" :label-position="'left'" label-width="95px"
             :rules="rule">
             <el-form-item label="课程名称" prop="cname">
               <el-input size="small" v-model='activeForm.cname'>
@@ -97,46 +74,55 @@
               </el-input>
             </el-form-item>
             <el-form-item label="上课老师" prop="teacher">
-              <el-select
-                v-model="activeForm.teacher"
-                filterable
-                placeholder="请选择上课老师"
-                size="small"
-              >
-                <el-option
-                  v-for="item in options.teacherOption"
-                  :key="item.tid"
-                  :label="item.tname"
+              <el-select v-model="activeForm.teacher" filterable placeholder="请选择上课老师" size="small">
+                <el-option v-for="item in options.teacherOption" :key="item.tid" :label="item.tname"
                   :value="item.tid + ',' + item.tname">
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="上课日期" prop="date">
-              <el-date-picker
-                v-model="activeForm.date"
-                type="date"
-                placeholder="选择日期"
-                size="small"
-
-                :picker-options="{
+              <el-date-picker v-model="activeForm.date" type="date" placeholder="选择日期" size="small" :picker-options="{
                     disabledDate(time) {
                       return dialog.type === 'new' && time.getTime() < Date.now() - 8.64e7;
                     }
-                  }"
-              >
+                  }">
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="上课时间段" prop="time">
-              <el-time-picker
-                is-range
-                size="small"
-                v-model="activeForm.time"
-                range-separator="~"
-                format="HH时mm分"
-                start-placeholder="开始时间"
-                end-placeholder="结束时间"
-                placeholder="选择时间范围">
-              </el-time-picker>
+            <el-form-item label="上课时间段" required>
+              <!--<el-time-picker-->
+              <!--is-range-->
+              <!--size="small"-->
+              <!--v-model="activeForm.time"-->
+              <!--:picker-options=" pickerOptions"-->
+              <!--range-separator="~"-->
+              <!--format="HH时mm分"-->
+              <!--start-placeholder="开始时间"-->
+              <!--end-placeholder="结束时间"-->
+              <!--placeholder="选择时间范围">-->
+              <!--</el-time-picker>-->
+              <el-col :span="11">
+                <el-form-item prop="startTime">
+                  <el-time-select placeholder="开始时间" v-model="activeForm.startTime" :picker-options="{
+                start: '06:00',
+                step: '00:10',
+                end: '22:00',
+              }">
+                  </el-time-select>
+                </el-form-item>
+              </el-col>
+              <el-col class="tac" :span="2">~</el-col>
+              <el-col :span="11">
+                <el-form-item prop="endTime">
+                  <el-time-select placeholder="结束时间" v-model="activeForm.endTime" :picker-options="{
+                start: '06:00',
+                step: '00:10',
+                end: '22:00',
+                minTime: activeForm.startTime
+              }">
+                  </el-time-select>
+                </el-form-item>
+              </el-col>
+
             </el-form-item>
             <el-form-item label="上课地点" prop="room">
               <el-input v-model="activeForm.room" size="small">
@@ -154,12 +140,15 @@
               </el-input-number>
             </el-form-item>
             <el-form-item label="课程预热" prop="preview">
-              <el-input
-                type="textarea"
-                :rows="5"
-                placeholder="请输入内容"
-                v-model="activeForm.preview">
+              <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="activeForm.preview">
               </el-input>
+            </el-form-item>
+            <el-form-item label='活动图片' prop='cpicture'>
+              <el-upload action="https://jsonplaceholder.typicode.com/posts" class="avatar-uploader"
+                :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                <img v-if="activeForm.imageUrl" :src="activeForm.imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
             </el-form-item>
           </el-form>
 
@@ -205,9 +194,12 @@
         },
         // form
         activeForm: {
+          imageUrl: '',
           room: '',
           teacher: '',
           date: '',
+          startTime: '',
+          endTiem: '',
           time: '',
           cname: '',
           snumber: 0,
@@ -237,8 +229,13 @@
             required: true,
             trigger: 'blur'
           }],
-          time: [{
-            message: '上课时间必选',
+          startTime: [{
+            message: '开始时间必选',
+            required: true,
+            trigger: 'blur'
+          }],
+          endTime: [{
+            message: '结束时间必选',
             required: true,
             trigger: 'blur'
           }],
@@ -277,6 +274,26 @@
       };
     },
     methods: {
+      /** 图片相关 start*/
+      beforeAvatarUpload(file) {
+        // const isJPG = file.type === 'image/jpeg';
+        // const isLt2M = file.size / 1024 / 1024 < 2;
+        //
+        // if (!isJPG) {
+        //   this.$message.error('上传头像图片只能是 JPG 格式!');
+        // }
+        // if (!isLt2M) {
+        //   this.$message.error('上传头像图片大小不能超过 2MB!');
+        // }
+        // return isJPG && isLt2M;
+      },
+      handleAvatarSuccess(res, file) {
+        console.log('res', res);
+        console.log('file', file);
+        this.activeForm.imageUrl = URL.createObjectURL(file.raw);
+      },
+      /** 图片相关 end*/
+
       changeNav(e) {
         var target = e.target || e.srcElement;
         if (target.dataset && target.dataset.nav) {
@@ -302,10 +319,10 @@
           this.$message.info('请至少选择一项');
         } else {
           this.$confirm('此操作将删除该批次活动课程, 是否确认?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          })
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            })
             .then(() => {
               this.deleteActive(this.deleteStr);
             });
@@ -328,8 +345,7 @@
           showDetailBtn: true,
           showDelBtn: true,
           showEditBtn: true,
-          column: [
-            {
+          column: [{
               prop: 'cname',
               label: '课程名称'
             },
@@ -380,25 +396,25 @@
           editDetail: (scope) => {
             let row = scope.row;
             this.activeForm = {
-              room: row.room,
-              teacher: row.tid + ',' + row.tname,
-              date: row.cdate,
-              time: ['2019 01-01 ' + row.begintime, '2019 01-01 ' + row.endtime],
-              cname: row.cname,
-              snumber: row.allarrive,
-              period_need: row.period_need,
-              preview: row.cdesc,
-              crid: row.crid
-            },
+                room: row.room,
+                teacher: row.tid + ',' + row.tname,
+                date: row.cdate,
+                time: ['2019 01-01 ' + row.begintime, '2019 01-01 ' + row.endtime],
+                cname: row.cname,
+                snumber: row.allarrive,
+                period_need: row.period_need,
+                preview: row.cdesc,
+                crid: row.crid
+              },
               this.eidtActiveCourse();
           },
           delete: (scope) => {
             let row = scope.row;
             this.$confirm('此操作将删除该活动课程, 是否确认?', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              type: 'warning'
-            })
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              })
               .then(() => {
                 this.deleteActive(row.crid, 0);
               });
@@ -414,8 +430,7 @@
           isMutiple: true,
           showOpr: true,
           showDetailBtn: true,
-          column: [
-            {
+          column: [{
               prop: 'cname',
               label: '课程名称'
             },
@@ -472,6 +487,9 @@
         this.dialog.visible = true;
         this.dialog.title = '新建活动课程';
         this.dialog.type = 'new';
+        if (this.$refs.activeForm) {
+          this.$refs.activeForm.resetFields();
+        }
       },
       // 编辑活动课程
       eidtActiveCourse() {
@@ -494,8 +512,8 @@
               cdate: dateJson.year + '-' + dateJson.month + '-' + dateJson.day,
               room: this.activeForm.room,
               cdesc: this.activeForm.preview,
-              begintime: util.formatHour(this.activeForm.time && this.activeForm.time[0]),
-              endtime: util.formatHour(this.activeForm.time && this.activeForm.time[1]),
+              begintime: this.activeForm.startTime,
+              endtime: this.activeForm.endTiem,
               tid: this.activeForm.teacher.split(',')[0],
               tname: this.activeForm.teacher.split(',')[1],
               period_need: this.activeForm.period_need,
@@ -515,16 +533,16 @@
       resetForm() {
         this.$refs.activeForm.resetFields();
         this.activeForm = {
-          room: '',
-          teacher: '',
-          date: '',
-          time: '',
-          cname: '',
-          snumber: 0,
-          period_need: 0,
-          preview: '',
-          crid: ''
-        },
+            room: '',
+            teacher: '',
+            date: '',
+            time: '',
+            cname: '',
+            snumber: 0,
+            period_need: 0,
+            preview: '',
+            crid: ''
+          },
           this.dialog.visible = false;
       },
       /** API */
@@ -540,8 +558,8 @@
       },
       deleteActive(id, status) {
         this.$axios.post('/deleteCourseRecord', {
-          crid: id
-        })
+            crid: id
+          })
           .then((res) => {
             if (res && parseInt(res.data.code) === 1) {
               this.$message({
@@ -644,6 +662,7 @@
       }
     }
   };
+
 </script>
 
 <style scope>
@@ -651,7 +670,8 @@
     width: 100%;
   }
 
-  .dialogs /deep/ .el-dialog .el-input-number, .dialogs /deep/ .el-dialog .el-date-editor {
+  .dialogs /deep/ .el-dialog .el-input-number,
+  .dialogs /deep/ .el-dialog .el-date-editor {
     width: 100%;
   }
 
@@ -679,4 +699,33 @@
   .content .table-ctn {
     margin-top: 15px;
   }
+
+  /*图片上传*/
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+
 </style>

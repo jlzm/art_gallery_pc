@@ -68,17 +68,29 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="起始时间段" prop="time" required>
-            <el-time-picker
-              is-range
-              size="small"
-              v-model="arrangeForm.time"
-              range-separator="~"
-              format="HH时mm分"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
-              placeholder="选择时间范围"
-            ></el-time-picker>
+          <el-form-item label="起始时间段"  required>
+            <el-col :span="11">
+                    <el-form-item prop="startTime">
+                      <el-time-select placeholder="开始时间" v-model="arrangeForm.startTime" :picker-options="{
+                                start: '06:00',
+                                step: '00:10',
+                                end: '22:00',
+                              }">
+                      </el-time-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col class="tac" :span="2">~</el-col>
+                  <el-col :span="11">
+                    <el-form-item prop="endTime">
+                      <el-time-select placeholder="结束时间" v-model="arrangeForm.endTime" :picker-options="{
+                                start: '06:00',
+                                step: '00:10',
+                                end: '22:00',
+                                minTime: arrangeForm.startTime
+                              }">
+                      </el-time-select>
+                    </el-form-item>
+                  </el-col>
           </el-form-item>
           <el-form-item label="上课老师" prop="teacher" required>
             <el-select v-model="arrangeForm.teacher" filterable placeholder="请选择上课老师" size="small">
@@ -146,6 +158,8 @@ export default {
       type: "new",
       dialogTitle: "新建教室安排",
       arrangeForm: {
+        startTime: '',
+        endTime: '',
         weeknum: "",
         weekOption: [
           {
@@ -196,11 +210,18 @@ export default {
             message: "请选择上课星期"
           }
         ],
-        time: [
+        startTime: [
           {
             trigger: "blur",
             required: true,
-            message: "请选择起始时间段"
+            message: "开始时间必选"
+          }
+        ],
+        endTime: [
+          {
+            trigger: "blur",
+            required: true,
+            message: "结束时间必选"
           }
         ],
         classroom: [
@@ -306,11 +327,6 @@ export default {
       if (this.$refs.arrangeForm) {
         this.$refs.arrangeForm.resetFields();
       }
-      this.arrangeForm.weeknum = "";
-      this.arrangeForm.classroom = "";
-      this.arrangeForm.time = "";
-      this.arrangeForm.teacher = "";
-      this.arrangeForm.class = [];
       this.dialogTitle = "新建教室安排";
     },
     // 删除教室

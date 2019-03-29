@@ -2,11 +2,13 @@
   <div>
     <div class="personal-content">
       <div class="search">
+
         <!-- 学生查询表格 -->
         <el-form :inline="true" :model="studentForm" class="form-inline" ref="" v-if="type==='students'">
           <el-form-item label="学员姓名">
             <el-input v-model="studentForm.studentName" placeholder="输入学员姓名" size="small" clearable></el-input>
           </el-form-item>
+
           <el-form-item label="班级">
             <el-select
               v-model="studentForm.classes"
@@ -20,11 +22,23 @@
                 :value="item.clid">
               </el-option>
             </el-select>
+
+          </el-form-item> <el-form-item label="性别">
+            <el-select
+              v-model="studentForm.sex"
+              placeholder="请选择"
+              size="small"
+              clearable>
+              <el-option :value="1" label="男"></el-option>
+              <el-option :value="2" label="女"></el-option>
+            </el-select>
           </el-form-item>
+
           <el-form-item>
             <el-button type="primary" icon="el-icon-search" size="small" @click="getStudentData">查询</el-button>
           </el-form-item>
         </el-form>
+
         <!-- 老师查询表格 -->
         <el-form :inline="true" :model="teacherForm" class="form-inline" ref="" v-else>
           <el-form-item label="老师姓名">
@@ -81,7 +95,7 @@
 
             </el-input-number>
           </el-form-item>
-          <el-form-item label="剩余课时" required prop="period_total">
+          <el-form-item label="购买课时" required prop="period_total">
             <el-input-number v-model="newStudentForm.period_total" :min="1" size="small">
 
             </el-input-number>
@@ -224,7 +238,8 @@
           // 学生姓名
           studentName: '',
           classes: '',
-          claszOption: []
+          claszOption: [],
+          sex: ''
         },
         teacherForm: {
           teacherName: ''
@@ -355,31 +370,31 @@
             showDelBtn: true,
             showEditBtn: true,
             column: [
-              {
-                prop: 'sid',
-                label: '学员id'
-              },
+              // {
+              //   prop: 'sid',
+              //   label: 'id'
+              // },
               {
                 prop: 'sname',
-                label: '学员姓名'
+                label: '姓名'
               },
               {
                 prop: 'sex',
-                label: '学员性别',
+                label: '性别',
                 formatter: (row) => {
                   return parseInt(row.sex) === 1 ? '男生' : '女生';
                 }
               },
               {
                 prop: 'clasz',
-                label: '所在班级',
+                label: '所属班级',
                 formatter: (row) => {
                   return util.getArrVal(this.studentForm.claszOption, 'clid', 'clname', row.clasz);
                 }
               },
               {
                 prop: 'period_total',
-                label: '所选课时',
+                label: '已买课时',
                 formatter: (row) => {
                   return row.period_total + '';
                 }
@@ -426,24 +441,28 @@
             showDelBtn: true,
             showEditBtn: true,
             column: [
-              {
-                prop: 'tid',
-                label: 'id'
-              },
+              // {
+              //   prop: 'tid',
+              //   label: 'id'
+              // },
               {
                 prop: 'tname',
-                label: '老师姓名'
+                label: '姓名'
               },
               {
                 prop: 'tsex',
-                label: '老师性别',
+                label: '性别',
                 formatter(value) {
                   return parseInt(value.tsex) === 1 ? '男性' : '女性';
                 }
               },
               {
                 prop: 'tage',
-                label: '老师年龄'
+                label: '年龄'
+              },
+              {
+                prop: 'education_background',
+                label: '学历'
               },
               {
                 prop: 'tphone',
@@ -466,7 +485,7 @@
             // 查看详情事件
             showDetail: (scope) => {
               this.newTeacherForm = {
-                title: '老师详情',
+                title: '详情',
                 visible: true,
                 teacherName: scope.row.tname,
                 teacherAge: scope.row.tage,
@@ -542,7 +561,7 @@
           console.log(1);
           this.deleteStudent(this.selectedId.join(','));
         } else {
-          this.$message.warning('请选择要删除的项');
+          this.$message('请至少选择一项');
           console.log(2);
         }
       },
