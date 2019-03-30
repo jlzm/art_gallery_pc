@@ -557,12 +557,15 @@
       },
       // 批量删除
       deleteAll() {
+        console.log('this.selectedId', this.selectedId);
         if (this.selectedId.length && this.type === 'students') {
-          console.log(1);
           this.deleteStudent(this.selectedId.join(','));
+          console.log('删除学生');
+        } else if(this.selectedId.length) {
+          this.deleteTeacher(this.selectedId.join(','));
+          console.log('删除老师');
         } else {
           this.$message('请至少选择一项');
-          console.log(2);
         }
       },
       // 学生dialog确认
@@ -728,6 +731,7 @@
 
       /** 删除老师 */
       deleteTeacher(id) {
+        console.log('id', id);
         this.$axios.post('/deleteTeacher', {tid: id})
           .then((res) => {
             if (res && parseInt(res.data.code) === 1) {

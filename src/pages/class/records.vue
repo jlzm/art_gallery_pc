@@ -192,9 +192,13 @@
         this.deleteStr = '';
         if (val && val.length) {
           val.forEach((item) => {
-            this.deleteStr += item.crid;
+            this.deleteStr += `${item.crid},`;
           });
+          if(val.length > 0) {
+            this.deleteStr = this.deleteStr.substr(0, this.deleteStr.length - 1);
+          }
         }
+        console.log(this.deleteStr);
       },
       // 批量删除确认
       deleteAll() {

@@ -146,6 +146,7 @@
             }
           ],
           editDetail: (scope) => {
+            console.log(scope);
           }
         };
         this.tableData = [{

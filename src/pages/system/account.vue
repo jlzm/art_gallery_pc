@@ -14,27 +14,16 @@
       </el-form>
       <el-form :inline="true">
         <el-form-item class="oprator">
-          <el-button type="primary" icon="el-icon-plus" size="small" @click="showModal">新建</el-button>
+          <el-button type="primary" icon="el-icon-plus" size="small" @click="showModal()">新建</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="tables">
       <tables :tableOption="tableOption" :tableData="tableData"></tables>
     </div>
-    <div class="dialog">
-      <el-dialog
-        :title="dialogTitle"
-        :visible.sync="accountFormVisible"
-        :close-on-click-modal="false"
-        width="350px"
-      >
-        <el-form
-          :model="accountForm"
-          ref="accountForm"
-          :label-position="'left'"
-          label-width="80px"
-          :rules="rule"
-        >
+    <div v-if="accountFormVisible" class="dialog">
+      <el-dialog :title="dialogTitle" :visible.sync="accountFormVisible" :close-on-click-modal="false" width="350px">
+        <el-form :model="accountForm" ref="accountForm" :label-position="'left'" label-width="80px" :rules="rule">
           <el-form-item label="账号" prop="uid">
             <el-input v-model="accountForm.uid" size="small"></el-input>
           </el-form-item>
@@ -42,20 +31,12 @@
             <el-input v-model="accountForm.uname" size="small"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input
-              v-model="accountForm.password"
-              size="small"
-              show-password
-            >
+            <el-input v-model="accountForm.password" size="small" show-password>
             </el-input>
           </el-form-item>
           <!-- 确认密码 -->
           <el-form-item label="确认密码" prop="checkPassword">
-            <el-input
-              v-model="accountForm.checkPassword"
-              size="small"
-              show-password
-            >
+            <el-input v-model="accountForm.checkPassword" size="small" show-password>
             </el-input>
           </el-form-item>
         </el-form>
@@ -79,7 +60,7 @@
       this.tableData = [];
     },
     data() {
-        var ckeckPass = (rule, value, callback) => {
+      var ckeckPass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
         } else if (value !== this.accountForm.password) {
@@ -105,33 +86,25 @@
           checkPassword: "",
         },
         rule: {
-          uid: [
-            {
-              trigger: "blur",
-              message: "请输入账号",
-              required: true
-            }
-          ],
-          uname: [
-            {
-              trigger: "blur",
-              message: "请输入姓名",
-              required: true
-            }
-          ],
-          password: [
-            {
-              trigger: "blur",
-              message: "请输入密码",
-              required: true
-            }
-          ],
-          checkPassword: [
-            {
-              trigger: "blur",
-              validator: ckeckPass
-            }
-          ]
+          uid: [{
+            trigger: "blur",
+            message: "请输入账号",
+            required: true
+          }],
+          uname: [{
+            trigger: "blur",
+            message: "请输入姓名",
+            required: true
+          }],
+          password: [{
+            trigger: "blur",
+            message: "请输入密码",
+            required: true
+          }],
+          checkPassword: [{
+            trigger: "blur",
+            validator: ckeckPass
+          }]
         },
         showPas: false
       };
@@ -144,8 +117,7 @@
           showOpr: true,
           showDelBtn: true,
           showEditBtn: true,
-          column: [
-            {
+          column: [{
               prop: "uid",
               label: "账号"
             },
@@ -185,16 +157,25 @@
       },
 
       showModal() {
+        this.dialogTitle = "新建账户";
+        this.resetNewForm();
+        this.$nextTick(() => {
+          if(this.$refs.accountForm) {
+            this.$refs.accountForm.resetFields();
+          }
+        });
         this.accountFormVisible = true;
+      },
+
+      /**
+       * 重置新建数据
+       */
+      resetNewForm() {
         this.accountForm.uid = '';
         this.accountForm.uname = '';
         this.accountForm.password = '';
-
-        this.dialogTitle = "新建账户";
-        // this.$nextTick(() => {
-        //   this.$refs.accountForm.resetFields();
-        // });
-      },
+        this.accountForm.checkPassword = '';
+      },  
 
       togglePas() {
         this.showPas = !this.showPas;
@@ -234,6 +215,7 @@
       }
     }
   };
+
 </script>
 
 <style scope>
@@ -241,4 +223,5 @@
     padding: 15px;
     background-color: #fff;
   }
+
 </style>

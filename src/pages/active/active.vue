@@ -27,9 +27,9 @@
             </el-form>
             <el-form :inline="true">
               <el-form-item class="oprator">
-                <el-button type="primary" icon="el-icon-plus" size="small" @click="newActiveCourse">新建</el-button>
+                <el-button type="primary" icon="el-icon-plus" size="small" @click="newActiveCourse()">新建</el-button>
                 <!--<el-button type="primary" icon="el-icon-document" size="small">导入</el-button>-->
-                <el-button type="danger" icon="el-icon-delete" size="small" plain @click="deleteAll">批量删除</el-button>
+                <el-button type="danger" icon="el-icon-delete" size="small" plain @click="deleteAll()">批量删除</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -51,7 +51,7 @@
             </el-form>
             <el-form :inline="true">
               <el-form-item class="oprator">
-                <el-button type="primary" icon="el-icon-delete" size="small" plain @click="deleteAll">批量删除</el-button>
+                <el-button type="primary" icon="el-icon-delete" size="small" plain @click="deleteAll()">批量删除</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -144,9 +144,9 @@
               </el-input>
             </el-form-item>
             <el-form-item label='活动图片' prop='cpicture'>
-              <el-upload action="https://jsonplaceholder.typicode.com/posts" class="avatar-uploader"
+              <el-upload action="http://172.16.10.184:8080/HappyMomaArt/uploadPicture" class="avatar-uploader"
                 :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                <img v-if="activeForm.imageUrl" :src="activeForm.imageUrl" class="avatar">
+                <img v-if="activeForm.previewImgUrl" :src="activeForm.previewImgUrl" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
@@ -154,7 +154,7 @@
 
           <span slot="footer" class="dialog-footer">
             <el-button @click="cancelDialog">取 消</el-button>
-            <el-button type="primary" @click="submit">确 定</el-button>
+            <el-button type="primary" @click="submit()">确 定</el-button>
           </span>
         </el-dialog>
       </div>
@@ -194,13 +194,13 @@
         },
         // form
         activeForm: {
+          previewImgUrl: '',
           imageUrl: '',
           room: '',
           teacher: '',
           date: '',
           startTime: '',
           endTiem: '',
-          time: '',
           cname: '',
           snumber: 0,
           period_need: 0,
@@ -290,7 +290,8 @@
       handleAvatarSuccess(res, file) {
         console.log('res', res);
         console.log('file', file);
-        this.activeForm.imageUrl = URL.createObjectURL(file.raw);
+        this.activeForm.previewImgUrl = URL.createObjectURL(file.raw);
+        this.activeForm.imageUrl = file.response;
       },
       /** 图片相关 end*/
 
@@ -307,12 +308,17 @@
       },
       // 批量删除
       selectChange(val) {
+        console.log('deleteId', val);
         this.deleteStr = '';
         if (val && val.length) {
-          val.forEach((item) => {
-            this.deleteStr += item.crid;
-          });
+            val.forEach((item) => {
+              this.deleteStr += `${item.crid},`;
+            });
+          if(val.length > 0) {
+            this.deleteStr = this.deleteStr.substr(0, this.deleteStr.length - 1);
+          }
         }
+        console.log(this.deleteStr);
       },
       deleteAll() {
         if (!this.deleteStr) {
@@ -393,6 +399,7 @@
               path: '/home/activeDetail/wating/' + scope.row.crid
             });
           },
+
           editDetail: (scope) => {
             let row = scope.row;
             this.activeForm = {
@@ -408,6 +415,7 @@
               },
               this.eidtActiveCourse();
           },
+
           delete: (scope) => {
             let row = scope.row;
             this.$confirm('此操作将删除该活动课程, 是否确认?', '提示', {
@@ -484,13 +492,33 @@
       },
       // 新建活动课程
       newActiveCourse() {
-        this.dialog.visible = true;
         this.dialog.title = '新建活动课程';
         this.dialog.type = 'new';
         if (this.$refs.activeForm) {
           this.$refs.activeForm.resetFields();
         }
+        this.resetNewForm();
+        this.dialog.visible = true;
       },
+
+      /**
+       * 重置新建表单数据
+       */
+      resetNewForm() {
+        this.activeForm.previewImgUrl = ''; 
+        this.activeForm.imageUrl = ''; 
+        this.activeForm.room = ''; 
+        this.activeForm.teacher = ''; 
+        this.activeForm.date = ''; 
+        this.activeForm.startTime = ''; 
+        this.activeForm.endTiem = ''; 
+        this.activeForm.cname = ''; 
+        this.activeForm.snumber = ''; 
+        this.activeForm.period_need = ''; 
+        this.activeForm.preview = ''; 
+        this.activeForm.crid = ''; 
+      }, 
+
       // 编辑活动课程
       eidtActiveCourse() {
         this.dialog.visible = true;
@@ -502,22 +530,29 @@
         this.$refs.activeForm.resetFields();
         this.dialog.visible = false;
       },
+
+      /**
+       * 提交新建
+       */
       submit() {
         const weekmap = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
         this.$refs.activeForm.validate((validate) => {
           if (validate) {
             let dateJson = util.getTime(this.activeForm.date);
             let json = {
+              cpicture: this.activeForm.imageUrl,
+              cname: this.activeForm.cname,
               weeknum: dateJson.weekLabel,
               cdate: dateJson.year + '-' + dateJson.month + '-' + dateJson.day,
               room: this.activeForm.room,
               cdesc: this.activeForm.preview,
               begintime: this.activeForm.startTime,
-              endtime: this.activeForm.endTiem,
+              endtime: this.activeForm.endTime,
               tid: this.activeForm.teacher.split(',')[0],
               tname: this.activeForm.teacher.split(',')[1],
               period_need: this.activeForm.period_need,
-              cname: this.activeForm.cname,
+              snumber: this.activeForm.snumber,
+              maxnum: this.activeForm.cname,
               ctype: 2,
               status: 0
             };
@@ -529,6 +564,7 @@
           }
         });
       },
+
       // 清空弹出框内表格
       resetForm() {
         this.$refs.activeForm.resetFields();
@@ -545,6 +581,7 @@
           },
           this.dialog.visible = false;
       },
+
       /** API */
       // 获取老师
       getTeacherData() {
@@ -557,6 +594,7 @@
           });
       },
       deleteActive(id, status) {
+        console.log('id', id);
         this.$axios.post('/deleteCourseRecord', {
             crid: id
           })
@@ -608,6 +646,7 @@
             }
           });
       },
+      
       // 获取活动课程
       getActiveData(status) {
         let json;
@@ -657,7 +696,6 @@
               }
             });
         }
-
 
       }
     }

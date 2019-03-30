@@ -1,12 +1,12 @@
 <template>
   <div class="sys-class-setting">
     <div class="search">
-      <el-button type="primary" icon="el-icon-plus" size="small" @click="newClass">新建</el-button>
+      <el-button type="primary" icon="el-icon-plus" size="small" @click="newClass()">新建</el-button>
     </div>
     <div class="tables">
       <tables :tableOption="tableOption" :tableData="tableData"></tables>
     </div>
-    <div class="dialog">
+    <div  class="dialog">
       <el-dialog
         :title="dialogTitle"
         :visible.sync="classSettingFormVisible"
@@ -120,13 +120,20 @@
        */
       newClass() {
         this.type = "new";
-        this.classSettingFormVisible = true;
-
-        if (this.$refs.classSettingForm) {
+        this.dialogTitle = '新建班级';
+        if(this.$refs.classSettingForm) {
           this.$refs.classSettingForm.resetFields();
         }
-
+        this.resetNewForm();
+        this.classSettingFormVisible = true;
       },
+
+      /**
+     * 重置新建数据
+     */
+    resetNewForm() {
+     this.classSettingForm.clname = '';
+    },
 
       /**
        * 修改

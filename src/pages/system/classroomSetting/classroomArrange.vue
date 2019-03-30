@@ -21,7 +21,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="dialog">
+    <div v-if="arrangeFormVisible" class="dialog">
       <el-dialog
         :title="dialogTitle"
         :visible.sync="arrangeFormVisible"
@@ -68,29 +68,35 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="起始时间段"  required>
+          <el-form-item label="起始时间段" required>
             <el-col :span="11">
-                    <el-form-item prop="startTime">
-                      <el-time-select placeholder="开始时间" v-model="arrangeForm.startTime" :picker-options="{
+              <el-form-item prop="startTime">
+                <el-time-select
+                  placeholder="开始时间"
+                  v-model="arrangeForm.startTime"
+                  :picker-options="{
                                 start: '06:00',
                                 step: '00:10',
                                 end: '22:00',
-                              }">
-                      </el-time-select>
-                    </el-form-item>
-                  </el-col>
-                  <el-col class="tac" :span="2">~</el-col>
-                  <el-col :span="11">
-                    <el-form-item prop="endTime">
-                      <el-time-select placeholder="结束时间" v-model="arrangeForm.endTime" :picker-options="{
+                              }"
+                ></el-time-select>
+              </el-form-item>
+            </el-col>
+            <el-col class="tac" :span="2">~</el-col>
+            <el-col :span="11">
+              <el-form-item prop="endTime">
+                <el-time-select
+                  placeholder="结束时间"
+                  v-model="arrangeForm.endTime"
+                  :picker-options="{
                                 start: '06:00',
                                 step: '00:10',
                                 end: '22:00',
                                 minTime: arrangeForm.startTime
-                              }">
-                      </el-time-select>
-                    </el-form-item>
-                  </el-col>
+                              }"
+                ></el-time-select>
+              </el-form-item>
+            </el-col>
           </el-form-item>
           <el-form-item label="上课老师" prop="teacher" required>
             <el-select v-model="arrangeForm.teacher" filterable placeholder="请选择上课老师" size="small">
@@ -158,8 +164,8 @@ export default {
       type: "new",
       dialogTitle: "新建教室安排",
       arrangeForm: {
-        startTime: '',
-        endTime: '',
+        startTime: "",
+        endTime: "",
         weeknum: "",
         weekOption: [
           {
@@ -191,7 +197,6 @@ export default {
             value: "星期天"
           }
         ],
-        time: "",
         classroom: "",
         classroomOption: [],
         classOption: [],
@@ -310,6 +315,7 @@ export default {
     timeformatter(val) {
       return val.begintime + "-" + val.endtime;
     },
+
     // 提交表单
     submit() {
       this.$refs.arrangeForm.validate(validate => {
@@ -321,14 +327,32 @@ export default {
 
     // 新建教室
     newArrange() {
-      this.arrangeFormVisible = true;
       this.type = "new";
-
-      if (this.$refs.arrangeForm) {
-        this.$refs.arrangeForm.resetFields();
-      }
       this.dialogTitle = "新建教室安排";
+      this.resetNewForm();
+      this.arrangeFormVisible = true;
+
+      this.$nextTick(() => {
+        if (this.$refs.accountForm) {
+          this.$refs.accountForm.resetFields();
+        }
+      });
     },
+
+    /**
+     * 重置新建数据
+     */
+    resetNewForm() {
+      this.arrangeForm.startTime = "";
+      this.arrangeForm.endTime = "";
+      this.arrangeForm.weeknum = "";
+      this.arrangeForm.classroom = "";
+      this.arrangeForm.treeValue = null;
+      this.arrangeForm.options = "";
+      this.arrangeForm.class = [];
+      this.arrangeForm.teacher = "";
+    },
+
     // 删除教室
     deleteRoom(row) {
       this.$confirm("此操作将永久删除该教室, 是否继续?", "提示", {
@@ -341,19 +365,20 @@ export default {
     },
     // 修改教室
     editRoom(row) {
-      this.arrangeFormVisible = true;
       this.dialogTitle = "修改教室";
       this.type = "edit";
+
       this.arrangeForm.class = row.class;
       this.arrangeForm.classroom = row.room;
       this.arrangeForm.weeknum = row.weeknum;
       this.arrangeForm.rmid = row.rmid;
       this.arrangeForm.teacher = row.tid + "," + row.tname;
-      this.arrangeForm.time = this.formatTime(
-        row.begintime + "-" + row.endtime
-      );
-      this.arrangeForm.treeValue = row.treeValue;
+      this.arrangeForm.startTime = row.begintime;
+      this.arrangeForm.endTime = row.begintime;
+      this.arrangeForm.treeValue = row.endtime;
       this.arrangeForm.class = row.clasz.split(",");
+
+      this.arrangeFormVisible = true;
     },
     cancelDialog() {
       this.$refs.arrangeForm.resetFields();
@@ -391,8 +416,8 @@ export default {
     saveClass() {
       let json = {
         weeknum: this.arrangeForm.weeknum,
-        begintime: this.formatHour(this.arrangeForm.time[0]),
-        endtime: this.formatHour(this.arrangeForm.time[1]),
+        begintime: this.arrangeForm.startTime,
+        endtime: this.arrangeForm.endTime,
         room: this.arrangeForm.classroom,
         tid: this.arrangeForm.teacher.split(",")[0],
         tname: this.arrangeForm.teacher.split(",")[1],

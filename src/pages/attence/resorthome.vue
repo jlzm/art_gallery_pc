@@ -13,7 +13,7 @@
         :total="total"
         pageType='back'></tables>
     </div>
-    <div class="dialog">
+    <div v-if="dialogFormVisible" class="dialog">
       <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
         <el-form :model="addForm" class="form-inline" ref="addForm" :label-position="'left'" label-width="80px"
                  :rules="rule">
@@ -38,6 +38,7 @@
               </el-option>
             </el-select>
           </el-form-item>
+          {{addForm.circle}}
           <el-form-item label="工作周期" prop="circle">
             <el-date-picker
               v-model="addForm.circle"
@@ -126,7 +127,7 @@
         addForm: {
           className: '',
           classNameOptions: [],
-          fitPeople: '',
+          fitPeople: [],
           fitPeopleOptions: [],
           circle: '',
           rest: []
@@ -193,12 +194,46 @@
               tooltip: true
             }
           ],
-          editDetail: () => {
+          editDetail: (item) => {
+            console.log(item);
             this.editType = 'edit';
             this.dialogTitle = '修改排班';
+            this.fillFormData(item.row);
             this.dialogFormVisible = true;
-          }
+          },
+          delete: (scope) => {
+              const id = scope.row.waid;
+              this.deleteAttendance(id);
+            }
         };
+      },
+
+      /**
+       * 填充修改属性
+       */
+      fillFormData(row) {
+        console.log(row.unames);
+        console.log('this.addForm.fitPeople', this.addForm.fitPeople);
+        this.addForm.className = row.wname;
+        this.addForm.fitPeople.push(row.unames);
+        this.addForm.circle = row.ondate;
+        this.addForm.rest = row.restdate;
+      },
+
+      deleteAttendance(id) {
+        let json = {
+          waid: id
+        }
+        this.$axios.post('/deleteWorkArrange', json)
+                .then(res => {
+                  console.log(res);
+                  if (res && res.data && parseInt(res.data.code) === 1) {
+                    this.$message.success('删除成功');
+                    this.getData();
+                  } else {
+                    this.$message.error(res.data.msg);
+                  }
+                });
       },
       addNewResort() {
         // this.$router.push({
@@ -206,6 +241,9 @@
         // })
         this.dialogFormVisible = true;
         this.dialogTitle = '新增排班';
+        // if (this.$refs.addForm) {
+        //     this.$refs.addForm.resetFields();
+        //   }
       },
       // 分页
       // 表格分页
@@ -242,6 +280,7 @@
                 .then(res => {
                   if (res && res.data && parseInt(res.data.code) === 1) {
                     this.$message.success('新增成功');
+                    this.getData();
                   } else {
                     this.$message.error(res.data.msg);
                   }
@@ -279,6 +318,7 @@
         this.tableData = [];
         this.$axios.post('/getWorkArrangeByPage', json)
           .then((res) => {
+            console.log('res', res);
             if (res && res.data && res.data.total > 0) {
               this.tableData = res.data.rows;
               this.total = res.data.total;

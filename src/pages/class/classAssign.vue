@@ -12,9 +12,9 @@
         </el-form-item>
       </el-form>
       <div class="right">
-        <el-button type="primary" icon="el-icon-refresh" size="small" :disabled="!canAutoAssign" @click="autoAssign">
+        <!-- <el-button type="primary" icon="el-icon-refresh" size="small" :disabled="!canAutoAssign" @click="autoAssign">
           自动排课
-        </el-button>
+        </el-button> -->
         <el-button type="primary" icon="el-icon-plus" size="small" @click="eidtOrAdd(1,1)">新增</el-button>
 
       </div>
@@ -355,11 +355,13 @@
         });
         return arr;
       },
+      
       // 规整表格
       formatData(data) {
         data = this.getSpanArr(data, 'cdate');
         data = this.getSpanArr(data, 'weeknum');
         this.tableData = this.getSpanArr(data, 'room');
+
       },
       timeformatter(val) {
         return val.begintime + '-' + val.endtime;
@@ -404,7 +406,8 @@
         this.assignForm.room = row.room;
         this.assignForm.teacher = row.tid + ',' + row.tname;
         this.assignForm.preview = row.cdesc;
-        this.assignForm.times = ['2019-01-01 ' + row.begintime, '2019-01-01 ' + row.endtime];
+        this.assignForm.startTime = row.endtime;
+        this.assignForm.endTime = row.endtime;
         this.assignForm.classNumber = parseInt(row.period_need);
         this.assignForm.cname = row.cname;
         this.assignForm.crid = row.crid;
