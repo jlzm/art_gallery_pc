@@ -14,7 +14,7 @@
       </el-form>
       <el-form :inline="true">
         <el-form-item class="oprator">
-          <el-button type="primary" icon="el-icon-plus" size="small" @click="showModal()">新建</el-button>
+          <el-button type="primary" icon="el-icon-plus" size="small" @click="showNewUser()">新建</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -35,7 +35,7 @@
             </el-input>
           </el-form-item>
           <!-- 确认密码 -->
-          <el-form-item label="确认密码" prop="checkPassword">
+          <el-form-item label="确认密码" required prop="checkPassword">
             <el-input v-model="accountForm.checkPassword" size="small" show-password>
             </el-input>
           </el-form-item>
@@ -80,6 +80,7 @@
           uname: ""
         },
         accountForm: {
+          type: 'new',
           uid: "",
           uname: "",
           password: "",
@@ -141,11 +142,7 @@
 
           // 编辑账号
           editDetail: data => {
-            this.accountFormVisible = true;
-            this.dialogTitle = "编辑账户";
-            this.accountForm.uname = data.row.uname;
-            this.accountForm.uid = data.row.uid;
-            this.accountForm.password = data.row.password;
+            this.showEditUser(data.row);
           },
 
           // 删除账号
@@ -156,7 +153,21 @@
         this.getTableData();
       },
 
-      showModal() {
+      /**
+       * 编辑账号
+       */
+      showEditUser(row) {
+        this.accountForm.type = 'edit';
+        this.dialogTitle = "编辑账户";
+        this.accountForm.uname = row.uname;
+        this.accountForm.uid = row.uid;
+        this.accountForm.password = row.password;
+        this.accountFormVisible = true;
+      },
+
+      /**新建账号 */
+      showNewUser() {
+        this.accountForm.type = 'new';
         this.dialogTitle = "新建账户";
         this.resetNewForm();
         this.$nextTick(() => {
@@ -165,6 +176,10 @@
           }
         });
         this.accountFormVisible = true;
+      },
+
+      showModal() {
+        
       },
 
       /**
@@ -182,9 +197,10 @@
       },
 
       /**
-       * 新建用户
+       * 新建或修改用户
        */
       insertUser() {
+        // if(this)
         this.$refs.accountForm.validate(validate => {
           if (validate) {
             this.$axios.post("/insertUser", this.accountForm).then(res => {

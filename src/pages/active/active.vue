@@ -89,17 +89,6 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item label="上课时间段" required>
-              <!--<el-time-picker-->
-              <!--is-range-->
-              <!--size="small"-->
-              <!--v-model="activeForm.time"-->
-              <!--:picker-options=" pickerOptions"-->
-              <!--range-separator="~"-->
-              <!--format="HH时mm分"-->
-              <!--start-placeholder="开始时间"-->
-              <!--end-placeholder="结束时间"-->
-              <!--placeholder="选择时间范围">-->
-              <!--</el-time-picker>-->
               <el-col :span="11">
                 <el-form-item prop="startTime">
                   <el-time-select placeholder="开始时间" v-model="activeForm.startTime" :picker-options="{
@@ -200,7 +189,7 @@
           teacher: '',
           date: '',
           startTime: '',
-          endTiem: '',
+          endTime: '',
           cname: '',
           snumber: 0,
           period_need: 0,
@@ -306,6 +295,7 @@
           }
         }
       },
+
       // 批量删除
       selectChange(val) {
         console.log('deleteId', val);
@@ -320,6 +310,7 @@
         }
         console.log(this.deleteStr);
       },
+
       deleteAll() {
         if (!this.deleteStr) {
           this.$message.info('请至少选择一项');
@@ -334,15 +325,18 @@
             });
         }
       },
+
       // 表格分页
       pageChange(val) {
         this.pageJSON = val;
         this.getActiveData(0);
       },
+
       donePageChange(val) {
         this.donePageJSON = val;
         this.getActiveData(1);
       },
+
       // 初始化未开始活动表格
       initWatingTable() {
         this.watingOption = {
@@ -406,7 +400,8 @@
                 room: row.room,
                 teacher: row.tid + ',' + row.tname,
                 date: row.cdate,
-                time: ['2019 01-01 ' + row.begintime, '2019 01-01 ' + row.endtime],
+                startTime: row.begintime,
+                endTime: row.endtime,
                 cname: row.cname,
                 snumber: row.allarrive,
                 period_need: row.period_need,
@@ -433,6 +428,7 @@
         this.watingTableData = [];
         this.getActiveData();
       },
+
       initDoneTable() {
         this.doneOption = {
           isMutiple: true,
@@ -490,6 +486,7 @@
         this.doneTableData = [];
         this.getActiveData(1);
       },
+
       // 新建活动课程
       newActiveCourse() {
         this.dialog.title = '新建活动课程';
@@ -511,7 +508,7 @@
         this.activeForm.teacher = ''; 
         this.activeForm.date = ''; 
         this.activeForm.startTime = ''; 
-        this.activeForm.endTiem = ''; 
+        this.activeForm.endTime = ''; 
         this.activeForm.cname = ''; 
         this.activeForm.snumber = ''; 
         this.activeForm.period_need = ''; 

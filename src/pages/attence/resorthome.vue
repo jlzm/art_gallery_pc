@@ -27,7 +27,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-          {{addForm.fitPeople}}
           <el-form-item label="适用人员" prop="fitPeople">
             <el-select v-model="addForm.fitPeople" placeholder="请选择适用人员" size="small" multiple filterable>
               <el-option

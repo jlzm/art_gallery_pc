@@ -68,6 +68,12 @@
             </div>
           </div>
         </div>
+        <div class="activity-img-wrap">
+          <span class="dib vat">活动图片：</span>
+          <div class="dib vat activity-img">
+            <img :src="detail.cpicture" alt="">
+          </div>
+        </div>
       </div>
     </div>
     <div class="ctn">
@@ -172,6 +178,7 @@
           crid: this.crid
         })
           .then((res) => {
+            console.log('res', res);
             this.detail = res.data.course;
             this.tableData = res.data.evaluation;
           });
@@ -234,5 +241,10 @@
 
   .ctn-table {
     margin: 0 0 20px 0;
+  }
+
+  .activity-img {
+    width: 300px;
+    height: 250px;
   }
 </style>
