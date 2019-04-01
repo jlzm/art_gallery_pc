@@ -1,7 +1,7 @@
 <template>
   <div class="resorthome">
     <div class="search">
-      <el-button type="primary" icon="el-icon-plus" size="small" @click="addNewResort">新增排班分组</el-button>
+      <el-button type="primary" icon="el-icon-plus" size="small" @click="addNewResort()">新增排班分组</el-button>
     </div>
     <div class="tables">
       <tables
@@ -38,7 +38,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-          {{addForm.circle}}
           <el-form-item label="工作周期" prop="circle">
             <el-date-picker
               v-model="addForm.circle"
@@ -66,7 +65,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="confirm">确 定</el-button>
+            <el-button type="primary" @click="confirm()">确 定</el-button>
           </span>
       </el-dialog>
     </div>
@@ -189,7 +188,7 @@
               label: '排班人员'
             },
             {
-              prop: 'suitable',
+              prop: 'unames',
               label: '适用人员',
               tooltip: true
             }
@@ -212,12 +211,13 @@
        * 填充修改属性
        */
       fillFormData(row) {
+        this.addForm.fitPeople = [];
         console.log(row.unames);
         console.log('this.addForm.fitPeople', this.addForm.fitPeople);
         this.addForm.className = row.wname;
         this.addForm.fitPeople.push(row.unames);
-        this.addForm.circle = row.ondate;
-        this.addForm.rest = row.restdate;
+        this.addForm.circle = [`${row.ondate}`, `${row.offdate}`];
+        this.addForm.rest = row.restdate.split(',');
       },
 
       deleteAttendance(id) {
@@ -241,10 +241,21 @@
         // })
         this.dialogFormVisible = true;
         this.dialogTitle = '新增排班';
-        // if (this.$refs.addForm) {
-        //     this.$refs.addForm.resetFields();
-        //   }
+        if (this.$refs.addForm) {
+            this.$refs.addForm.resetFields();
+          }
+        this.resetNewForm();
       },
+      /**
+       * 重置新建数据
+       */
+      resetNewForm() {
+        this.addForm.className = '';
+        this.addForm.fitPeople = []
+        this.addForm.circle = '';
+        this.addForm.rest = [];
+      },
+
       // 分页
       // 表格分页
       pageChange(val) {
@@ -260,6 +271,7 @@
           });
         }
       },
+
       // 弹窗确认
       confirm() {
         // this.dialogFormVisible = false
@@ -274,10 +286,12 @@
               uids: this.addForm.fitPeople.join(','),
               restdate: this.addForm.rest.join(',')
             };
+            console.log('json', json);
             this.dialogFormVisible = false;
             if (this.editType === 'new') {
               this.$axios.post('/insertWorkArrange', json)
                 .then(res => {
+                  console.log('res', res);
                   if (res && res.data && parseInt(res.data.code) === 1) {
                     this.$message.success('新增成功');
                     this.getData();
