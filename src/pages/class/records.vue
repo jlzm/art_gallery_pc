@@ -49,7 +49,7 @@
       </el-form>
       <el-form :inline="true">
         <el-form-item class="oprator">
-          <el-button type="primary" icon="el-icon-delete" size="small" plain @click="deleteAll">批量删除</el-button>
+          <el-button type="danger" icon="el-icon-delete" size="small" plain @click="deleteAll">批量删除</el-button>
         </el-form-item>
       </el-form>
     </div>

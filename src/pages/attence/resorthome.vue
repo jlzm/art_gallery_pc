@@ -27,6 +27,7 @@
               </el-option>
             </el-select>
           </el-form-item>
+          {{addForm.fitPeople}}
           <el-form-item label="适用人员" prop="fitPeople">
             <el-select v-model="addForm.fitPeople" placeholder="请选择适用人员" size="small" multiple filterable>
               <el-option
@@ -211,11 +212,10 @@
        * 填充修改属性
        */
       fillFormData(row) {
-        this.addForm.fitPeople = [];
         console.log(row.unames);
         console.log('this.addForm.fitPeople', this.addForm.fitPeople);
         this.addForm.className = row.wname;
-        this.addForm.fitPeople.push(row.unames);
+        this.addForm.fitPeople = row.uids.split(',');
         this.addForm.circle = [`${row.ondate}`, `${row.offdate}`];
         this.addForm.rest = row.restdate.split(',');
       },
@@ -235,10 +235,12 @@
                   }
                 });
       },
+
       addNewResort() {
         // this.$router.push({
         //   name: 'addNewResort'
         // })
+        this.editType = 'new';
         this.dialogFormVisible = true;
         this.dialogTitle = '新增排班';
         if (this.$refs.addForm) {
@@ -246,6 +248,7 @@
           }
         this.resetNewForm();
       },
+
       /**
        * 重置新建数据
        */
@@ -262,6 +265,7 @@
         this.pageJSON = val;
         this.getData();
       },
+      
       // 批量删除
       selectChange(val) {
         this.deleteStr = '';
@@ -272,7 +276,7 @@
         }
       },
 
-      // 弹窗确认
+      /** 新建考勤排班 */
       confirm() {
         // this.dialogFormVisible = false
         this.$refs.addForm.validate((validate) => {

@@ -113,8 +113,8 @@
       initTable() {
         this.tableOption = {
           showIndex: true,
-          showOpr: true,
-          showEditBtn: true,
+          showOpr: false,
+          showEditBtn: false,
           column: [
             {
               prop: 'teacherName',
@@ -145,9 +145,9 @@
               label: '考勤状态'
             }
           ],
-          editDetail: (scope) => {
-            console.log(scope);
-          }
+          // editDetail: (scope) => {
+          //   console.log(scope);
+          // }
         };
         this.tableData = [{
           teacherName: '王小虎',
