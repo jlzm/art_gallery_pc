@@ -49,7 +49,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" size="small">查询</el-button>
-          <el-button type="primary" icon="el-icon-delete" size="small" plain>重置</el-button>
+          <el-button class="reset-btn" type="warning" icon="el-icon-delete" size="small">重置</el-button>
         </el-form-item>
       </el-form>
     </div>

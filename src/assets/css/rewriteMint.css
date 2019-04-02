@@ -62,3 +62,15 @@ button.sys-corlor-plain {
 .dialog .el-form-item__content > .el-input-number {
   width: 50%;
 }
+
+.search button.delete-btn {
+  background: #F56C6C;
+  color: #fff;
+  border-color: #F56C6C;
+}
+
+.search button.reset-btn {
+  background: #e6a23c;
+  color: #fff;
+  border-color: #e6a23c;
+}

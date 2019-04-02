@@ -52,7 +52,7 @@
           <el-form-item class="oprator">
             <el-button type="primary" icon="el-icon-plus" size="small" @click="newItem">新建</el-button>
             <!--<el-button type="primary" icon="el-icon-document" size="small">导入</el-button>-->
-            <el-button type="danger" icon="el-icon-delete" size="small" plain @click="deleteAll()">批量删除</el-button>
+            <el-button class="delete-btn" type="danger" icon="el-icon-delete" size="small" @click="deleteAll()">批量删除</el-button>
           </el-form-item>
         </el-form>
       </div>

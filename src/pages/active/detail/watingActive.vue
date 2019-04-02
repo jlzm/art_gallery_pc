@@ -53,10 +53,18 @@
         <div class="info-ctn">
           <div class="info">
             <div class="inline-label">
-              报名人数:
+              已报人数:
             </div>
             <div>
               <span>{{detail.allarrive}}人</span>
+            </div>
+          </div>
+          <div class="info">
+            <div class="inline-label">
+              报名人数:
+            </div>
+            <div>
+              <span>{{detail.maxnum}}人</span>
             </div>
           </div>
           <div class="info">
@@ -178,7 +186,7 @@
           crid: this.crid
         })
           .then((res) => {
-            console.log('res', res);
+            console.log('res', res.data);
             this.detail = res.data.course;
             this.tableData = res.data.evaluation;
           });

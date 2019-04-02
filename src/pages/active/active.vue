@@ -29,7 +29,7 @@
               <el-form-item class="oprator">
                 <el-button type="primary" icon="el-icon-plus" size="small" @click="newActiveCourse()">新建</el-button>
                 <!--<el-button type="primary" icon="el-icon-document" size="small">导入</el-button>-->
-                <el-button type="danger" icon="el-icon-delete" size="small" plain @click="deleteAll()">批量删除</el-button>
+                <el-button class="delete-btn" type="danger" icon="el-icon-delete" size="small" @click="deleteAll()">批量删除</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -51,7 +51,7 @@
             </el-form>
             <el-form :inline="true">
               <el-form-item class="oprator">
-                <el-button type="primary" icon="el-icon-delete" size="small" plain @click="deleteAll()">批量删除</el-button>
+                <el-button class="delete-btn" type="primary" icon="el-icon-delete" size="small" @click="deleteAll()">批量删除</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -123,7 +123,6 @@
 
               </el-input-number>
             </el-form-item>
-            {{activeForm.maxnum}}
             <el-form-item label="报名人数" prop="maxnum">
               <el-input-number v-model="activeForm.maxnum" size="small" :min="0">
 
@@ -385,8 +384,8 @@
               }
             },
             {
-              prop: 'maxnum',
-              label: '报名人数'
+              prop: 'allarrive',
+              label: '已报人数'
             }
           ],
           showDetail: (scope) => {
@@ -476,8 +475,8 @@
               }
             },
             {
-              prop: 'maxnum',
-              label: '报名人数'
+              prop: 'allarrive',
+              label: '已报人数'
             }
           ],
           showDetail: (scope) => {
@@ -670,6 +669,7 @@
           }
           this.$axios.post('/getCourseByPage', json)
             .then((res) => {
+              console.log('res.data', res.data);
               if (res.data && res.data.total > 0) {
                 this.watingTableData = res.data.rows;
                 this.total = res.data.total;

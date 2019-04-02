@@ -59,10 +59,10 @@
               size="small"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="地点范围" prop="range">
+          <!-- <el-form-item label="地点范围" prop="range">
             <el-input-number v-model="addClassForm.range" size="small" :min="0" :step="10"></el-input-number>
             <span class="tip">(米)</span>
-          </el-form-item>
+          </el-form-item> -->
           <!-- <el-form-item label="打卡地点" prop="locationName">
             <el-input v-model="addClassForm.locationName" size="small" disabled></el-input>
             <el-button
@@ -273,20 +273,20 @@
               message: "请选择启用时间"
             }
           ],
-          locationName: [
-            {
-              required: true,
-              trigger: "blur",
-              message: "请选择打卡地点"
-            }
-          ],
-          range: [
-            {
-              required: true,
-              trigger: "blur",
-              message: "地点范围必填"
-            }
-          ]
+          // locationName: [
+          //   {
+          //     required: true,
+          //     trigger: "blur",
+          //     message: "请选择打卡地点"
+          //   }
+          // ],
+          // range: [
+          //   {
+          //     required: true,
+          //     trigger: "blur",
+          //     message: "地点范围必填"
+          //   }
+          // ]
         }
       };
     },
@@ -433,19 +433,19 @@
               prop: "start",
               label: "启用时间"
             },
-            {
-              prop: "sign_place",
-              label: "打卡地点",
-              tooltip: true,
-              width: 350
-            },
-            {
-              prop: "ranges",
-              label: "地点范围",
-              formatter(row, column, cellValue, index) {
-                return cellValue + "米";
-              }
-            }
+            // {
+            //   prop: "sign_place",
+            //   label: "打卡地点",
+            //   tooltip: true,
+            //   width: 350
+            // },
+            // {
+            //   prop: "ranges",
+            //   label: "地点范围",
+            //   formatter(row, column, cellValue, index) {
+            //     return cellValue + "米";
+            //   }
+            // }
           ],
           editDetail: scope => {
             this.editDetail(scope);
