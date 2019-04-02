@@ -1,8 +1,8 @@
 <template>
   <div class="attence-record">
     <div class="search">
-      <el-form :inline="true" :model="recordForm" class="form-inline" ref="">
-        <el-form-item label="选择日期">
+      <el-form :inline="true" :model="recordForm" class="form-inline" ref="searchForm">
+        <el-form-item prop="date" label="选择日期">
           <el-date-picker
             v-model="recordForm.date"
             type="daterange"
@@ -14,10 +14,10 @@
             size="small">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="老师姓名">
+        <el-form-item prop="teacherName" label="老师姓名">
           <el-input v-model="recordForm.teacherName" placeholder="输入老师姓名" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="班次">
+        <el-form-item prop="classes" label="班次">
           <el-select v-model="recordForm.classes" placeholder="请选择" size="small">
             <el-option
               v-for="item in recordForm.classesOptions"
@@ -27,7 +27,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="签到类型">
+        <el-form-item prop="signType" label="签到类型">
           <el-select v-model="recordForm.signType" placeholder="请选择" size="small">
             <el-option
               v-for="item in recordForm.signOptions"
@@ -37,7 +37,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="考勤状态">
+        <el-form-item prop="signState" label="考勤状态">
           <el-select v-model="recordForm.signState" placeholder="请选择" size="small">
             <el-option
               v-for="item in recordForm.stateOptions"
@@ -48,8 +48,8 @@
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="small">查询</el-button>
-          <el-button class="reset-btn" type="warning" icon="el-icon-delete" size="small">重置</el-button>
+          <el-button @click="search()" type="primary" icon="el-icon-search" size="small">查询</el-button>
+          <el-button @click="resetSearchForm()" class="reset-btn" type="warning" icon="el-icon-delete" size="small">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -110,6 +110,16 @@
       };
     },
     methods: {
+      /**重置搜索表单 */
+      resetSearchForm() {
+          this.$refs.searchForm.resetFields();
+      },
+
+      /**搜索 */
+      search() {
+        
+      },
+
       initTable() {
         this.tableOption = {
           showIndex: true,

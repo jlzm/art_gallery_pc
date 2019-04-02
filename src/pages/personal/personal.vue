@@ -35,7 +35,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="small" @click="getStudentData">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" size="small" @click="getStudentData()">查询</el-button>
           </el-form-item>
         </el-form>
 
@@ -45,7 +45,7 @@
             <el-input v-model="teacherForm.teacherName" placeholder="请输入" size="small" clearable></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="small" @click="getTeacherData">查询</el-button>
+            <el-button type="primary" icon="el-icon-search" size="small" @click="getTeacherData()">查询</el-button>
           </el-form-item>
         </el-form>
         <el-form :inline="true">
@@ -654,7 +654,8 @@
           page: this.pageJSON.currentPage,
           rows: this.pageJSON.pageSize,
           sname: this.studentForm.studentName,
-          clasz: this.studentForm.classes
+          clasz: this.studentForm.classes,
+          sex: this.studentForm.sex
         })
           .then((res) => {
             this.loading = false;
