@@ -123,8 +123,9 @@
 
               </el-input-number>
             </el-form-item>
-            <el-form-item label="报名人数" prop="snumber">
-              <el-input-number v-model="activeForm.snumber" size="small" :min="0">
+            {{activeForm.maxnum}}
+            <el-form-item label="报名人数" prop="maxnum">
+              <el-input-number v-model="activeForm.maxnum" size="small" :min="0">
 
               </el-input-number>
             </el-form-item>
@@ -191,10 +192,10 @@
           startTime: '',
           endTime: '',
           cname: '',
-          snumber: 0,
+          maxnum: 0,
           period_need: 0,
           preview: '',
-          crid: ''
+          crid: '',
         },
         // 批量删除数据
         deleteStr: '',
@@ -238,7 +239,7 @@
             required: true,
             trigger: 'blur'
           }],
-          snumber: [{
+          maxnum: [{
             message: '所需课时必填',
             required: true,
             trigger: 'blur'
@@ -384,7 +385,7 @@
               }
             },
             {
-              prop: 'allarrive',
+              prop: 'maxnum',
               label: '报名人数'
             }
           ],
@@ -396,6 +397,7 @@
 
           editDetail: (scope) => {
             let row = scope.row;
+            console.log(row);
             this.activeForm = {
                 room: row.room,
                 teacher: row.tid + ',' + row.tname,
@@ -403,10 +405,11 @@
                 startTime: row.begintime,
                 endTime: row.endtime,
                 cname: row.cname,
-                snumber: row.allarrive,
+                maxnum: row.maxnum,
                 period_need: row.period_need,
                 preview: row.cdesc,
-                crid: row.crid
+                crid: row.crid,
+                previewImgUrl: row.cpicture
               },
               this.eidtActiveCourse();
           },
@@ -473,7 +476,7 @@
               }
             },
             {
-              prop: 'allarrive',
+              prop: 'maxnum',
               label: '报名人数'
             }
           ],
@@ -510,7 +513,7 @@
         this.activeForm.startTime = ''; 
         this.activeForm.endTime = ''; 
         this.activeForm.cname = ''; 
-        this.activeForm.snumber = ''; 
+        this.activeForm.maxnum = ''; 
         this.activeForm.period_need = ''; 
         this.activeForm.preview = ''; 
         this.activeForm.crid = ''; 
@@ -522,6 +525,7 @@
         this.dialog.title = '编辑活动课程';
         this.dialog.type = 'edit';
       },
+
       /** dialogs */
       cancelDialog() {
         this.$refs.activeForm.resetFields();
@@ -548,11 +552,11 @@
               tid: this.activeForm.teacher.split(',')[0],
               tname: this.activeForm.teacher.split(',')[1],
               period_need: this.activeForm.period_need,
-              snumber: this.activeForm.snumber,
-              maxnum: this.activeForm.cname,
+              maxnum: this.activeForm.maxnum,
               ctype: 2,
               status: 0
             };
+            console.log('json', json);
             if (this.dialog.type === 'new') {
               this.insertActive(json);
             } else {
@@ -571,7 +575,7 @@
             date: '',
             time: '',
             cname: '',
-            snumber: 0,
+            maxnum: 0,
             period_need: 0,
             preview: '',
             crid: ''
@@ -626,6 +630,7 @@
             }
           });
       },
+
       updateActive(json) {
         this.dialog.visible = false;
         json.crid = this.activeForm.crid;

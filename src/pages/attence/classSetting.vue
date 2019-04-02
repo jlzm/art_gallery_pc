@@ -63,7 +63,7 @@
             <el-input-number v-model="addClassForm.range" size="small" :min="0" :step="10"></el-input-number>
             <span class="tip">(米)</span>
           </el-form-item>
-          <el-form-item label="打卡地点" prop="locationName">
+          <!-- <el-form-item label="打卡地点" prop="locationName">
             <el-input v-model="addClassForm.locationName" size="small" disabled></el-input>
             <el-button
               type="primary"
@@ -72,7 +72,7 @@
               @click="selectLocation"
             >选择打卡地点
             </el-button>
-          </el-form-item>
+          </el-form-item> -->
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="hideForm">取 消</el-button>
@@ -318,6 +318,7 @@
       selectLocation() {
         this.innerVisible = true;
       },
+
       /** dialog */
       // 显示新增弹窗
       addNewSetting() {
@@ -327,10 +328,11 @@
         this.addClassForm.wakeTime = '';
         this.addClassForm.range = 0;
         this.addClassForm.locationName = '';
-        this.dialogFormVisible = true;
         this.dialogTitle = "新增班次";
         this.editType = "new";
+        this.dialogFormVisible = true;
       },
+      
       // 修改弹窗
       editDetail(scope) {
         this.dialogFormVisible = true;
@@ -349,18 +351,21 @@
         };
         Object.assign(this.addClassForm, json);
       },
+
       // 确认提交修改
       confirm() {
         this.$refs.addClassForm.validate(validate => {
           if (validate) {
-            let point = JSON.parse(this.addClassForm.point);
+            // let point = JSON.parse(this.addCClassForm.point);
             let json = {
               wname: this.addClassForm.className,
               ontime: this.addClassForm.dutyTime,
               offtime: this.addClassForm.offDutyTime,
               start: this.addClassForm.wakeTime,
-              sign_place: point.title,
-              lnglat: point.point.lng + "," + point.point.lat,
+              // sign_place: point.title,
+              // lnglat: point.point.lng + "," + point.point.lat,
+              sign_place: '',
+              lnglat: '',
               range: this.addClassForm.range
             };
             if (this.editType === "new") {

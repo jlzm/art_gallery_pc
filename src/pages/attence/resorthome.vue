@@ -124,6 +124,7 @@
         editType: 'new',
         showRestTips: true,
         addForm: {
+          waid: '',
           className: '',
           classNameOptions: [],
           fitPeople: [],
@@ -195,10 +196,8 @@
           ],
           editDetail: (item) => {
             console.log(item);
-            this.editType = 'edit';
-            this.dialogTitle = '修改排班';
-            this.fillFormData(item.row);
-            this.dialogFormVisible = true;
+            this.showEditDialog(item.row);
+            
           },
           delete: (scope) => {
               const id = scope.row.waid;
@@ -208,12 +207,22 @@
       },
 
       /**
+       * 打开修改界面
+       */
+      showEditDialog(row) {
+        this.editType = 'edit';
+        this.dialogTitle = '修改排班'
+        this.fillFormData(row);
+        this.dialogFormVisible = true;
+      },
+
+      /**
        * 填充修改属性
        */
       fillFormData(row) {
-        console.log(row.unames);
-        console.log('this.addForm.fitPeople', this.addForm.fitPeople);
-        this.addForm.className = row.wname;
+        console.log(row);
+        this.addForm.waid = row.waid;
+        this.addForm.className = row.wid;
         this.addForm.fitPeople = row.uids.split(',');
         this.addForm.circle = [`${row.ondate}`, `${row.offdate}`];
         this.addForm.rest = row.restdate.split(',');
@@ -281,6 +290,7 @@
         this.$refs.addForm.validate((validate) => {
           if (validate) {
             let json = {
+              waid: this.addForm.waid,
               wid: this.addForm.className,
               ondate: this.addForm.circle[0],
               offdate: this.addForm.circle[1],
@@ -294,7 +304,7 @@
             if (this.editType === 'new') {
               this.$axios.post('/insertWorkArrange', json)
                 .then(res => {
-                  console.log('res', res);
+                  console.log('res1', res);
                   if (res && res.data && parseInt(res.data.code) === 1) {
                     this.$message.success('新增成功');
                     this.getData();
@@ -302,6 +312,20 @@
                     this.$message.error(res.data.msg);
                   }
                 });
+            } else {
+              this.$axios.post('/updateWorkArrange', json).then(res => {
+                console.log('res2', res);
+                switch (res.data.code) {
+                  case 1:
+                    this.$message.success('成功修改');
+                    this.getData();
+                    break;
+                
+                  default:
+                    this.$message.error(res.data.msg);
+                    break;
+                }
+              })
             }
           }
         });
