@@ -159,8 +159,8 @@ export default {
         },
 
         // 删除账号
-        delete() {
-          console.log(1);
+        delete: data => {
+          this.deleteUser(data.row);
         }
       };
       this.getTableData();
@@ -213,10 +213,32 @@ export default {
     },
 
     /**
+     * 删除账号
+     */
+    deleteUser(row) {
+      console.log(row);
+      let propsData = {
+        uid: row.uid
+      };
+      this.$axios.post("/deleteUser", propsData).then(res => {
+        console.log("res", res);
+        switch (res.data.code) {
+          case 1:
+            this.$message.success("成功删除账号");
+            this.getTableData();
+            break;
+
+          default:
+            this.$message.error(res.data.msg);
+            break;
+        }
+      });
+    },
+
+    /**
      * 新建或修改账号
      */
     insertUser() {
-
       let propsData = {
         uid: this.accountForm.uid,
         uname: this.accountForm.uid,
