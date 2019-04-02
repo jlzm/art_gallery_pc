@@ -44,12 +44,12 @@
               :value-consists-of="'LEAF_PRIORITY'"
               size="small"/>
           </el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="small" @click="queryByJson">查询</el-button>
+          <el-button type="primary" icon="el-icon-search" size="small" @click="searchData()">查询</el-button>
         </el-form-item>
       </el-form>
       <el-form :inline="true">
         <el-form-item class="oprator">
-          <el-button class="delete-btn" type="danger" icon="el-icon-delete" size="small" @click="deleteAll">批量删除</el-button>
+          <el-button class="delete-btn" type="danger" icon="el-icon-delete" size="small" @click="deleteAll()">批量删除</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -187,6 +187,7 @@
         this.pageJSON = val;
         this.getData();
       },
+
       // 批量删除
       selectChange(val) {
         this.deleteStr = '';
@@ -215,7 +216,9 @@
             });
         }
       },
-      queryByJson() {
+
+      /**搜索 */
+      searchData() {
         let json = {
           page: 1,
           rows: 10,
@@ -253,6 +256,8 @@
             }
           });
       },
+
+      
       deleteActive(id) { // 删除
         this.$axios.post('/deleteCourseRecord', {
           crid: id

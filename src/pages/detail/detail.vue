@@ -216,7 +216,7 @@
             :tableData="tableData"
             :backData='tableData'
             @pageChange="pageChange"
-            :total="total"
+            :total="pageJSON.total"
             pageType='back'></tables>
         </div>
       </div>
@@ -225,14 +225,14 @@
       <div class="edit" v-if="!isEditing">
         <el-form :inline="true">
           <el-form-item class="oprator">
-            <el-button type="primary" icon="el-icon-edit" size="small" class="sys-corlor" @click="edit">修改</el-button>
+            <el-button type="primary" icon="el-icon-edit" size="small" class="sys-corlor" @click="edit()">修改</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="save" v-else>
         <el-form :inline="true">
           <el-form-item class="oprator">
-            <el-button type="primary" icon="el-icon-document" size="small" class="sys-corlor" @click="save">保存
+            <el-button type="primary" icon="el-icon-document" size="small" class="sys-corlor" @click="save()">保存
             </el-button>
             <!-- <el-button type="primary" icon="el-icon-edit"  size="small" class="sys-corlor-plain" @click="cancel">取消</el-button> -->
           </el-form-item>
@@ -343,11 +343,13 @@
         };
         this.getCourseRecordBystu();
       },
+
       // 表格分页
       pageChange(val) {
         this.pageJSON = val;
         this.getCourseRecordBystu();
       },
+
       // 修改与保存
       edit() {
         this.isEditing = true;
@@ -355,16 +357,19 @@
         // 保存一次副本
         this.copy = JSON.parse(JSON.stringify(this.detail));
       },
+
       save() {
         this.isEditing = false;
         this.editable = false;
         this.updateStudent();
       },
+
       cancel() {
         this.isEditing = false;
         this.editable = false;
         this.detail = JSON.parse(JSON.stringify(this.copy));
       },
+
       /** API */
       // 查看学生详情
       getStudentDetail() {
@@ -375,15 +380,25 @@
             }
           });
       },
+
       // 更新学生信息
       updateStudent() {
         this.$axios.post('/updateStudent', this.detail)
           .then((res) => {
-            if (res && res.data) {
-              console.log(res);
+            console.log('res', res.data);
+            switch (res.data.code) {
+              case 1:
+                this.$message.success(res.data.msg);
+                break;
+            
+              default:
+              this.$message.error(res.data.msg);
+                break;
             }
+            this.getStudentDetail();
           });
       },
+
       // 获取班级信息
       getClass() {
         this.$axios.post('/getClass')
@@ -394,6 +409,7 @@
             }
           });
       },
+
       // 根据学生id查上课记录
       getCourseRecordBystu() {
         this.tableData = [];
@@ -403,6 +419,7 @@
           rows: this.pageJSON.pageSize
         })
           .then(res => {
+            console.log('res', res.data);
             if (res.data && res.data.total > 0) {
               this.tableData = res.data.rows;
               this.pageJSON = {
