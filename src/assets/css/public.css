@@ -23,3 +23,7 @@ img {
 .vab {
   vertical-align: bottom;
 }
+
+.hv-cp {
+  cursor: pointer;
+}
