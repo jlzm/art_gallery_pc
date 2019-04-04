@@ -64,7 +64,7 @@
       </div>
     </div>
     <div class="dialogs">
-      <div class="activeDialog">
+      <div v-if="dialog.visible" class="activeDialog">
         <el-dialog :title="dialog.title" :visible.sync="dialog.visible" top="4vh" :close-on-click-modal="false" width="500px">
           <el-form :model="activeForm" class="form-inline" ref="activeForm" :label-position="'left'" label-width="95px"
             :rules="rule">

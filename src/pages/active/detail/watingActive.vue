@@ -252,7 +252,7 @@
   }
 
   .activity-img {
-    width: 300px;
-    height: 250px;
+    width: 200px;
+    height: 150px;
   }
 </style>

@@ -49,7 +49,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="dialog">
+    <div v-if="dialog.assignFormVisible" class="dialog">
       <el-dialog :title="dialog.dialogTitle" :visible.sync="dialog.assignFormVisible" :close-on-click-modal="false"
         width="500px">
         <el-form :model="assignForm" class="form-inline" ref="assignForm" :label-position="'left'" label-width="95px"
@@ -387,17 +387,38 @@
       eidtOrAdd(data, type) {
         this.dialog.assignFormVisible = true;
         // 新增
-        if (type === 1) {
+        if (type == 1) {
           this.dialog.dialogTitle = '新建排课';
           this.dialog.type = 'new';
           if (this.$refs.assignForm) {
+            console.log(1);
             this.$refs.assignForm.resetFields();
           }
+            this.resetNewForm();
         } else { // 修改
           this.dialog.dialogTitle = '编辑排课';
           this.dialog.type = 'edit';
         }
       },
+
+      /**
+       * 重置新增数据表单
+       */
+      resetNewForm() {
+        this.assignForm.startTime = '';
+        this.assignForm.endTime = '';
+        this.assignForm.room = '';
+        this.assignForm.cname = '';
+        this.assignForm.week = '';
+        this.assignForm.date = '';
+        this.assignForm.times = '';
+        this.assignForm.teacher = '';
+        this.assignForm.classNumber = '';
+        this.assignForm.preview = '';
+        this.assignForm.treeValue = '';
+      },
+      
+
       // 编辑单个教室
       editClass(row) {
         this.assignForm.treeValue = row.sid.split(',').filter((item) => {
