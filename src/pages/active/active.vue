@@ -65,7 +65,7 @@
     </div>
     <div class="dialogs">
       <div class="activeDialog">
-        <el-dialog :title="dialog.title" :visible.sync="dialog.visible" :close-on-click-modal="false" width="500px">
+        <el-dialog :title="dialog.title" :visible.sync="dialog.visible" top="4vh" :close-on-click-modal="false" width="500px">
           <el-form :model="activeForm" class="form-inline" ref="activeForm" :label-position="'left'" label-width="95px"
             :rules="rule">
             <el-form-item label="课程名称" prop="cname">
@@ -129,7 +129,7 @@
               </el-input-number>
             </el-form-item>
             <el-form-item label="课程预热" prop="preview">
-              <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="activeForm.preview">
+              <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="activeForm.preview">
               </el-input>
             </el-form-item>
             <el-form-item label='活动图片' prop='cpicture'>
@@ -756,15 +756,15 @@
   .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
     text-align: center;
   }
 
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 120px;
+    height: 120px;
     display: block;
   }
 
