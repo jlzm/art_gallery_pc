@@ -122,7 +122,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="resetForm">取 消</el-button>
-          <el-button type="primary" @click="submit">确 定</el-button>
+          <el-button type="primary" @click="submit()">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -611,7 +611,7 @@
       },
       // 新增上课排班
       insertCourseRecord(json) {
-        this.dialog.assignFormVisible = false;
+        
         this.$axios.post('/insertCourseRecord', json)
           .then((res) => {
             if (res && parseInt(res.data.code) === 1) {
@@ -620,6 +620,7 @@
                 type: 'success'
               });
               this.getCourseRecordByWeek(this.form.week);
+              this.dialog.assignFormVisible = false;
             } else {
               this.$message.error(res.data.msg);
             }
@@ -628,7 +629,6 @@
       // 修改
       updateCourseRecord(json) {
         if (this.dialog.assignFormVisible) {
-          this.dialog.assignFormVisible = false;
           this.$axios.post('/updateCourseRecord', json)
             .then((res) => {
               if (res && parseInt(res.data.code) === 1) {
@@ -638,6 +638,7 @@
                 });
                 this.getCourseRecordByWeek(this.form.week);
                 this.resetForm();
+                this.dialog.assignFormVisible = false;
               } else {
                 this.$message.error(res.data.msg);
               }

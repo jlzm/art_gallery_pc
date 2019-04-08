@@ -28,7 +28,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="classSettingFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="confirm">确 定</el-button>
+          <el-button type="primary" @click="confirm()">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -146,7 +146,6 @@
       insertClass() {
         this.$refs.classSettingForm.validate(validate => {
           if (validate) {
-            this.classSettingFormVisible = false;
             this.$axios
               .post("/insertClass", {
                 clname: this.classSettingForm.clname
@@ -158,11 +157,12 @@
                     type: "success"
                   });
                   this.classSettingFormVisible = false;
+                  this.getTableData();
                 } else {
                   this.$message.error(res.data.msg);
                 }
                 this.$refs.classSettingForm.resetFields();
-                this.getTableData();
+                
               });
           }
         });

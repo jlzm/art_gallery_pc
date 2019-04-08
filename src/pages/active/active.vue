@@ -614,7 +614,7 @@
       },
       // 添加课程
       insertActive(data) {
-        this.dialog.visible = false;
+        
         this.$axios.post('/insertCourseRecord', data)
           .then((res) => {
             if (res && parseInt(res.data.code) === 1) {
@@ -624,6 +624,7 @@
               });
               this.pageJSON.page = 1;
               this.getActiveData();
+              this.dialog.visible = false;
             } else {
               this.$message.error(res.data.msg);
             }
@@ -631,7 +632,6 @@
       },
 
       updateActive(json) {
-        this.dialog.visible = false;
         json.crid = this.activeForm.crid;
         this.$axios.post('/updateCourseRecord', json)
           .then((res) => {
@@ -642,6 +642,8 @@
               });
               this.getActiveData();
               this.resetForm();
+              this.dialog.visible = false;
+
             } else {
               this.$message.error(res.data.msg);
             }

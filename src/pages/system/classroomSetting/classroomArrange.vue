@@ -130,7 +130,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="cancelDialog">取 消</el-button>
-          <el-button type="primary" @click="submit">确 定</el-button>
+          <el-button type="primary" @click="submit()">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -436,13 +436,14 @@ export default {
           msg: "修改教室安排成功"
         }
       };
-      this.arrangeFormVisible = false;
+      
       this.$axios.post("/" + map[this.type].url, json).then(res => {
         if (res && parseInt(res.data.code) === 1) {
           this.$message({
             message: map[this.type].msg,
             type: "success"
           });
+          this.arrangeFormVisible = false;
           this.getClassRoomList();
         } else {
           this.$message.error(res.data.msg);
