@@ -739,7 +739,6 @@ export default {
       };
 
       this.$axios.post("/insertOneStudent", json).then(res => {
-        this.$refs.newStudentForm.resetFields();
         if (res && res.data) {
           if (parseInt(res.data.code) === 1) {
             this.$message({
