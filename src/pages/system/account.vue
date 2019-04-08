@@ -245,11 +245,12 @@ export default {
         password: this.accountForm.password
       };
 
+      console.log('propsData', propsData);
       this.$refs.accountForm.validate(validate => {
         if (validate) {
           switch (this.accountForm.type) {
             case "new":
-              this.$axios.post("/insertUser", this.propsData).then(res => {
+              this.$axios.post("/insertUser", propsData).then(res => {
                 if (res && res.data && parseInt(res.data.code) === 1) {
                   this.$message.success("新增用户成功");
                   this.getTableData();
