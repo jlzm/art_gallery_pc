@@ -73,7 +73,10 @@
       <div class="title">课堂动态(视频)</div>
       <div class="ctn-img video">
         <div class="img-item" v-for="item in trend.videoList" :key="item.crid">
-          <video :src="videoUrl + item.src" controls></video>
+          <video autoplay :src="videoUrl + item.src" controls preload="auto">
+            您的浏览器不支持H5播放器，你可以 <a :href="videoUrl + item.src">下载</a>
+            并用你喜欢的播放器观看!
+          </video>
         </div>
       </div>
     </div>

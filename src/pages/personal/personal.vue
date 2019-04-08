@@ -157,7 +157,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="newStudentForm.visible = false">取 消</el-button>
-          <el-button type="primary" @click="confirm">确 定</el-button>
+          <el-button type="primary" @click="confirm()">确 定</el-button>
         </span>
       </el-dialog>
 
@@ -218,7 +218,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="resetForm('newTeacherForm')">取 消</el-button>
-          <el-button type="primary" @click="editTeacher">确 定</el-button>
+          <el-button type="primary" @click="editTeacher()">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -626,6 +626,7 @@ export default {
             tphone: this.newTeacherForm.teacherTel,
             home_address: this.newTeacherForm.address
           };
+          
           let url;
           switch (this.oprType) {
             case "new":
@@ -736,9 +737,9 @@ export default {
         train_class: this.newStudentForm.train_class,
         clasz: this.newStudentForm.clasz
       };
+
       this.$axios.post("/insertOneStudent", json).then(res => {
         this.$refs.newStudentForm.resetFields();
-        this.newStudentForm.visible = false;
         if (res && res.data) {
           if (parseInt(res.data.code) === 1) {
             this.$message({
@@ -746,6 +747,7 @@ export default {
               type: "success"
             });
             this.getStudentData();
+            this.newStudentForm.visible = false;
           } else {
             this.$message.error(res.data.msg);
           }

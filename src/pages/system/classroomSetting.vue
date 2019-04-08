@@ -4,9 +4,9 @@
       <div class="title" :class="activeNav === 'setup' && 'active'" data-nav='setup'>
         教室设置
       </div>
-      <div class="title" :class="activeNav === 'classroomArrange' && 'active'" data-nav='classroomArrange'>
+      <!-- <div class="title" :class="activeNav === 'classroomArrange' && 'active'" data-nav='classroomArrange'>
         教室安排
-      </div>
+      </div> -->
     </div>
     <div class="content">
       <router-view></router-view>

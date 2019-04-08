@@ -195,7 +195,7 @@ const router = new Router({
                 breadList: meta.classSetting
               },
               redirect: {
-                path: '/home/system/classroomSetting/classroomArrange'
+                path: '/home/system/classroomSetting/setup'
               },
               children: [{
                 name: 'classroomArrange',

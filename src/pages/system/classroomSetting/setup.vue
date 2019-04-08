@@ -26,7 +26,7 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="cancelDialog">取 消</el-button>
-          <el-button type="primary" @click="confirm">确 定</el-button>
+          <el-button type="primary" @click="confirm()">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -115,14 +115,13 @@ export default {
     },
 
     newSetUpBtn() {
-      
       this.type = "new";
 
       this.setUpFormVisible = true;
-      if(this.$refs.setUpForm) {
+      if (this.$refs.setUpForm) {
         this.$refs.setUpForm.resetFields();
       }
-      this.setUpForm.className = '';
+      this.setUpForm.className = "";
     },
     // 确定点击
     confirm() {
@@ -145,11 +144,11 @@ export default {
                 message: res.data.msg,
                 type: "success"
               });
+              this.setUpFormVisible = false;
+              this.getSetUp();
             } else {
               this.$message.error(res.data.msg);
             }
-            this.setUpFormVisible = false;
-            this.getSetUp();
           }
         });
     },
