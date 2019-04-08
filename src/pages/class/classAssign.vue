@@ -535,7 +535,7 @@
         };
         // 结束时间在今天之前
         const isBeforeTody = (new Date(json.enddate) - new Date()) < 0;
-        let message = '该段时间没有排课记录,请手动添加,或自动排课';
+        let message = '该段时间没有排课记录,请手动添加';
         this.$axios.post('/getCourseRecordByWeek', json)
           .then((res) => {
             if (res.data.length) {

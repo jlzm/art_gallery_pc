@@ -2,10 +2,10 @@
   <div class="resort">
     <div class="title-ctn" @click="changeNav">
       <div class="title" :class="activeNav === 'resorthome' && 'active'" data-nav='resorthome'>
-        考勤排班
+        排班设置
       </div>
       <div class="title" :class="activeNav === 'classsetting' && 'active'" data-nav='classsetting'>
-        排班设置
+        班次设置
       </div>
     </div>
     <div class="content">

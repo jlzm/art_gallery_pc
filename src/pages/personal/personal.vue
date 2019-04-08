@@ -189,7 +189,6 @@
           <el-form-item label="年龄" prop="teacherAge">
             <el-input-number v-model="newTeacherForm.teacherAge" :max="90" :min="10"></el-input-number>
           </el-form-item>
-
           <el-form-item label="学历" prop="willingTime">
             <el-select
               v-model="newTeacherForm.educationalBackground"
@@ -198,8 +197,8 @@
             >
               <el-option value="1" label="高中"></el-option>
               <el-option value="2" label="大专"></el-option>
-              <el-option value="2" label="本科"></el-option>
-              <el-option value="2" label="研究生"></el-option>
+              <el-option value="3" label="本科"></el-option>
+              <el-option value="4" label="研究生"></el-option>
             </el-select>
           </el-form-item>
 
@@ -383,6 +382,28 @@ export default {
     };
   },
   methods: {
+    studengtTest(row) {
+      let statusTxt = '';
+      switch (row) {
+        case '1':
+          statusTxt = '高中';
+          break;
+        case '2':
+          statusTxt = '大专';
+          break;
+        case '3':
+          statusTxt = '本科';
+          break;
+        case '4':
+          statusTxt = '研究生';
+          break;
+      
+        default:
+          break;
+      }
+      return statusTxt;
+    },
+
     initOpt(type) {
       this.tableData = [];
       if (type === "students") {
@@ -405,7 +426,7 @@ export default {
               prop: "sex",
               label: "性别",
               formatter: row => {
-                return parseInt(row.sex) === 1 ? "男生" : "女生";
+                return parseInt(row.sex) === 1 ? "男" : "女";
               }
             },
             {
@@ -438,6 +459,10 @@ export default {
             {
               prop: "sphone",
               label: "联系电话"
+            },
+            {
+              prop: "nvitation_code",
+              label: "邀请码"
             }
           ],
           // 查看详情事件
@@ -481,7 +506,7 @@ export default {
               prop: "tsex",
               label: "性别",
               formatter(value) {
-                return parseInt(value.tsex) === 1 ? "男性" : "女性";
+                return parseInt(value.tsex) === 1 ? "男" : "女";
               }
             },
             {
@@ -489,12 +514,19 @@ export default {
               label: "年龄"
             },
             {
-              prop: "education_background",
-              label: "学历"
+              prop: "educationalbg",
+              label: "学历",
+              formatter: row => {
+                return this.studengtTest(row.educationalbg);
+              }
             },
             {
               prop: "tphone",
               label: "电话号码"
+            },
+            {
+              prop: "nvitation_code",
+              label: "邀请码"
             },
             {
               prop: "sale_total",
@@ -620,6 +652,7 @@ export default {
       this.$refs.newTeacherForm.validate(validate => {
         if (validate) {
           let json = {
+            educationalbg: this.newTeacherForm.educationalBackground,
             tname: this.newTeacherForm.teacherName,
             tsex: this.newTeacherForm.gender,
             tage: this.newTeacherForm.teacherAge,
@@ -658,6 +691,7 @@ export default {
         this.getTeacherData();
       }
     },
+    
     /** API */
     // 新建老师api
     postTeacher(json, url) {

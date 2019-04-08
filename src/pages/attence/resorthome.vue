@@ -1,7 +1,7 @@
 <template>
   <div class="resorthome">
     <div class="search">
-      <el-button type="primary" icon="el-icon-plus" size="small" @click="addNewResort()">新增排班分组</el-button>
+      <el-button type="primary" icon="el-icon-plus" size="small" @click="addNewResort()">新增排班</el-button>
     </div>
     <div class="tables">
       <tables

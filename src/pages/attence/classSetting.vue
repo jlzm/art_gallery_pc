@@ -1,7 +1,7 @@
 <template>
   <div class="class-setting">
     <div class="search">
-      <el-button type="primary" icon="el-icon-plus" size="small" @click="addNewSetting">新增</el-button>
+      <el-button type="primary" icon="el-icon-plus" size="small" @click="addNewSetting">新增班次</el-button>
     </div>
     <div class="tables">
       <tables :tableOption="tableOption" :tableData="tableData"></tables>
