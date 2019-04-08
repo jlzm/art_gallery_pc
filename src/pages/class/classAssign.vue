@@ -21,7 +21,7 @@
     </div>
     <!-- <cascader :tree="treeData"></cascader> -->
     <div class="tables">
-      <el-table :data="tableData" :span-method="arraySpanMethod" border>
+      <el-table  :data="tableData" :span-method="arraySpanMethod" border>
         <el-table-column label="crid" align="center" v-if="false">
         </el-table-column>
         <el-table-column prop="cdate" label="日期" align="center">

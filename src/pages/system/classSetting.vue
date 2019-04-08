@@ -77,10 +77,6 @@
           showEditBtn: true,
           column: [
             {
-              prop: "clid",
-              label: "班级ID"
-            },
-            {
               prop: "clname",
               label: "班级名称"
             },

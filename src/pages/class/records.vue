@@ -48,9 +48,9 @@
         </el-form-item>
       </el-form>
       <el-form :inline="true">
-        <el-form-item class="oprator">
+        <!-- <el-form-item class="oprator">
           <el-button class="delete-btn" type="danger" icon="el-icon-delete" size="small" @click="deleteAll()">批量删除</el-button>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
     </div>
     <tables :tableOption='tableOption'
@@ -119,7 +119,7 @@
     methods: {
       initTable() {
         this.tableOption = {
-          isMutiple: true,
+          isMutiple: false,
           showOpr: true,
           column: [
             {
