@@ -415,7 +415,6 @@
         this.assignForm.teacher = '';
         this.assignForm.classNumber = '';
         this.assignForm.preview = '';
-        this.assignForm.treeValue = '';
       },
       
 
