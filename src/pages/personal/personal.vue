@@ -189,7 +189,6 @@
           <el-form-item label="年龄" prop="teacherAge">
             <el-input-number v-model="newTeacherForm.teacherAge" :max="90" :min="10"></el-input-number>
           </el-form-item>
-          {{newTeacherForm.educationalBackground}}
           <el-form-item label="学历" prop="willingTime">
             <el-select
               v-model="newTeacherForm.educationalBackground"
