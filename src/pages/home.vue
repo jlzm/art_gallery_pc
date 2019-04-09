@@ -80,11 +80,11 @@
             id: '5',
             path: '/home/attence/record',
             childData: [
-              {
-                name: '考勤记录',
-                id: '5-1',
-                path: '/home/attence/record'
-              },
+              // {
+              //   name: '考勤记录',
+              //   id: '5-1',
+              //   path: '/home/attence/record'
+              // },
               {
                 name: '考勤排班',
                 id: '5-2',
