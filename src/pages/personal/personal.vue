@@ -673,7 +673,7 @@ export default {
             tphone: this.newTeacherForm.teacherTel,
             home_address: this.newTeacherForm.address
           };
-          console.log('json', json);
+          console.log("json", json);
           let url;
           switch (this.oprType) {
             case "new":
