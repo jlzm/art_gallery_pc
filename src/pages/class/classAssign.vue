@@ -412,9 +412,11 @@ export default {
       data = this.getSpanArr(data, "weeknum");
       this.tableData = this.getSpanArr(data, "room");
     },
+
     timeformatter(val) {
       return val.begintime + "-" + val.endtime;
     },
+    
     changeDate(val) {
       // this.$refs.search.validate()
       const weekTime = 1000 * 60 * 60 * 24 * 6;
@@ -432,6 +434,7 @@ export default {
         }
       }
     },
+
     eidtOrAdd(data, type) {
       this.dialog.assignFormVisible = true;
       // 新增
@@ -483,6 +486,7 @@ export default {
       this.assignForm.date = row.cdate;
       this.eidtOrAdd(null, 2);
     },
+
     // 删除单个排课
     deleteClass(row) {
       this.$confirm("该操作会删除此次排课，是否确认", "确认删除排课", {
@@ -493,6 +497,7 @@ export default {
         this.deleteCourseRecord(row.crid);
       });
     },
+
     // 提交表单
     submit() {
       // 提交表单
@@ -525,6 +530,7 @@ export default {
         }
       });
     },
+
     // 清空弹出框内表格
     resetForm() {
       this.$refs.assignForm.resetFields();
@@ -536,12 +542,15 @@ export default {
       this.assignForm.classNumber = 0;
       this.dialog.assignFormVisible = false;
     },
+
     // 选择班级
     changeClass(newVal) {
       this.visible = true;
     },
+
     // 鼠标移入选择器事件
     overMenu(e) {},
+
     // 点击自动排课
     autoAssign() {
       if (!this.form.week.length) {
@@ -555,6 +564,7 @@ export default {
       };
       this.getClassRoomByWeek(json);
     },
+
     // 首页获取表格数据
     getIndexData() {
       const ONEDAYTIME = 1 * 1000 * 60 * 60 * 24;
@@ -611,6 +621,7 @@ export default {
         }
       });
     },
+
     getClassRoomByWeek(data) {
       this.$axios.post("/getClassRoomByWeek", data).then(res => {
         if (res && res.data.length) {
@@ -621,6 +632,7 @@ export default {
         }
       });
     },
+
     // 获取学生二级下拉
     getStudentByCstep() {
       this.$axios.post("/getStudentByClasz").then(res => {
@@ -642,6 +654,7 @@ export default {
         }
       });
     },
+
     // 获取教室
     getClassRoom() {
       this.$axios.post("/getRoom").then(res => {
@@ -651,6 +664,7 @@ export default {
         }
       });
     },
+
     // 获取老师
     getTeacherData() {
       this.teacherOption = [];
@@ -660,6 +674,7 @@ export default {
         }
       });
     },
+
     // 新增上课排班
     insertCourseRecord(json) {
       this.$axios.post("/insertCourseRecord", json).then(res => {
@@ -675,6 +690,7 @@ export default {
         }
       });
     },
+
     // 修改
     updateCourseRecord(json) {
       if (this.dialog.assignFormVisible) {
@@ -693,6 +709,7 @@ export default {
         });
       }
     },
+    
     deleteCourseRecord(id) {
       this.dialog.assignFormVisible = false;
       this.$axios
