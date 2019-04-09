@@ -9,8 +9,10 @@ export default {
       let date = new Date();
       let a = start.split(":");
       let b = end.split(":");
-      this.$message.error("开始时间不能大于或等于结束时间");
-      return date.setHours(a[0], a[1]) >= date.setHours(b[0], b[1]);
+      if(date.setHours(a[0], a[1]) >= date.setHours(b[0], b[1])) {
+        this.$message.error("开始时间不能大于或等于结束时间");
+        return true;
+      }
     }
   }
 };

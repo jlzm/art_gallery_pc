@@ -499,9 +499,7 @@ export default {
 
       this.$refs.assignForm.validate(validate => {
         if (validate) {
-          if (
-            this.compareDate(this.assignForm.startTime, this.assignForm.endTime)
-          ) {
+          if (this.compareDate(this.assignForm.startTime, this.assignForm.endTime)) {
             return false;
           }
           let dateJson = util.getTime(this.assignForm.date);
@@ -582,13 +580,18 @@ export default {
       let date = [formatStr(startDateJson), formatStr(endDateJson)];
       this.form.week = date;
       this.getCourseRecordByWeek(date);
+      props
     },
+
     /** API */
     getCourseRecordByWeek(data) {
       let json = {
         begindate: data[0],
-        enddate: data[1]
+        enddate: data[1],
+        ctype: '1'
       };
+
+      console.log('json', json);
       // 结束时间在今天之前
       const isBeforeTody = new Date(json.enddate) - new Date() < 0;
       let message = "该段时间没有排课记录,请手动添加";
