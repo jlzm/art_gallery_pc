@@ -580,7 +580,6 @@ export default {
       let date = [formatStr(startDateJson), formatStr(endDateJson)];
       this.form.week = date;
       this.getCourseRecordByWeek(date);
-      props
     },
 
     /** API */
