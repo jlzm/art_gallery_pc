@@ -189,6 +189,7 @@
           <el-form-item label="年龄" prop="teacherAge">
             <el-input-number v-model="newTeacherForm.teacherAge" :max="90" :min="10"></el-input-number>
           </el-form-item>
+          {{newTeacherForm.educationalBackground}}
           <el-form-item label="学历" prop="willingTime">
             <el-select
               v-model="newTeacherForm.educationalBackground"
@@ -577,7 +578,8 @@ export default {
               course_total: scope.row.course_total,
               sale_total: scope.row.sale_total,
               id: scope.row.tid,
-              disabled: false
+              disabled: false,
+              educationalBackground: scope.row.educationalbg
             };
             this.oprType = "edit";
           },
@@ -672,7 +674,7 @@ export default {
             tphone: this.newTeacherForm.teacherTel,
             home_address: this.newTeacherForm.address
           };
-
+          console.log('json', json);
           let url;
           switch (this.oprType) {
             case "new":
