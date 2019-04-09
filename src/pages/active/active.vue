@@ -499,7 +499,8 @@ export default {
             period_need: row.period_need,
             preview: row.cdesc,
             crid: row.crid,
-            previewImgUrl: row.cpicture
+            previewImgUrl: row.cpicture,
+            imageUrl: row.cpicture
           }),
             this.eidtActiveCourse();
         },
