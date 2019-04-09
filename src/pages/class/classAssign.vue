@@ -78,6 +78,7 @@
                         }"
             ></el-date-picker>
           </el-form-item>
+          {{assignForm.startTime}}
           <el-form-item label="起始时间段" required>
             <el-col :span="11">
               <el-form-item prop="startTime">
@@ -467,13 +468,14 @@ export default {
 
     // 编辑单个教室
     editClass(row) {
+      console.log(row);
       this.assignForm.treeValue = row.sid.split(",").filter(item => {
         return item;
       });
       this.assignForm.room = row.room;
       this.assignForm.teacher = row.tid + "," + row.tname;
       this.assignForm.preview = row.cdesc;
-      this.assignForm.startTime = row.endtime;
+      this.assignForm.startTime = row.begintime;
       this.assignForm.endTime = row.endtime;
       this.assignForm.classNumber = parseInt(row.period_need);
       this.assignForm.cname = row.cname;
