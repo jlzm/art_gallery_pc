@@ -383,21 +383,21 @@ export default {
   },
   methods: {
     studengtTest(row) {
-      let statusTxt = '';
+      let statusTxt = "";
       switch (row) {
-        case '1':
-          statusTxt = '高中';
+        case "1":
+          statusTxt = "高中";
           break;
-        case '2':
-          statusTxt = '大专';
+        case "2":
+          statusTxt = "大专";
           break;
-        case '3':
-          statusTxt = '本科';
+        case "3":
+          statusTxt = "本科";
           break;
-        case '4':
-          statusTxt = '研究生';
+        case "4":
+          statusTxt = "研究生";
           break;
-      
+
         default:
           break;
       }
@@ -482,7 +482,14 @@ export default {
 
           delete: scope => {
             const id = scope.row.sid;
-            this.deleteStudent(id);
+
+            this.$confirm("此操作将删除该学员, 是否继续?", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }).then(() => {
+              this.deleteStudent(id);
+            });
           }
         };
         this.getStudentData();
@@ -575,7 +582,13 @@ export default {
             this.oprType = "edit";
           },
           delete: scope => {
-            this.deleteTeacher(scope.row.tid);
+            this.$confirm("此操作将删除该教师, 是否继续?", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }).then(() => {
+              this.deleteTeacher(scope.row.tid);
+            });
           }
         };
         this.getTeacherData();
@@ -618,7 +631,7 @@ export default {
     deleteAll() {
       console.log("this.selectedId", this.selectedId);
       if (this.selectedId.length && this.type === "students") {
-        this.$confirm("此操作将删除该批次课程, 是否确认?", "提示", {
+        this.$confirm("此操作将删除学员, 是否确认?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -627,7 +640,7 @@ export default {
           console.log("删除学生");
         });
       } else if (this.selectedId.length) {
-        this.$confirm("此操作将删除该批次课程, 是否确认?", "提示", {
+        this.$confirm("此操作将删除教师, 是否确认?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -659,7 +672,7 @@ export default {
             tphone: this.newTeacherForm.teacherTel,
             home_address: this.newTeacherForm.address
           };
-          
+
           let url;
           switch (this.oprType) {
             case "new":
@@ -691,7 +704,7 @@ export default {
         this.getTeacherData();
       }
     },
-    
+
     /** API */
     // 新建老师api
     postTeacher(json, url) {
