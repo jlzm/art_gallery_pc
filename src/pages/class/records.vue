@@ -174,9 +174,12 @@
           showDetailBtn: true,
           // 查看详情事件
           showDetail: (scope) => {
-            const id = scope.row.crid;
+            const crid = scope.row.crid;
             this.$router.push({
-              path: '/home/recordsDetail/' + id
+              path: '/home/recordsDetail/',
+              query: {
+                crid,
+              }
             });
           }
         };

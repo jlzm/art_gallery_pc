@@ -87,7 +87,7 @@ const router = new Router({
         },
         {
           name: 'recordsDetail',
-          path: 'recordsDetail/:id',
+          path: 'recordsDetail',
           component: resolve => require(['../pages/class/recordsDetail/recordsDetail'], resolve),
           meta: {
             breadList: meta.recordsDetailMeta

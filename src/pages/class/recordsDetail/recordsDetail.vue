@@ -66,13 +66,13 @@
     <div class="ctn">
       <div class="title">课堂动态(图片)</div>
       <div class="ctn-img">
-        <div class="img-item" v-for="item in trend.imgList" :key="item.crid">
+        <div class="img-item" v-for="(item, index) in trend.imgList" :key="index">
           <img :src="imgUrl + item.src" alt :preview="item.crid">
         </div>
       </div>
       <div class="title">课堂动态(视频)</div>
       <div class="ctn-img video">
-        <div class="img-item" v-for="item in trend.videoList" :key="item.crid">
+        <div class="img-item" v-for="(item, index) in trend.videoList" :key="index">
           <video autoplay :src="videoUrl + item.src" controls preload="auto">
             您的浏览器不支持H5播放器，你可以 <a :href="videoUrl + item.src">下载</a>
             并用你喜欢的播放器观看!
@@ -149,9 +149,10 @@ export default {
     getClassDetail() {
       this.$axios
         .post("/getCourseRecordDetails", {
-          crid: this.crid
+          crid: this.$route.query.crid
         })
         .then(res => {
+          console.log('res', res);
           if (res && res.data) {
             this.detail = res.data.course;
             this.tableData = res.data.evaluation;
@@ -167,7 +168,7 @@ export default {
       };
       this.$axios
         .post("/getCourseDynamic", {
-          crid: this.crid,
+          crid: this.$route.query.crid,
           ftype: ""
         })
         .then(res => {
@@ -194,15 +195,6 @@ export default {
         });
     }
   },
-  watch: {
-    $route: {
-      deep: true,
-      immediate: true,
-      handler(val) {
-        this.crid = val.params.id;
-      }
-    }
-  }
 };
 </script>
 
