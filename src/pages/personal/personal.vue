@@ -598,9 +598,15 @@ export default {
         this.tableOption = {};
       }
     },
+
+    // 打开新建弹窗
     newItem() {
+      console.log(1);
       if (this.type === "students") {
-        this.newStudentForm.visible = true;
+        if (this.$refs.studentForm) {
+          this.$refs.studentForm.resetFields();
+        }
+        this.resetNewStudents();
         this.getClass();
       } else {
         this.oprType = "new";
@@ -618,6 +624,24 @@ export default {
         };
       }
     },
+
+    resetNewStudents() {
+      this.newStudentForm = {
+        studentName: "",
+        parentName: "",
+        sex: 1,
+        visible: true,
+        tel: "",
+        address: "",
+        period_total: 0,
+        school: "",
+        willingTime: [],
+        age: 1,
+        train_class: "",
+        clasz: "",
+      }
+    },
+
     // 多选表格
     selectChange(val) {
       this.selectedId = val.map(item => {
