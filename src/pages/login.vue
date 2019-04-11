@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="center">
-      <el-form @submit.stop="login()" label-width="80px" :model="loginForm" ref="login" :rules="rules">
+      <el-form @submit.prevent="login()" label-width="80px" :model="loginForm" ref="login" :rules="rules">
         <el-form-item label="用户名" prop="name">
           <el-input v-model="loginForm.name"></el-input>
         </el-form-item>

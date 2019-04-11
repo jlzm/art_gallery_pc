@@ -67,14 +67,15 @@
       <div class="title">课堂动态(图片)</div>
       <div class="ctn-img">
         <div class="img-item" v-for="(item, index) in trend.imgList" :key="index">
-          <img :src="imgUrl + item.src" alt :preview="item.crid">
+          <img :src="imgUrl + item.src" alt :preview="index">
         </div>
       </div>
       <div class="title">课堂动态(视频)</div>
       <div class="ctn-img video">
         <div class="img-item" v-for="(item, index) in trend.videoList" :key="index">
-          <video autoplay :src="videoUrl + item.src" controls preload="auto">
-            您的浏览器不支持H5播放器，你可以 <a :href="videoUrl + item.src">下载</a>
+          <video autoplay :src="videoUrl + item.src" controls preload>
+            您的浏览器不支持H5播放器，你可以
+            <a :href="videoUrl + item.src">下载</a>
             并用你喜欢的播放器观看!
           </video>
         </div>
@@ -86,27 +87,173 @@
         <el-table ref="singleTable" :data="tableData" highlight-current-row style="width: 100%">
           <el-table-column type="index" label="序号"></el-table-column>
           <el-table-column property="sname" label="学生姓名" width="120"></el-table-column>
-          <el-table-column property="teacherComment" label="老师评价" show-overflow-tooltip>
+          <el-table-column width="300" property="teacherComment" label="老师评价" show-overflow-tooltip>
             <template slot-scope="scope">{{scope.row.t_eva.remark || '暂无'}}</template>
+          </el-table-column>
+          <el-table-column
+            width="300"
+            property="houseHolderComment"
+            label="家长评价"
+            show-overflow-tooltip
+          >
+            <template slot-scope="scope" v-if="scope.row.p_eva">{{scope.row.p_eva.remark || '暂无'}}</template>
           </el-table-column>
           <el-table-column property="address" label="作品图">
             <template slot-scope="scope" v-if="scope.row.t_eva && scope.row.t_eva.photoUrl">
-              <div class="imgs">
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
                 <img
                   :src="imgUrl + item"
-                  alt
-                  :preview="scope.row.sid"
-                  v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')"
-                  :key="index"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                >
+              </div>
+              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
                 >
               </div>
             </template>
           </el-table-column>
-          <el-table-column property="houseHolderComment" label="家长评价" show-overflow-tooltip>
-            <template slot-scope="scope" v-if="scope.row.p_eva">{{scope.row.p_eva.remark}}</template>
-          </el-table-column>
+          <!-- <el-table-column fixed="right" label="操作" width="100">
+            <template slot-scope="scope">
+              <el-button @click="showStudentDetal(scope.row)" type="text" size="small">查看详情</el-button>
+            </template>
+          </el-table-column> -->
         </el-table>
       </div>
+    </div>
+    <div class="dialog">
+      <el-dialog title="学生详情" :visible.sync="studentDialog" width="30%">
+        <div class="dialog-tname">
+          <span>姓名：{{studentDialogData.name}}</span>
+        </div>
+        <div class="dialog-tname">
+          <span>老师评价：{{studentDialogData.tRemark || '暂无评价'}}</span>
+        </div>
+        <div class="dialog-tname">
+          <span>家长评价：{{studentDialogData.pRemark || '暂无评价'}}</span>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <div class="imgs">
+                <img
+                  :src="imgUrl + item"
+                  :preview="index"
+                  v-for="(item, index) in studentDialogData.imgs"
+                  :key="index"
+                >
+              </div>
+          <el-button @click="studentDialog = false">取 消</el-button>
+          <el-button type="primary" @click="studentDialog = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -123,6 +270,14 @@ export default {
   },
   data() {
     return {
+      studentDialogData: {
+        name: '',
+        imgs: [],
+        tRemark: '',
+        pRemark: '',
+        
+      },
+      studentDialog: false,
       detail: {
         cname: "",
         classTime: "",
@@ -146,13 +301,22 @@ export default {
     };
   },
   methods: {
+    showStudentDetal(row) {
+      console.log(row);
+      this.studentDialogData.name = row.sname
+      this.studentDialogData.imgs = row.t_eva.photoUrl && row.t_eva.photoUrl.split(',');
+      this.studentDialogData.tRemark = row.t_eva.remark;
+      this.studentDialogData.pRemark = row.p_eva.remark;
+      this.studentDialog = true;
+    },
+
     getClassDetail() {
       this.$axios
         .post("/getCourseRecordDetails", {
           crid: this.$route.query.crid
         })
         .then(res => {
-          console.log('res', res);
+          console.log("res", res);
           if (res && res.data) {
             this.detail = res.data.course;
             this.tableData = res.data.evaluation;
@@ -194,11 +358,11 @@ export default {
           }
         });
     }
-  },
+  }
 };
 </script>
 
-<style scope>
+<style lang="less" scope>
 .recordsDetail {
   padding: 15px;
   background-color: #fff;
@@ -253,8 +417,8 @@ export default {
   margin-left: 0;
 }
 .ctn-img .img-item img {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
 }
 .video .img-item {
   width: 500px;
@@ -268,9 +432,23 @@ export default {
 .ctn-table {
   margin-top: 15px;
 }
-.recordsDetail /deep/ .el-table .imgs img {
-  max-width: 100px;
-  max-height: 100px;
+.recordsDetail /deep/ .el-table .imgs {
+  max-width: 50px;
+  max-height: 50px;
   margin: 0 20px;
+}
+
+.dialog {
+  .dialog-tname {
+    margin-bottom: 5px;
+  }
+  .imgs {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.testi {
+  width: 50px;
 }
 </style>
