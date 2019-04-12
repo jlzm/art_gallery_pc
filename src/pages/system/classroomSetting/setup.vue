@@ -73,10 +73,10 @@ export default {
         showDelBtn: true,
         showEditBtn: true,
         column: [
-          {
-            prop: "rid",
-            label: "教室ID"
-          },
+          // {
+          //   prop: "rid",
+          //   label: "教室ID"
+          // },
           {
             prop: "rname",
             label: "教室名称",
