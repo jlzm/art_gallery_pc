@@ -78,7 +78,6 @@
                         }"
             ></el-date-picker>
           </el-form-item>
-          {{assignForm.startTime}}
           <el-form-item label="起始时间段" required>
             <el-col :span="11">
               <el-form-item prop="startTime">
