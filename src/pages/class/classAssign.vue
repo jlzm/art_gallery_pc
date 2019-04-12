@@ -78,7 +78,7 @@
                         }"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="起始时间段" required>
+          <el-form-item label="上课时间" required>
             <el-col :span="11">
               <el-form-item prop="startTime">
                 <el-time-select
