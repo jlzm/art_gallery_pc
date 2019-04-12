@@ -33,7 +33,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item>
+      
           <el-form-item label="上课学员" prop="treeValue">
             <treeselect
               placeholder="请选择上课学员"
@@ -44,6 +44,9 @@
               :value-consists-of="'LEAF_PRIORITY'"
               size="small"/>
           </el-form-item>
+          
+        
+        <el-form-item >
           <el-button type="primary" icon="el-icon-search" size="small" @click="searchData()">查询</el-button>
         </el-form-item>
       </el-form>

@@ -466,6 +466,7 @@ export default {
       this.assignForm.teacher = "";
       this.assignForm.classNumber = "";
       this.assignForm.preview = "";
+      this.assignForm.treeValue = [];
     },
 
     // 编辑单个教室
