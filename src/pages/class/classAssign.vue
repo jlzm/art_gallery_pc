@@ -109,9 +109,9 @@
             </el-col>
           </el-form-item>
           <el-form-item label="主教老师" prop="teacher">
-            <el-select v-model="assignForm.teacher" filterable placeholder="请选择主教老师" size="small">
+            <el-select v-model="assignForm.mainTheater" filterable placeholder="请选择主教老师" size="small">
               <el-option
-                v-for="item in assignForm.teacherOption"
+                v-for="item in assignForm.mainTheaterOption"
                 :key="item.value"
                 :label="item.tname"
                 :value="item.tid + ',' + item.tname"
@@ -120,9 +120,9 @@
           </el-form-item>
 
           <el-form-item label="助教老师" prop="teacher">
-            <el-select v-model="assignForm.teacher" filterable placeholder="请选择助教老师" size="small">
+            <el-select v-model="assignForm.assistantTheater" filterable placeholder="请选择助教老师" size="small">
               <el-option
-                v-for="item in assignForm.teacherOption"
+                v-for="item in assignForm.assistantTheaterOption"
                 :key="item.value"
                 :label="item.tname"
                 :value="item.tid + ',' + item.tname"
@@ -236,13 +236,10 @@ export default {
         week: "",
         date: "",
         times: "",
-        teacher: "",
-        teacherOption: [
-          {
-            label: "张老师",
-            value: 1
-          }
-        ],
+        mainTheater: "",
+        assistantTheater: '',
+        mainTheaterOption: [],
+        assistantTheaterOption: [],
         classNumber: "",
         preview: "",
         treeValue: [],
@@ -296,10 +293,17 @@ export default {
             required: true
           }
         ],
-        teacher: [
+        mainTheater: [
           {
             trigger: "blur",
-            message: "请选择上课老师",
+            message: "请选择主教老师",
+            required: true
+          }
+        ],
+        assistantTheater: [
+          {
+            trigger: "blur",
+            message: "请选择助教老师",
             required: true
           }
         ],
@@ -474,7 +478,8 @@ export default {
       this.assignForm.week = "";
       this.assignForm.date = "";
       this.assignForm.times = "";
-      this.assignForm.teacher = "";
+      this.assignForm.assistantTheater = "";
+      this.assignForm.mainTheater = "";
       this.assignForm.classNumber = "";
       this.assignForm.preview = "";
       this.assignForm.treeValue = [];
@@ -487,7 +492,8 @@ export default {
         return item;
       });
       this.assignForm.room = row.room;
-      this.assignForm.teacher = row.tid + "," + row.tname;
+      this.assignForm.mainTheater = row.tid + "," + row.tname;
+      this.assignForm.assistantTheater = row.atid + "," + row.atname;
       this.assignForm.preview = row.cdesc;
       this.assignForm.startTime = row.begintime;
       this.assignForm.endTime = row.endtime;
@@ -525,8 +531,10 @@ export default {
             begintime: this.assignForm.startTime,
             endtime: this.assignForm.endTime,
             room: this.assignForm.room,
-            tid: this.assignForm.teacher.split(",")[0],
-            tname: this.assignForm.teacher.split(",")[1],
+            tid: this.assignForm.mainTheater.split(",")[0],
+            tname: this.assignForm.mainTheater.split(",")[1],
+            atid: this.assignForm.assistantTheater.split(",")[0],
+            atname: this.assignForm.assistantTheater.split(",")[1],
             sid: this.assignForm.treeValue.join(","),
             period_need: this.assignForm.classNumber,
             cdate: dateJson.year + "-" + dateJson.month + "-" + dateJson.day,
@@ -547,7 +555,8 @@ export default {
       this.$refs.assignForm.resetFields();
       this.assignForm.treeValue = [];
       this.assignForm.room = "";
-      this.assignForm.teacher = "";
+      this.assignForm.mainTheater = "";
+      this.assignForm.assistantTheater = "";
       this.assignForm.preview = "";
       this.assignForm.times = "";
       this.assignForm.classNumber = 0;
@@ -678,10 +687,13 @@ export default {
 
     // 获取老师
     getTeacherData() {
-      this.teacherOption = [];
+      this.mainTheaterOption = [];
+      this.assistantTheaterOption = [];
       this.$axios.post("/getTeacherSelectVul").then(res => {
+        console.log('res', res.data);
         if (res && res.data.length) {
-          this.assignForm.teacherOption = res.data;
+          this.assignForm.mainTheaterOption = res.data.mainTheater;
+          this.assignForm.assistantTheaterOption = res.data.assistantTheater;
         }
       });
     },
