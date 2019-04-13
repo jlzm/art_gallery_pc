@@ -123,21 +123,6 @@
             </el-select>
           </el-form-item>
 
-          <!--<el-form-item label="意愿时间" prop="willingTime">-->
-          <!--<el-select-->
-          <!--v-model="newStudentForm.willingTime"-->
-          <!--placeholder="请选择"-->
-          <!--size="small"-->
-          <!--multiple>-->
-          <!--<el-option value="星期一" label="星期一"></el-option>-->
-          <!--<el-option value="星期二" label="星期二"></el-option>-->
-          <!--<el-option value="星期三" label="星期三"></el-option>-->
-          <!--<el-option value="星期四" label="星期四"></el-option>-->
-          <!--<el-option value="星期五" label="星期五"></el-option>-->
-          <!--<el-option value="星期六" label="星期六"></el-option>-->
-          <!--<el-option value="星期日" label="星期日"></el-option>-->
-          <!--</el-select>-->
-          <!--</el-form-item>-->
 
           <el-form-item label="家长姓名" prop="parentName">
             <el-input v-model="newStudentForm.parentName" size="small"></el-input>
@@ -179,6 +164,12 @@
         >
           <el-form-item label="姓名" prop="teacherName">
             <el-input v-model="newTeacherForm.teacherName" size="small"></el-input>
+          </el-form-item>
+          <el-form-item label="角色" prop="trole">
+            <el-select v-model="newTeacherForm.trole" placeholder="请选择" size="small">
+              <el-option value="0" label="主教"></el-option>
+              <el-option value="1" label="助教"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="性别" prop="gender">
             <el-select v-model="newTeacherForm.gender" placeholder="请选择" size="small">
@@ -296,7 +287,8 @@ export default {
         title: "新增老师",
         id: "",
         sale_total: 0,
-        course_total: 0
+        course_total: 0,
+        trole: '',
       },
       selectedId: [],
       tableData: [],
@@ -316,6 +308,13 @@ export default {
             // trigger: 'blur',
             required: true,
             message: "老师姓名必填"
+          }
+        ],
+        trole: [
+          {
+            // trigger: 'blur',
+            required: true,
+            message: "老师角色必填"
           }
         ],
         teacherTel: [
@@ -510,10 +509,17 @@ export default {
               label: "姓名"
             },
             {
+              prop: "trole",
+              label: "角色",
+              formatter(value) {
+                return parseInt(value.trole) == 0 ? "主教" : "助教";
+              }
+            },
+            {
               prop: "tsex",
               label: "性别",
               formatter(value) {
-                return parseInt(value.tsex) === 1 ? "男" : "女";
+                return parseInt(value.tsex) == 1 ? "男" : "女";
               }
             },
             {
@@ -561,6 +567,7 @@ export default {
               address: scope.row.home_address,
               course_total: scope.row.course_total,
               sale_total: scope.row.sale_total,
+              trole: scope.row.trole,
               disabled: true
             };
             this.oprType = "show";
@@ -685,6 +692,7 @@ export default {
         }
       });
     },
+
     // 操作老师
     editTeacher() {
       this.$refs.newTeacherForm.validate(validate => {
@@ -695,7 +703,8 @@ export default {
             tsex: this.newTeacherForm.gender,
             tage: this.newTeacherForm.teacherAge,
             tphone: this.newTeacherForm.teacherTel,
-            home_address: this.newTeacherForm.address
+            home_address: this.newTeacherForm.address,
+            trole: this.newTeacherForm.trole
           };
           console.log("json", json);
           let url;

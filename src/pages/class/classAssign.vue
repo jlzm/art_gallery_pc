@@ -108,8 +108,19 @@
               </el-form-item>
             </el-col>
           </el-form-item>
-          <el-form-item label="上课老师" prop="teacher">
-            <el-select v-model="assignForm.teacher" filterable placeholder="请选择上课老师" size="small">
+          <el-form-item label="主教老师" prop="teacher">
+            <el-select v-model="assignForm.teacher" filterable placeholder="请选择主教老师" size="small">
+              <el-option
+                v-for="item in assignForm.teacherOption"
+                :key="item.value"
+                :label="item.tname"
+                :value="item.tid + ',' + item.tname"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="助教老师" prop="teacher">
+            <el-select v-model="assignForm.teacher" filterable placeholder="请选择助教老师" size="small">
               <el-option
                 v-for="item in assignForm.teacherOption"
                 :key="item.value"

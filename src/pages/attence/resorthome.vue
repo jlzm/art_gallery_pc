@@ -163,10 +163,10 @@ export default {
           },
           { required: true, message: "请选择工作周期", trigger: "blur" }
         ],
-        rest: [
-          { validator: restValidate, trigger: "change" },
-          { required: true, message: "请选择休息日期", trigger: "blur" }
-        ]
+        // rest: [
+        //   { validator: restValidate, trigger: "change" },
+        //   { required: true, message: "请选择休息日期", trigger: "blur" }
+        // ]
       },
       // 分页属性
       pageJSON: {

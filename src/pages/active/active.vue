@@ -201,7 +201,7 @@
             </el-form-item>
             <el-form-item label="活动图片" prop="cpicture">
               <el-upload
-                action="http://172.16.10.184:8080/HappyMomaArt/uploadPicture"
+                :action="global.BASEURL + 'uploadPicture'"
                 class="avatar-uploader"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
@@ -226,16 +226,18 @@
 <script>
 import mixin from "../../mixins/tableMixin";
 import util from "@/util/util";
-
+import global from "@/global/global";
 import publicFn from "../../mixins/pubilc.vue";
 export default {
   name: "activity",
   mixins: [mixin, publicFn],
   mounted() {
+    console.log('global', global);
     this.initWatingTable();
   },
   data() {
     return {
+      global: global,
       activeNav: "wating",
       watingCourseForm: {
         courseName: "",
