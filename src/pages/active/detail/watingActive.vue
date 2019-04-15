@@ -34,10 +34,18 @@
         <div class="info-ctn">
           <div class="info">
             <div class="inline-label">
-              上课老师:
+              主教老师:
             </div>
             <div>
               <span>{{detail.tname}}</span>
+            </div>
+          </div>
+          <div class="info">
+            <div class="inline-label">
+              助教老师:
+            </div>
+            <div>
+              <span>{{detail.atname}}</span>
             </div>
           </div>
           <div class="info">
