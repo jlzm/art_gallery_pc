@@ -172,7 +172,7 @@ import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import util from "@/util/util";
 
-import publicFn from "../../mixins/pubilc.vue";
+import publicFn from "../../mixins/pubilc";
 export default {
   mixins: [publicFn],
   name: "classAssign",

@@ -227,7 +227,7 @@
 import mixin from "../../mixins/tableMixin";
 import util from "@/util/util";
 import global from "@/global/global";
-import publicFn from "../../mixins/pubilc.vue";
+import publicFn from "../../mixins/pubilc";
 export default {
   name: "activity",
   mixins: [mixin, publicFn],

@@ -72,7 +72,7 @@
   import '@riophae/vue-treeselect/dist/vue-treeselect.css';
   import mixin from '../../mixins/tableMixin';
 
-import publicFn from "../../mixins/pubilc.vue";
+import publicFn from "../../mixins/pubilc";
 
 
   export default {

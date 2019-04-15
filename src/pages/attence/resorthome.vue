@@ -47,7 +47,7 @@
               filterable
             >
               <el-option
-                v-for="item in addForm.fitPeopleOptions"
+                v-for="item in addForm.teacherOption"
                 :key="item.tid"
                 :label="item.tname"
                 :value="item.tid"
@@ -93,17 +93,21 @@
 import mixin from "../../mixins/tableMixin";
 import { mapState } from "vuex";
 
+import publicFn from "../../mixins/pubilc";
 export default {
   name: "resorthome",
-  mixins: [mixin],
+  mixins: [mixin, publicFn],
   mounted() {
     this.initTable();
     // 获取班次名称及id
     this.getResort();
     // 获取老师
-    this.getTeacherData();
+    this.getTeacherData(this.addForm, true);
     // 获取表格信息
     this.getData();
+
+    console.log('this.userInfo', this.userInfo);
+
   },
   data() {
     const requireValidate = (rule, value, callback) => {
@@ -144,7 +148,7 @@ export default {
         className: "",
         classNameOptions: [],
         fitPeople: [],
-        fitPeopleOptions: [],
+        teacherOption: [],
         circle: "",
         rest: []
       },
@@ -175,6 +179,12 @@ export default {
       },
       total: 10
     };
+  },
+
+  computed: {
+    ...mapState({
+      userInfo: 'userInfo'
+    })
   },
   methods: {
     initTable() {
@@ -364,15 +374,7 @@ export default {
         }
       });
     },
-    // 获取老师
-    getTeacherData() {
-      this.addForm.fitPeopleOptions = [];
-      this.$axios.post("/getTeacherSelectVul").then(res => {
-        if (res && res.data.length) {
-          this.addForm.fitPeopleOptions = res.data;
-        }
-      });
-    },
+
     getData() {
       let json = Object.assign(
         {},
@@ -393,11 +395,6 @@ export default {
         }
       });
     }
-  },
-  computed: {
-    ...mapState({
-      userInfo: "userInfo"
-    })
   }
 };
 </script>
