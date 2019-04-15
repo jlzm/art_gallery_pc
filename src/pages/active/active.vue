@@ -134,10 +134,20 @@
             <el-form-item label="课程名称" prop="cname">
               <el-input size="small" v-model="activeForm.cname"></el-input>
             </el-form-item>
-            <el-form-item label="上课老师" prop="teacher">
-              <el-select v-model="activeForm.teacher" filterable placeholder="请选择上课老师" size="small">
+            <el-form-item label="主教老师" prop="teacher">
+              <el-select v-model="activeForm.mainTheater" filterable placeholder="请选择上课老师" size="small">
                 <el-option
-                  v-for="item in options.teacherOption"
+                  v-for="item in activeForm.mainTheaterOption"
+                  :key="item.tid"
+                  :label="item.tname"
+                  :value="item.tid + ',' + item.tname"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="助教老师" prop="teacher">
+              <el-select v-model="activeForm.assistantTheater" filterable placeholder="请选择上课老师" size="small">
+                <el-option
+                  v-for="item in activeForm.assistantTheaterOption"
                   :key="item.tid"
                   :label="item.tname"
                   :value="item.tid + ',' + item.tname"
@@ -232,7 +242,7 @@ export default {
   name: "activity",
   mixins: [mixin, publicFn],
   mounted() {
-    console.log('global', global);
+    // this.getTeacherData(this.activeForm)
     this.initWatingTable();
   },
   data() {
@@ -261,7 +271,6 @@ export default {
         previewImgUrl: "",
         imageUrl: "",
         room: "",
-        teacher: "",
         date: "",
         startTime: "",
         endTime: "",
@@ -269,12 +278,15 @@ export default {
         maxnum: 0,
         period_need: 0,
         preview: "",
-        crid: ""
+        crid: "",
+        mainTheater: "",
+        assistantTheater: '',
+        mainTheaterOption: [],
+        assistantTheaterOption: [],
       },
       // 批量删除数据
       deleteStr: "",
       options: {
-        teacherOption: [],
         classroomOption: []
       },
       rule: {
@@ -444,7 +456,11 @@ export default {
           },
           {
             prop: "tname",
-            label: "上课老师"
+            label: "主教老师"
+          },
+          {
+            prop: "atname",
+            label: "助教老师"
           },
           {
             prop: "cdate",
@@ -490,20 +506,7 @@ export default {
         editDetail: scope => {
           let row = scope.row;
           console.log(row);
-          (this.activeForm = {
-            room: row.room,
-            teacher: row.tid + "," + row.tname,
-            date: row.cdate,
-            startTime: row.begintime,
-            endTime: row.endtime,
-            cname: row.cname,
-            maxnum: row.maxnum,
-            period_need: row.period_need,
-            preview: row.cdesc,
-            crid: row.crid,
-            previewImgUrl: row.cpicture,
-            imageUrl: row.cpicture
-          }),
+            this.editDetailData(row);
             this.eidtActiveCourse();
         },
 
@@ -519,9 +522,30 @@ export default {
         }
       };
 
-      this.getTeacherData();
+      this.getTeacherData(this.activeForm).then(res=> {
+        console.log('aaaaaaaaaaaa', res);
+      });
       this.watingTableData = [];
       this.getActiveData();
+    },
+
+    /**
+     * 填充编辑数据
+     */
+    editDetailData(row) {
+      this.activeForm.room = row.room,
+      this.activeForm.mainTheater = row.tid + "," + row.tname,
+      this.activeForm.assistantTheater = row.atid + "," + row.atname,
+      this.activeForm.date = row.cdate,
+      this.activeForm.startTime = row.begintime,
+      this.activeForm.endTime = row.endtime,
+      this.activeForm.cname = row.cname,
+      this.activeForm.maxnum = row.maxnum,
+      this.activeForm.period_need = row.period_need,
+      this.activeForm.preview = row.cdesc,
+      this.activeForm.crid = row.crid,
+      this.activeForm.previewImgUrl = row.cpicture,
+      this.activeForm.imageUrl = row.cpicture
     },
 
     initDoneTable() {
@@ -536,7 +560,11 @@ export default {
           },
           {
             prop: "tname",
-            label: "上课老师"
+            label: "主教老师"
+          },
+          {
+            prop: "atname",
+            label: "助教老师"
           },
           {
             prop: "cdate",
@@ -693,15 +721,6 @@ export default {
     },
 
     /** API */
-    // 获取老师
-    getTeacherData() {
-      this.teacherOption = [];
-      this.$axios.post("/getTeacherSelectVul").then(res => {
-        if (res && res.data.length) {
-          this.options.teacherOption = res.data;
-        }
-      });
-    },
     deleteActive(id, status) {
       console.log("id", id);
       this.$axios
