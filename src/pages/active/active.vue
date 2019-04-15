@@ -297,9 +297,16 @@ export default {
             trigger: "blur"
           }
         ],
-        teacher: [
+        mainTheater: [
           {
-            message: "上课老师必选",
+            message: "请选择主教老师",
+            required: true,
+            trigger: "blur"
+          }
+        ],
+        assistantTheater: [
+          {
+            message: "请选择助教老师",
             required: true,
             trigger: "blur"
           }
@@ -629,7 +636,8 @@ export default {
       this.activeForm.previewImgUrl = "";
       this.activeForm.imageUrl = "";
       this.activeForm.room = "";
-      this.activeForm.teacher = "";
+      this.activeForm.mainTheater = "";
+      this.activeForm.assistantTheater = "";
       this.activeForm.date = "";
       this.activeForm.startTime = "";
       this.activeForm.endTime = "";
@@ -685,8 +693,10 @@ export default {
             cdesc: this.activeForm.preview,
             begintime: this.activeForm.startTime,
             endtime: this.activeForm.endTime,
-            tid: this.activeForm.teacher.split(",")[0],
-            tname: this.activeForm.teacher.split(",")[1],
+            tid: this.activeForm.mainTheater.split(",")[0],
+            tname: this.activeForm.mainTheater.split(",")[1],
+            atid: this.activeForm.assistantTheater.split(",")[0],
+            atname: this.activeForm.assistantTheater.split(",")[1],
             period_need: this.activeForm.period_need,
             maxnum: this.activeForm.maxnum,
             ctype: 2,
