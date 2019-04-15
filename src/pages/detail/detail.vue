@@ -315,7 +315,11 @@
             },
             {
               prop: 'tname',
-              label: '上课老师'
+              label: '主教老师'
+            },
+            {
+              prop: 'atname',
+              label: '助教老师'
             },
             {
               prop: 'room',
