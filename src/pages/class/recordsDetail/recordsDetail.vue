@@ -42,14 +42,14 @@
               <span>{{detail.room}}</span>
             </div>
           </div>
+        </div>
+        <div class="info-ctn">
           <div class="info">
             <div class="inline-label">应到人数:</div>
             <div>
               <span>{{detail.allarrive}}</span>
             </div>
           </div>
-        </div>
-        <div class="info-ctn">
           <div class="info">
             <div class="inline-label">签到人数:</div>
             <div>
@@ -76,7 +76,7 @@
           <img :src="imgUrl + item.src" alt :preview="index">
         </div>
       </div>
-      <div class="title">课堂动态(视频)</div>
+      <!-- <div class="title">课堂动态(视频)</div>
       <div class="ctn-img video">
         <div class="img-item" v-for="(item, index) in trend.videoList" :key="index">
           <video autoplay :src="videoUrl + item.src" controls preload>
@@ -85,7 +85,7 @@
             并用你喜欢的播放器观看!
           </video>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="ctn">
       <div class="title">学生列表</div>
