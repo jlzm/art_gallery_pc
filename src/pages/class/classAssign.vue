@@ -109,7 +109,7 @@
               </el-form-item>
             </el-col>
           </el-form-item>
-          <el-form-item label="主教老师" prop="teacher">
+          <el-form-item label="主教老师" prop="mainTheater">
             <el-select v-model="assignForm.mainTheater" filterable placeholder="请选择主教老师" size="small">
               <el-option
                 v-for="item in assignForm.mainTheaterOption"
@@ -120,7 +120,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="助教老师" prop="teacher">
+          <el-form-item label="助教老师" prop="assistantTheater">
             <el-select v-model="assignForm.assistantTheater" filterable placeholder="请选择助教老师" size="small">
               <el-option
                 v-for="item in assignForm.assistantTheaterOption"

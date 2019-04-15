@@ -203,7 +203,7 @@
             <el-form-item label="所需课时" prop="period_need">
               <el-input-number v-model="activeForm.period_need" size="small" :min="0"></el-input-number>
             </el-form-item>
-            <el-form-item label="报名人数" prop="maxnum">
+            <el-form-item label="活动人数" prop="maxnum">
               <el-input-number v-model="activeForm.maxnum" size="small" :min="0"></el-input-number>
             </el-form-item>
             <el-form-item label="课程预热" prop="preview">
@@ -501,7 +501,7 @@ export default {
           },
           {
             prop: "allarrive",
-            label: "已报人数"
+            label: "报名人数"
           }
         ],
         showDetail: scope => {

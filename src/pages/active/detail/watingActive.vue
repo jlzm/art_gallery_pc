@@ -61,7 +61,7 @@
         <div class="info-ctn">
           <div class="info">
             <div class="inline-label">
-              已报人数:
+              报名人数:
             </div>
             <div>
               <span>{{detail.allarrive}}人</span>
@@ -69,7 +69,7 @@
           </div>
           <div class="info">
             <div class="inline-label">
-              报名人数:
+              活动人数:
             </div>
             <div>
               <span>{{detail.maxnum}}人</span>
