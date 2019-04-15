@@ -25,9 +25,15 @@
         </div>
         <div class="info-ctn">
           <div class="info">
-            <div class="inline-label">上课老师:</div>
+            <div class="inline-label">主教老师:</div>
             <div>
               <span>{{detail.tname}}</span>
+            </div>
+          </div>
+          <div class="info">
+            <div class="inline-label">助教老师:</div>
+            <div>
+              <span>{{detail.atname}}</span>
             </div>
           </div>
           <div class="info">
@@ -316,7 +322,7 @@ export default {
           crid: this.$route.query.crid
         })
         .then(res => {
-          console.log("res", res);
+          console.log("res", res.data);
           if (res && res.data) {
             this.detail = res.data.course;
             this.tableData = res.data.evaluation;

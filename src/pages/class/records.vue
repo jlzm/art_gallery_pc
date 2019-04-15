@@ -33,7 +33,6 @@
             </el-option>
           </el-select>
         </el-form-item>
-      
           <el-form-item label="上课学员" prop="treeValue">
             <treeselect
               placeholder="请选择上课学员"
@@ -73,21 +72,27 @@
   import '@riophae/vue-treeselect/dist/vue-treeselect.css';
   import mixin from '../../mixins/tableMixin';
 
+import publicFn from "../../mixins/pubilc.vue";
+
+
   export default {
     name: 'records',
-    mixins: [mixin],
+    mixins: [mixin, publicFn],
     components: {
       Treeselect
     },
+    created() {
+      
+    },
     mounted() {
+      this.getTeacherData(this.recordForm, true);
       this.initTable();
-      this.getStudentByCstep();
-      this.getTeacherData();
     },
     data() {
       return {
         // 学生表
         recordForm: {
+          tid: '',
           // 学生姓名
           date: '',
           classes: '',
@@ -104,6 +109,8 @@
             }
           ],
           teacherOption: [],
+          assistantTheaterOption: [],
+          mainTheaterOption: [],
 
           sid: null,
           studentOption: []
@@ -120,6 +127,7 @@
       };
     },
     methods: {
+
       initTable() {
         this.tableOption = {
           isMutiple: false,
@@ -151,7 +159,11 @@
             },
             {
               prop: 'tname',
-              label: '上课老师'
+              label: '主教老师'
+            },
+            {
+              prop: 'atname',
+              label: '助教老师'
             },
             {
               prop: 'room',
@@ -280,16 +292,7 @@
             }
           });
       },
-      // 获取老师
-      getTeacherData() {
-        this.teacherOption = [];
-        this.$axios.post('/getTeacherSelectVul')
-          .then((res) => {
-            if (res && res.data.length) {
-              this.recordForm.teacherOption = res.data;
-            }
-          });
-      },
+
       getStudentByCstep() { // 学生下拉框
         this.$axios.post('/getStudentByClasz')
           .then((res) => {

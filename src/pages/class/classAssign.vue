@@ -36,7 +36,8 @@
         <el-table-column prop="room" label="上课教室" align="center"></el-table-column>
         <el-table-column prop="cname" label="课程名" align="center"></el-table-column>
         <el-table-column prop="time" label="上课时间" align="center" :formatter="timeformatter"></el-table-column>
-        <el-table-column prop="tname" label="上课老师" align="center"></el-table-column>
+        <el-table-column prop="tname" label="主教老师" align="center"></el-table-column>
+        <el-table-column prop="atname" label="助教老师" align="center"></el-table-column>
         <el-table-column prop="sname" label="上课学生" align="center" show-overflow-tooltip></el-table-column>
         <el-table-column prop="period_need" label="所需课时" align="center" show-overflow-tooltip></el-table-column>
         <el-table-column label="操作" align="center">
@@ -184,8 +185,9 @@ export default {
     // 页面加载获取学生
     this.getStudentByCstep();
     this.getClassRoom();
+    
     // 获取老师
-    this.getTeacherData();
+    this.getTeacherData(this.assignForm);
     this.getIndexData();
   },
   data() {
@@ -339,6 +341,7 @@ export default {
     };
   },
   methods: {
+
     // 合并表格
     arraySpanMethod({ row, column, rowIndex, columnIndex }) {
       let type = ["cdate", "weeknum", "room"];
@@ -681,19 +684,6 @@ export default {
         let data;
         if (res && res.data.length) {
           this.assignForm.classroomOption = res.data;
-        }
-      });
-    },
-
-    // 获取老师
-    getTeacherData() {
-      this.mainTheaterOption = [];
-      this.assistantTheaterOption = [];
-      this.$axios.post("/getTeacherSelectVul").then(res => {
-        console.log('res', res.data);
-        if (res && res.data.length) {
-          this.assignForm.mainTheaterOption = res.data.mainTheater;
-          this.assignForm.assistantTheaterOption = res.data.assistantTheater;
         }
       });
     },
