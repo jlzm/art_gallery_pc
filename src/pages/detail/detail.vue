@@ -178,6 +178,7 @@
               </div>
               <div>
                 <el-input-number
+                disabled
                   placeholder="请输入内容"
                   v-model="detail.period_total"
                   size="small"
