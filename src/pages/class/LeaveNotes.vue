@@ -137,6 +137,10 @@ export default {
             hidden: "hidden"
           },
           {
+            prop: "sname",
+            label: "姓名"
+          },
+          {
             prop: "cname",
             label: "课程名称"
           },
@@ -145,15 +149,8 @@ export default {
             label: "上课日期"
           },
           {
-            prop: "weeknum",
-            label: "星期"
-          },
-          {
-            prop: "time",
-            label: "时间段",
-            formatter(row) {
-              return row.begintime + " - " + row.endtime;
-            }
+            prop: "instime",
+            label: "请假日期"
           },
           {
             prop: "tname",
@@ -164,23 +161,10 @@ export default {
             label: "助教老师"
           },
           {
-            prop: "room",
-            label: "上课教室"
-          },
-
-          {
-            prop: "allarrive",
-            label: "应到人数"
-          },
-          {
-            prop: "realarrive",
-            label: "签到人数"
-          },
-          {
             prop: "status",
-            label: "课程状态",
+            label: "请假状态",
             formatter(row) {
-              return parseInt(row.status) === 0 ? "未开始" : "已结束";
+              return row.status == 0 ? "审批中" : "审批通过";
             }
           }
         ],
@@ -241,25 +225,30 @@ export default {
           page: this.pageJSON.currentPage,
           rows: this.pageJSON.pageSize,
           cname: this.recordForm.cname,
-          clasz: this.recordForm.classes,
           tid: this.recordForm.tid,
-          sid: this.recordForm.sid
+          sid: this.recordForm.sid,
+          status: this.recordFormstatus
         }
       );
       if (this.recordForm.date) {
-        json.begindate = this.recordForm.date[0];
+        json.startdate = this.recordForm.date[0];
         json.enddate = this.recordForm.date[1];
       } else {
-        json.begindate = "";
+        json.startdate = "";
         json.enddate = "";
       }
       this.tableData = [];
-      this.$axios.post("/getCourseByPage", json).then(res => {
+      this.$axios.post("/getLeaveByPage", json).then(res => {
         if (res && res.data && res.data.total > 0) {
           this.tableData = res.data.rows;
           this.total = res.data.total;
           this.pageJSON.crrentPage = res.data.crrentPage;
           this.pageJSON.pageSize = res.data.pageSize;
+          this.tableData.forEach(item => {
+            let instime = item.instime;
+            let index = instime.indexOf('.');
+            item.instime = instime.substr(0, index);
+          })
         }
       });
     },
