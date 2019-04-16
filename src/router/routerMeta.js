@@ -49,6 +49,9 @@ let recordsDetailMeta = [{
 let classMetaClassAssignMeta = [{
   title: '上课排班'
 }];
+let classMetaClassLeaveNotes = [{
+  title: '请假记录'
+}];
 // 活动管理
 let activeMeta = [{
   title: '活动课程管理',
@@ -120,6 +123,7 @@ detailMeta = personal.concat(detailMeta);
 
 classMetaRecordMeta = classMeta.concat(classMetaRecordMeta);
 classMetaClassAssignMeta = classMeta.concat(classMetaClassAssignMeta);
+classMetaClassLeaveNotes = classMeta.concat(classMetaClassLeaveNotes);
 
 recordsDetailMeta = classMeta.concat(recordsDetailMeta);
 activeDetailMeta = activeMeta.concat(activeDetailMeta);
@@ -146,6 +150,7 @@ export default {
   detailMeta,
   classMetaRecordMeta,
   classMetaClassAssignMeta,
+  classMetaClassLeaveNotes,
   recordsDetailMeta,
   activeDetailMeta,
   attenceRecordMeta,

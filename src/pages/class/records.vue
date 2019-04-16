@@ -33,7 +33,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-          <el-form-item label="上课学员" prop="treeValue">
+          <!-- <el-form-item label="上课学员" prop="treeValue">
             <treeselect
               placeholder="请选择上课学员"
               v-model="recordForm.sid"
@@ -42,7 +42,7 @@
               noOptionsText="没有相关成员"
               :value-consists-of="'LEAF_PRIORITY'"
               size="small"/>
-          </el-form-item>
+          </el-form-item> -->
           
         
         <el-form-item >
@@ -50,9 +50,9 @@
         </el-form-item>
       </el-form>
       <el-form :inline="true">
-        <!-- <el-form-item class="oprator">
-          <el-button class="delete-btn" type="danger" icon="el-icon-delete" size="small" @click="deleteAll()">批量删除</el-button>
-        </el-form-item> -->
+        <el-form-item class="oprator">
+          <el-button type="primary" icon="el-icon-delete" size="small" @click="exportExcel()">导出</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <tables :tableOption='tableOption'
@@ -219,20 +219,12 @@ import publicFn from "../../mixins/pubilc";
         }
         console.log(this.deleteStr);
       },
-      // 批量删除确认
-      deleteAll() {
-        if (!this.deleteStr) {
-          this.$message.info('请至少选择一项');
-        } else {
-          this.$confirm('此操作将删除该批次课程, 是否确认?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          })
-            .then(() => {
-              this.deleteActive(this.deleteStr);
-            });
-        }
+
+      /**
+       * 导出
+       */
+      exportExcel() {
+        
       },
 
       /**搜索 */

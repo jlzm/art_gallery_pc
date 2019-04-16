@@ -112,120 +112,6 @@
                   :preview="index"
                 >
               </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
-              <div v-for="(item, index) in scope.row.t_eva.photoUrl.split(',')" :key="index" class="imgs dib">
-                <img
-                  :src="imgUrl + item"
-                  :preview="index"
-                >
-              </div>
             </template>
           </el-table-column>
           <!-- <el-table-column fixed="right" label="操作" width="100">
@@ -316,6 +202,9 @@ export default {
       this.studentDialog = true;
     },
 
+  /**
+   * 获取学生列表
+   */
     getClassDetail() {
       this.$axios
         .post("/getCourseRecordDetails", {

@@ -7,23 +7,6 @@
         </div>
         <div class="detail-inline">
           <div class="info-ctn">
-
-            <!--<div class="info">-->
-            <!--<div class="inline-label">-->
-            <!--学员id:-->
-            <!--</div>-->
-            <!--<div>-->
-            <!--<el-input-->
-            <!--placeholder="请输入内容"-->
-            <!--v-model="detail.sid"-->
-            <!--size="small"-->
-            <!--disabled-->
-            <!--v-if="editable">-->
-            <!--</el-input>-->
-            <!--<span v-else>{{detail.sid}}</span>-->
-            <!--</div>-->
-            <!--</div>-->
-
             <div class="info">
               <div class="inline-label">
                 姓名:
@@ -211,6 +194,11 @@
         <div class="title">
           上课信息
         </div>
+        <el-form :inline="true">
+          <el-form-item class="oprator">
+            <el-button type="primary" icon="el-icon-edit" size="small" class="sys-corlor" @click="exportExcel()">导出</el-button>
+          </el-form-item>
+        </el-form>
         <div class="tables">
           <tables
             :tableOption="tableOption"
@@ -288,6 +276,13 @@
       };
     },
     methods: {
+      /**
+       * 导出为excel
+       */
+      exportExcel() {
+
+      },
+
       initTable() {
         this.tableOption = {
           isMutiple: false,
@@ -460,7 +455,7 @@
 
   .detail-content .title {
     font-weight: bold;
-    margin-top: 15px;
+    margin: 15px 0 15px 0;
   }
 
   .detail-content .detail-inline {
@@ -500,7 +495,7 @@
   }
 
   .detail-content .ctn .tables {
-    margin-top: 30px;
+    margin-top: 10px;
   }
 
   .details .buttons {
@@ -508,4 +503,6 @@
     top: 15px;
     right: 15px;
   }
+
+
 </style>

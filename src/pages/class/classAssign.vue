@@ -2,7 +2,7 @@
   <div class="class-assign">
     <div class="search" v-if="!isIndex">
       <el-form ref="search">
-        <el-form-item label="选择日期" prop="date">
+        <el-form-item class="dib form-item" label="选择日期" prop="date">
           <el-date-picker
             v-model="form.week"
             type="daterange"
@@ -17,6 +17,10 @@
           <el-tooltip class="item" effect="dark" :content="tips" placement="top-start">
             <i class="el-icon-info"></i>
           </el-tooltip>
+        </el-form-item>
+        <el-form-item class="dib form-item">
+          <el-button type="primary" size="small" @click="thisWeek()">本周排课</el-button>
+          <el-button type="primary" size="small" @click="downWeek()">下周排课</el-button>
         </el-form-item>
       </el-form>
       <div class="right">
@@ -110,7 +114,12 @@
             </el-col>
           </el-form-item>
           <el-form-item label="主教老师" prop="mainTheater">
-            <el-select v-model="assignForm.mainTheater" filterable placeholder="请选择主教老师" size="small">
+            <el-select
+              v-model="assignForm.mainTheater"
+              filterable
+              placeholder="请选择主教老师"
+              size="small"
+            >
               <el-option
                 v-for="item in assignForm.mainTheaterOption"
                 :key="item.value"
@@ -121,7 +130,12 @@
           </el-form-item>
 
           <el-form-item label="助教老师" prop="assistantTheater">
-            <el-select v-model="assignForm.assistantTheater" filterable placeholder="请选择助教老师" size="small">
+            <el-select
+              v-model="assignForm.assistantTheater"
+              filterable
+              placeholder="请选择助教老师"
+              size="small"
+            >
               <el-option
                 v-for="item in assignForm.assistantTheaterOption"
                 :key="item.value"
@@ -185,10 +199,12 @@ export default {
     // 页面加载获取学生
     this.getStudentByCstep();
     this.getClassRoom();
-    
+
     // 获取老师
     this.getTeacherData(this.assignForm);
     this.getIndexData();
+
+    console.log("this.thisWeekDate", this.thisWeekDate);
   },
   data() {
     // 时间校验
@@ -198,8 +214,11 @@ export default {
       }
     };
     return {
+      thisWeekDate: [],
+      downWeekDate: [],
+      thisWeekDateBtn: null,
       form: {
-        week: ""
+        week: []
       },
       /**const */
       // 提示
@@ -239,7 +258,7 @@ export default {
         date: "",
         times: "",
         mainTheater: "",
-        assistantTheater: '',
+        assistantTheater: "",
         mainTheaterOption: [],
         assistantTheaterOption: [],
         classNumber: "",
@@ -341,7 +360,6 @@ export default {
     };
   },
   methods: {
-
     // 合并表格
     arraySpanMethod({ row, column, rowIndex, columnIndex }) {
       let type = ["cdate", "weeknum", "room"];
@@ -433,15 +451,16 @@ export default {
     timeformatter(val) {
       return val.begintime + "-" + val.endtime;
     },
-    
+
     changeDate(val) {
       // this.$refs.search.validate()
       const weekTime = 1000 * 60 * 60 * 24 * 6;
       const clearTime = msg => {
         this.$message.error(msg);
-        this.form.week = "";
+        this.form.week = [];
       };
       if (val) {
+        console.log("val", val);
         const time0 = new Date(val[0]);
         const time1 = new Date(val[1]);
         if (time1.getTime() - time0.getTime() > weekTime) {
@@ -450,6 +469,87 @@ export default {
           this.getCourseRecordByWeek(this.form.week);
         }
       }
+      console.log("this.thisWeekDate", this.thisWeekDate);
+    },
+
+    /**
+     * 获取前后日期方法
+     */
+    funDate(dayNum) {
+      let month1 = null,
+          day1 = null,
+          month2 = null,
+          day2 = null;
+
+      let date1 = new Date();
+
+      // date1.getMonth() + 1 < 10 ? month1 = "0" + (date1.getMonth() + 1) :  month1 = (date1.getMonth() + 1);
+      // date1.getDate() < 10 ? day1 = "0" + (date1.getDate()) : day1 = (date1.getDate());
+
+      // let time1 = `${date1.getFullYear()}-${month1}-${day1}`;
+
+      let date2 = new Date(date1);
+      date2.setDate(date1.getDate() + dayNum);
+      date2.getMonth() + 1 < 10 ? month2 = "0" + (date2.getMonth() + 1) : month2 = (date2.getMonth() + 1);
+      date2.getDate() < 10 ? day2 = "0" + (date2.getDate()) : day2 = (date2.getDate());
+      let time2 = `${date2.getFullYear()}-${month2}-${day2}`;
+      return time2;
+    },
+
+    /**
+     * 下周课程
+     */
+    downWeek() {
+      if(this.thisWeekDateBtn == 'downWeek') return;
+      
+      let downWeekDate = this.downWeekDate;
+      downWeekDate[0] = this.funDate(6);
+      downWeekDate[1] = this.funDate(12);
+      console.log("downWeekDate", downWeekDate);
+      this.form.week = downWeekDate;
+      this.getCourseRecordByWeek(this.form.week);
+      this.thisWeekDateBtn = 'downWeek';
+    },
+
+    /**
+     * 本周课程
+     */
+    thisWeek() {
+      if(this.thisWeekDateBtn == 'thisWeek') return;
+      this.thisWeekDateBtn = false;
+      this.form.week = this.thisWeekDate;
+      this.getCourseRecordByWeek(this.form.week);
+      this.thisWeekDateBtn = 'thisWeek';
+    },
+
+    /** API */
+    getCourseRecordByWeek(data) {
+      let json = {
+        begindate: data[0],
+        enddate: data[1],
+        ctype: "1"
+      };
+
+      console.log("json", json);
+      // 结束时间在今天之前
+      const isBeforeTody = new Date(json.enddate) - new Date() < 0;
+      let message = "该段时间没有排课记录,请手动添加";
+      this.$axios.post("/getCourseRecordByWeek", json).then(res => {
+        if (res.data.length) {
+          this.formatData(res.data);
+          this.canAutoAssign = false;
+        } else {
+          isBeforeTody && (message = "该段时间没有排课记录");
+          this.tableData = [];
+          this.$message({
+            message: message,
+            type: "warning",
+            duration: 3500,
+            showClose: true
+          });
+          this.canAutoAssign = !isBeforeTody;
+        }
+      });
     },
 
     eidtOrAdd(data, type) {
@@ -524,7 +624,9 @@ export default {
 
       this.$refs.assignForm.validate(validate => {
         if (validate) {
-          if (this.compareDate(this.assignForm.startTime, this.assignForm.endTime)) {
+          if (
+            this.compareDate(this.assignForm.startTime, this.assignForm.endTime)
+          ) {
             return false;
           }
           let dateJson = util.getTime(this.assignForm.date);
@@ -611,38 +713,8 @@ export default {
       let startDateJson = util.getTime(weekStart);
       let endDateJson = util.getTime(weekEnd);
       let date = [formatStr(startDateJson), formatStr(endDateJson)];
-      this.form.week = date;
+      this.thisWeekDate = this.form.week = date;
       this.getCourseRecordByWeek(date);
-    },
-
-    /** API */
-    getCourseRecordByWeek(data) {
-      let json = {
-        begindate: data[0],
-        enddate: data[1],
-        ctype: '1'
-      };
-
-      console.log('json', json);
-      // 结束时间在今天之前
-      const isBeforeTody = new Date(json.enddate) - new Date() < 0;
-      let message = "该段时间没有排课记录,请手动添加";
-      this.$axios.post("/getCourseRecordByWeek", json).then(res => {
-        if (res.data.length) {
-          this.formatData(res.data);
-          this.canAutoAssign = false;
-        } else {
-          isBeforeTody && (message = "该段时间没有排课记录");
-          this.tableData = [];
-          this.$message({
-            message: message,
-            type: "warning",
-            duration: 3500,
-            showClose: true
-          });
-          this.canAutoAssign = !isBeforeTody;
-        }
-      });
     },
 
     getClassRoomByWeek(data) {
@@ -722,7 +794,7 @@ export default {
         });
       }
     },
-    
+
     deleteCourseRecord(id) {
       this.dialog.assignFormVisible = false;
       this.$axios
@@ -742,6 +814,7 @@ export default {
         });
     }
   },
+
   watch: {
     "assignForm.class"(newVal) {
       console.log(newVal);
@@ -781,5 +854,9 @@ export default {
 
 .class-assign /deep/ .vue-treeselect {
   line-height: initial;
+}
+
+.form-item {
+  margin-right: 30px;
 }
 </style>

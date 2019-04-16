@@ -58,7 +58,12 @@
                 name: '上课排班',
                 id: '3-2',
                 path: '/home/class/classAssign'
-              }
+              },
+              {
+                name: '请假记录',
+                id: '3-3',
+                path: '/home/class/classLeaveNotes'
+              },
             ]
           },
           {

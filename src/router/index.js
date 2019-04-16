@@ -82,7 +82,15 @@ const router = new Router({
               meta: {
                 breadList: meta.classMetaClassAssignMeta
               },
-            }
+            },
+            {
+              name: 'leaveNotes',
+              path: 'classLeaveNotes',
+              component: resolve => require(['../pages/class/leaveNotes'], resolve),
+              meta: {
+                breadList: meta.classMetaClassLeaveNotes
+              },
+            },
           ]
         },
         {
