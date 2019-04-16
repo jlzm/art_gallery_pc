@@ -58,7 +58,13 @@
         <el-form :inline="true">
           <el-form-item class="oprator">
             <el-button type="primary" icon="el-icon-plus" size="small" @click="newItem()">新建</el-button>
-            <el-button type="primary" icon="el-icon-document" size="small" @click="exportExcel()">导出</el-button>
+            <el-button
+              v-if="type==='students'"
+              type="primary"
+              icon="el-icon-document"
+              size="small"
+              @click="exportExcel()"
+            >导出</el-button>
             <el-button
               class="delete-btn"
               type="danger"
@@ -122,7 +128,6 @@
               ></el-option>
             </el-select>
           </el-form-item>
-
 
           <el-form-item label="家长姓名" prop="parentName">
             <el-input v-model="newStudentForm.parentName" size="small"></el-input>
@@ -288,7 +293,7 @@ export default {
         id: "",
         sale_total: 0,
         course_total: 0,
-        trole: '',
+        trole: ""
       },
       selectedId: [],
       tableData: [],
@@ -381,13 +386,35 @@ export default {
     };
   },
   methods: {
-
     /**
-       * 导出
-       */
-      exportExcel() {
-        
-      },
+     * 导出
+     */
+    exportExcel() {
+      if (this.type != "students") {
+        return false;
+      }
+      let json = {
+        sname: this.studentForm.studentName,
+        clasz: this.studentForm.classes,
+        sex: this.studentForm.sex
+      };
+      this.getStudentExcel(json);
+    },
+
+    getStudentExcel(json) {
+      this.$axios
+        .get("/getStudentExcel", {
+          params: json
+        })
+        .then(res => {
+          console.log("res", res);
+          // console.log('res', res.request.responseURL);
+          /**
+           * 脱了裤子放屁.。。.
+           */
+          window.open(res.request.responseURL);
+        });
+    },
 
     studengtTest(row) {
       let statusTxt = "";
@@ -653,8 +680,8 @@ export default {
         willingTime: [],
         age: 1,
         train_class: "",
-        clasz: "",
-      }
+        clasz: ""
+      };
     },
 
     // 多选表格
