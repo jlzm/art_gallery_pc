@@ -401,6 +401,9 @@ export default {
       this.getStudentExcel(json);
     },
 
+    /**
+     * 导出学生列表方法
+     */
     getStudentExcel(json) {
       this.$axios
         .get("/getStudentExcel", {

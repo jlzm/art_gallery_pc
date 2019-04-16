@@ -205,7 +205,40 @@ export default {
     /**
      * 导出
      */
-    exportExcel() {},
+    exportExcel() {
+      let json = Object.assign(
+        {},
+        {
+          page: "",
+          rows: "",
+          crid: "",
+          cname: this.recordForm.cname,
+          sname: "",
+          tid: this.recordForm.tid,
+          sid: this.recordForm.sid,
+          status: this.recordForm.status
+        }
+      );
+      if (this.recordForm.date) {
+        json.begindate = this.recordForm.date[0];
+        json.enddate = this.recordForm.date[1];
+      } else {
+        json.begindate = "";
+        json.enddate = "";
+      }
+      this.$axios
+        .get("/getLeaveExcel", {
+          params: json
+        })
+        .then(res => {
+          console.log("res", res);
+          // console.log('res', res.request.responseURL);
+          /**
+           * 脱了裤子放屁.。。.
+           */
+          window.open(res.request.responseURL);
+        });
+    },
 
     /**搜索 */
     searchData() {
@@ -246,9 +279,9 @@ export default {
           this.pageJSON.pageSize = res.data.pageSize;
           this.tableData.forEach(item => {
             let instime = item.instime;
-            let index = instime.indexOf('.');
+            let index = instime.indexOf(".");
             item.instime = instime.substr(0, index);
-          })
+          });
         }
       });
     },

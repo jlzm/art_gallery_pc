@@ -276,11 +276,25 @@
       };
     },
     methods: {
-      /**
-       * 导出为excel
-       */
       exportExcel() {
+        let json = {
+        sname: this.detail.sname,
+        clasz: this.detail.clasz,
+        sex: this.detail.sex
+      };
 
+        this.$axios
+        .get("/getStudentExcel", {
+          params: json
+        })
+        .then(res => {
+          console.log("res", res);
+          // console.log('res', res.request.responseURL);
+          /**
+           * 脱了裤子放屁.。。.
+           */
+          window.open(res.request.responseURL);
+        });
       },
 
       initTable() {
@@ -375,6 +389,7 @@
       getStudentDetail() {
         this.$axios.post('/getOneStudent', {sid: this.$route.params.id})
           .then((res) => {
+            console.log('sres', res);
             if (res && res.data) {
               this.detail = res.data;
             }
@@ -423,9 +438,9 @@
             if (res.data && res.data.total > 0) {
               this.tableData = res.data.rows;
               this.pageJSON = {
-                currentPage: data.crrentPage,
-                pageSize: data.pageSize,
-                total: data.total
+                currentPage: res.data.crrentPage,
+                pageSize: res.data.pageSize,
+                total: res.data.total
               };
             }
           });
