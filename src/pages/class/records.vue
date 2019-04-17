@@ -138,10 +138,6 @@ export default {
             hidden: "hidden"
           },
           {
-            prop: "cname",
-            label: "课程名称"
-          },
-          {
             prop: "cdate",
             label: "上课日期"
           },
@@ -150,8 +146,12 @@ export default {
             label: "星期"
           },
           {
+            prop: "cname",
+            label: "课程名称"
+          },
+          {
             prop: "time",
-            label: "时间段",
+            label: "上课时间",
             formatter(row) {
               return row.begintime + " - " + row.endtime;
             }

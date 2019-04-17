@@ -134,7 +134,7 @@
             <el-form-item label="课程名称" prop="cname">
               <el-input size="small" v-model="activeForm.cname"></el-input>
             </el-form-item>
-            <el-form-item label="主教老师" prop="teacher">
+            <el-form-item label="主教老师" prop="mainTheater">
               <el-select v-model="activeForm.mainTheater" filterable placeholder="请选择上课老师" size="small">
                 <el-option
                   v-for="item in activeForm.mainTheaterOption"
@@ -144,7 +144,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="助教老师" prop="teacher">
+            <el-form-item label="助教老师" prop="assistantTheater">
               <el-select v-model="activeForm.assistantTheater" filterable placeholder="请选择上课老师" size="small">
                 <el-option
                   v-for="item in activeForm.assistantTheaterOption"
@@ -458,6 +458,14 @@ export default {
         showEditBtn: true,
         column: [
           {
+            prop: "cdate",
+            label: "上课日期"
+          },
+          {
+            prop: "weeknum",
+            label: "星期"
+          },
+          {
             prop: "cname",
             label: "课程名称"
           },
@@ -470,16 +478,8 @@ export default {
             label: "助教老师"
           },
           {
-            prop: "cdate",
-            label: "上课日期"
-          },
-          {
-            prop: "weeknum",
-            label: "星期"
-          },
-          {
             prop: "time",
-            label: "时间段",
+            label: "上课时间",
             formatter: row => {
               return row.begintime + "-" + row.endtime;
             }
