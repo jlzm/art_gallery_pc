@@ -129,7 +129,7 @@ export default {
     initTable() {
       this.tableOption = {
         isMutiple: false,
-        showOpr: true,
+        showOpr: false,
         column: [
           {
             prop: "crid",
@@ -145,6 +145,14 @@ export default {
             label: "课程名称"
           },
           {
+            prop: "tname",
+            label: "主教老师"
+          },
+          {
+            prop: "atname",
+            label: "助教老师"
+          },
+          {
             prop: "cdate",
             label: "上课日期"
           },
@@ -153,12 +161,8 @@ export default {
             label: "请假日期"
           },
           {
-            prop: "tname",
-            label: "主教老师"
-          },
-          {
-            prop: "atname",
-            label: "助教老师"
+            prop: "approval",
+            label: "审批人"
           },
           {
             prop: "status",
@@ -168,7 +172,7 @@ export default {
             }
           }
         ],
-        showDetailBtn: true,
+        showDetailBtn: true
         // 查看详情事件
         // showDetail: scope => {
         //   const crid = scope.row.crid;
