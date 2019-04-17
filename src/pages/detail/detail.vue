@@ -155,18 +155,31 @@
                 </el-select>
               </div>
             </div>
-            <div class="info">
+            <div v-if="editable" class="info">
               <div lass="inline-label">
-                已买课时:
+                购买课时：
               </div>
               <div>
                 <el-input-number
-                disabled
+                  placeholder="请输入内容"
+                  v-model="detail.addPeriod"
+                  size="small"
+                  :min="0">
+                </el-input-number>
+              </div>
+            </div>
+            <div class="info">
+              <div lass="inline-label">
+                已买课时：
+              </div>
+              <div>
+                <el-input-number
+                  disabled
                   placeholder="请输入内容"
                   v-model="detail.period_total"
                   size="small"
                   v-if="editable"
-                  :min="1">
+                  :min="0">
                 </el-input-number>
                 <span v-else>{{detail.period_total}}  节</span>
               </div>
@@ -177,6 +190,7 @@
               </div>
               <div>
                 <el-input-number
+                  disabled
                   placeholder="请输入内容"
                   v-model="detail.period_surplus"
                   :min="0"
@@ -250,6 +264,7 @@
       return {
         claszOption: [],
         detail: {
+          addPeriod: 0,
           sid: '',
           sname: '',
           sex: '',
@@ -396,12 +411,14 @@
             console.log('sres', res);
             if (res && res.data) {
               this.detail = res.data;
+              this.detail.addPeriod = 0;
             }
           });
       },
 
       // 更新学生信息
       updateStudent() {
+        this.detail.period_total += this.detail.addPeriod;
         this.$axios.post('/updateStudent', this.detail)
           .then((res) => {
             console.log('res', res.data);
