@@ -160,16 +160,17 @@ export default {
             prop: "instime",
             label: "请假日期"
           },
-          {
-            prop: "approval",
-            label: "审批人"
-          },
+
           {
             prop: "status",
             label: "请假状态",
             formatter(row) {
               return row.status == 0 ? "审批中" : "审批通过";
             }
+          },
+          {
+            prop: "approval",
+            label: "审批人"
           }
         ],
         showDetailBtn: true
