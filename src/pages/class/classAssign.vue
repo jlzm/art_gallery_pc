@@ -91,7 +91,7 @@
                   placeholder="开始时间"
                   v-model="assignForm.startTime"
                   :picker-options="{
-                          start: '06:00',
+                          start: '08:00',
                           step: '00:10',
                           end: '22:00',
                         }"

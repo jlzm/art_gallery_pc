@@ -810,20 +810,20 @@ export default {
     getStudentData() {
       // this.tableData = []
       this.loading = true;
-      this.$axios
-        .post("/getStudentsByPage", {
+      let propsData = {
           page: this.pageJSON.currentPage,
           rows: this.pageJSON.pageSize,
           sname: this.studentForm.studentName,
           clasz: this.studentForm.classes,
           sex: this.studentForm.sex
-        })
+        }
+        console.log('propsData', propsData);
+      this.$axios
+        .post("/getStudentsByPage", propsData)
         .then(res => {
           this.loading = false;
           this.total = res.data.total;
-          if (res && res.data.rows && res.data.rows.length) {
-            this.tableData = res.data.rows;
-          }
+          this.tableData = res.data.rows;
         });
     },
     // 获取老师

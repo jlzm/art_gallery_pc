@@ -164,7 +164,8 @@
                   placeholder="请输入内容"
                   v-model="detail.addPeriod"
                   size="small"
-                  :min="0">
+                  :min="0"
+                  >
                 </el-input-number>
               </div>
             </div>
@@ -263,6 +264,7 @@
     data() {
       return {
         claszOption: [],
+        testaaa: 0,
         detail: {
           addPeriod: 0,
           sid: '',
@@ -411,8 +413,9 @@
             console.log('sres', res);
             if (res && res.data) {
               this.detail = res.data;
-              this.detail.addPeriod = 0;
             }
+            this.$set(this.detail, 'addPeriod', 0)
+              // this.detail.addPeriod = 0;
           });
       },
 
