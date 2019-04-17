@@ -612,9 +612,11 @@ export default {
             this.oprType = "show";
           },
           editDetail: scope => {
+            console.log('scope', scope);
             this.newTeacherForm = {
               title: "编辑详情",
               visible: true,
+              trole: scope.row.trole,
               teacherName: scope.row.tname,
               teacherAge: scope.row.tage,
               gender: scope.row.tsex + "",

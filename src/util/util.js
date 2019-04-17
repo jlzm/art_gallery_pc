@@ -66,11 +66,11 @@ function getArrVal(arr, type, getType, val) {
  */
 function debounce(fn, delay) {
   let timer = null
-  return function() {
+  return function () {
     let context = this
     let arg = arguments
     clearTimeout(timer)
-    time = setTimeout(function() {
+    time = setTimeout(function () {
       fn.apply(context, arg)
     }, delay)
   }

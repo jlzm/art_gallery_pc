@@ -477,24 +477,17 @@ export default {
     /**
      * 获取前后日期方法
      */
-    funDate(dayNum) {
-      let month1 = null,
-          day1 = null,
-          month2 = null,
-          day2 = null;
+    funDate(currentTime, dayNum) {
+      let month = null,
+          day = null;
 
-      let date1 = new Date();
-
-      // date1.getMonth() + 1 < 10 ? month1 = "0" + (date1.getMonth() + 1) :  month1 = (date1.getMonth() + 1);
-      // date1.getDate() < 10 ? day1 = "0" + (date1.getDate()) : day1 = (date1.getDate());
-
-      // let time1 = `${date1.getFullYear()}-${month1}-${day1}`;
-
-      let date2 = new Date(date1);
-      date2.setDate(date1.getDate() + dayNum);
-      date2.getMonth() + 1 < 10 ? month2 = "0" + (date2.getMonth() + 1) : month2 = (date2.getMonth() + 1);
-      date2.getDate() < 10 ? day2 = "0" + (date2.getDate()) : day2 = (date2.getDate());
-      let time2 = `${date2.getFullYear()}-${month2}-${day2}`;
+      let date = new Date(currentTime);
+      console.log('date', date);
+      date.setDate(date.getDate() + dayNum);
+      date.getMonth() + 1 < 10 ? month = "0" + (date.getMonth() + 1) : month = (date.getMonth() + 1);
+      date.getDate() < 10 ? day = "0" + (date.getDate()) : day = (date.getDate());
+      let time2 = `${date.getFullYear()}-${month}-${day}`;
+      console.log('time2', time2);
       return time2;
     },
 
@@ -505,8 +498,8 @@ export default {
       if(this.thisWeekDateBtn == 'downWeek') return;
       
       let downWeekDate = this.downWeekDate;
-      downWeekDate[0] = this.funDate(6);
-      downWeekDate[1] = this.funDate(12);
+      downWeekDate[0] = this.funDate(this.thisWeekDate[0], 7);
+      downWeekDate[1] = this.funDate(this.thisWeekDate[1], 7);
       this.form.week = downWeekDate;
       this.getCourseRecordByWeek(this.form.week);
       this.thisWeekDateBtn = 'downWeek';
@@ -516,8 +509,8 @@ export default {
       if(this.thisWeekDateBtn == 'afterWeek') return;
       
       let afterWeekDate = this.afterWeekDate;
-      afterWeekDate[0] = this.funDate(13);
-      afterWeekDate[1] = this.funDate(19);
+      afterWeekDate[0] = this.funDate(this.thisWeekDate[0], 14);
+      afterWeekDate[1] = this.funDate(this.thisWeekDate[1], 14);
       this.form.week = afterWeekDate;
       this.getCourseRecordByWeek(this.form.week);
       this.thisWeekDateBtn = 'afterWeek';
@@ -657,7 +650,8 @@ export default {
             period_need: this.assignForm.classNumber,
             cdate: dateJson.year + "-" + dateJson.month + "-" + dateJson.day,
             weeknum: dateJson.weekLabel,
-            crid: this.assignForm.crid
+            crid: this.assignForm.crid,
+            ctype: "1"
           };
           if (this.dialog.type === "new") {
             this.insertCourseRecord(json);
@@ -717,15 +711,21 @@ export default {
         return dateJson.year + "-" + dateJson.month + "-" + dateJson.day;
       };
       // 计算一周剩余时间
+      
       minusTime = ((6 + today.weeknum) % 7) * ONEDAYTIME;
       plusTime = ((7 - today.weeknum) % 7) * ONEDAYTIME;
       // 周一和周日的时间戳
       weekStart = new Date(todayTime - minusTime);
+
+
       weekEnd = new Date(todayTime + plusTime);
+      console.log('weekStart', weekStart);
+      console.log('weekEnd', weekEnd);
       // 周一和周日的日期
       let startDateJson = util.getTime(weekStart);
       let endDateJson = util.getTime(weekEnd);
       let date = [formatStr(startDateJson), formatStr(endDateJson)];
+      console.log('date', date);
       this.thisWeekDate = this.form.week = date;
       this.getCourseRecordByWeek(date);
     },

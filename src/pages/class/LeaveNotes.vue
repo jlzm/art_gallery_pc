@@ -137,6 +137,10 @@ export default {
             hidden: "hidden"
           },
           {
+            prop: "cdate",
+            label: "上课日期"
+          },
+          {
             prop: "sname",
             label: "姓名"
           },
@@ -151,10 +155,6 @@ export default {
           {
             prop: "atname",
             label: "助教老师"
-          },
-          {
-            prop: "cdate",
-            label: "上课日期"
           },
           {
             prop: "instime",
