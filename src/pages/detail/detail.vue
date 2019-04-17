@@ -208,7 +208,7 @@
         <div class="title">
           上课信息
         </div>
-        <el-form :inline="true">
+        <el-form v-if="tableData.length" :inline="true">
           <el-form-item class="oprator">
             <el-button type="primary" icon="el-icon-edit" size="small" class="sys-corlor" @click="exportExcel()">导出</el-button>
           </el-form-item>
@@ -295,7 +295,7 @@
        * 导出excel
        */
       exportExcel() {
-        if(!tableData.length) return;
+        if(!this.tableData.length) return;
         let json = {
         sname: this.detail.sname,
         clasz: this.detail.clasz,

@@ -49,7 +49,7 @@
           <el-button type="primary" icon="el-icon-search" size="small" @click="searchData()">查询</el-button>
         </el-form-item>
       </el-form>
-      <el-form v-if="tableOption.length" :inline="true">
+      <el-form v-if="tableData.length" :inline="true">
         <el-form-item class="oprator">
           <el-button type="primary" icon="el-icon-delete" size="small" @click="exportExcel()">导出</el-button>
         </el-form-item>

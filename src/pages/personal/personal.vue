@@ -390,7 +390,7 @@ export default {
      * 导出excel
      */
     exportExcel() {
-      if(!tableData.length) return;
+      if(!this.tableData.length) return;
       if (this.type != "students") {
         return false;
       }

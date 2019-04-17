@@ -223,7 +223,7 @@ export default {
      * 导出excel
      */
     exportExcel() {
-      if(!tableData.length) return;
+      if(!this.tableData.length) return;
       let json = Object.assign(
         {},
         {
