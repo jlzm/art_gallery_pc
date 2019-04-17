@@ -59,7 +59,7 @@
           <el-form-item class="oprator">
             <el-button type="primary" icon="el-icon-plus" size="small" @click="newItem()">新建</el-button>
             <el-button
-              v-if="type==='students'"
+              v-if="type==='students' && tableData.length"
               type="primary"
               icon="el-icon-document"
               size="small"
@@ -387,9 +387,10 @@ export default {
   },
   methods: {
     /**
-     * 导出
+     * 导出excel
      */
     exportExcel() {
+      if(!tableData.length) return;
       if (this.type != "students") {
         return false;
       }

@@ -276,7 +276,11 @@
       };
     },
     methods: {
+      /**
+       * 导出excel
+       */
       exportExcel() {
+        if(!tableData.length) return;
         let json = {
         sname: this.detail.sname,
         clasz: this.detail.clasz,
