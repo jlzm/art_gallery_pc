@@ -21,6 +21,7 @@
         <el-form-item class="dib form-item">
           <el-button type="primary" size="small" @click="thisWeek()">本周排课</el-button>
           <el-button type="primary" size="small" @click="downWeek()">下周排课</el-button>
+          <el-button type="primary" size="small" @click="afterWeek()">后周排课</el-button>
         </el-form-item>
       </el-form>
       <div class="right">
@@ -216,6 +217,7 @@ export default {
     return {
       thisWeekDate: [],
       downWeekDate: [],
+      afterWeekDate: [],
       thisWeekDateBtn: null,
       form: {
         week: []
@@ -505,10 +507,20 @@ export default {
       let downWeekDate = this.downWeekDate;
       downWeekDate[0] = this.funDate(6);
       downWeekDate[1] = this.funDate(12);
-      console.log("downWeekDate", downWeekDate);
       this.form.week = downWeekDate;
       this.getCourseRecordByWeek(this.form.week);
       this.thisWeekDateBtn = 'downWeek';
+    },
+
+    afterWeek(){
+      if(this.thisWeekDateBtn == 'afterWeek') return;
+      
+      let afterWeekDate = this.afterWeekDate;
+      afterWeekDate[0] = this.funDate(13);
+      afterWeekDate[1] = this.funDate(19);
+      this.form.week = afterWeekDate;
+      this.getCourseRecordByWeek(this.form.week);
+      this.thisWeekDateBtn = 'afterWeek';
     },
 
     /**
@@ -521,6 +533,7 @@ export default {
       this.getCourseRecordByWeek(this.form.week);
       this.thisWeekDateBtn = 'thisWeek';
     },
+
 
     /** API */
     getCourseRecordByWeek(data) {

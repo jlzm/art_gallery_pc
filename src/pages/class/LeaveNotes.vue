@@ -170,15 +170,15 @@ export default {
         ],
         showDetailBtn: true,
         // 查看详情事件
-        showDetail: scope => {
-          const crid = scope.row.crid;
-          this.$router.push({
-            path: "/home/recordsDetail/",
-            query: {
-              crid
-            }
-          });
-        }
+        // showDetail: scope => {
+        //   const crid = scope.row.crid;
+        //   this.$router.push({
+        //     path: "/home/recordsDetail/",
+        //     query: {
+        //       crid
+        //     }
+        //   });
+        // }
       };
       this.getData();
     },
