@@ -139,7 +139,7 @@ export default {
         })
         .then(res => {
           if (res && res.data) {
-            if (parseInt(res.data.code) === 1) {
+            if (parseInt(res.data.code) == 1) {
               this.$message({
                 message: res.data.msg,
                 type: "success"
@@ -188,9 +188,19 @@ export default {
         })
         .then(res => {
           if (res) {
+            if (res) {
+            if (parseInt(res.data.code) === 1) {
+              this.$message({
+                message: res.data.msg,
+                type: "success"
+              });
+              this.getSetUp();
             this.setUpFormVisible = false;
-            this.getSetUp();
-            console.log(res);
+
+            } else {
+              this.$message.error(res.data.msg);
+            }
+          } 
           }
         });
     }
