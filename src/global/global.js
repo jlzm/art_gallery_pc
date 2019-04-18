@@ -5,6 +5,8 @@ const baseurl = 'http://172.16.10.184:8080/HappyMomaArt/';
 
 // const baseurl = '/api/HappyMomaArt/';
 const imgUrl = baseurl + 'getImgUrl?ftype=photo&imgurl=';
+// const imgUrl = baseurl + 'showPicture?ftype=photo&imgurl=';
+
 const videoUrl = baseurl + 'getImgUrl?ftype=view&imgurl=';
 export default {
   CONTENTTYPE: contentType,
