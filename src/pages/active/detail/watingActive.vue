@@ -146,6 +146,8 @@
 <script>
   import mixin from '../../../mixins/tableMixin';
 
+  import global from '../../../global/global.js'
+
   export default {
     name: 'watingActive',
     mixins: [mixin],
@@ -157,6 +159,7 @@
       return {
         crid: '',
         detail: {
+          cpicture: '',
           course: '',
           room: "",
           allarrive: 0,
@@ -197,6 +200,7 @@
             console.log('res', res.data);
             this.detail = res.data.course;
             this.tableData = res.data.evaluation;
+            this.detail.cpicture = global.IMGURL + this.detail.cpicture;
           });
       }
     },
