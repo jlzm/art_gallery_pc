@@ -8,7 +8,7 @@ let personal = [{
   path: '/home/personal/students'
 },
   {
-    title: '学生管理',
+    title: '会员管理',
     path: '/home/personal/students',
     type: 'students'
   },

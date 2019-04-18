@@ -330,12 +330,8 @@
               label: '日期'
             },
             {
-              prop: 'weeknum',
-              label: '星期'
-            },
-            {
               prop: 'times',
-              label: '时间段',
+              label: '上课时间',
               formatter(row) {
                 return row.begintime + ' ~ ' + row.endtime;
               }
@@ -363,16 +359,20 @@
                 return parseInt(row.ctype) === 1 ? '普通课程' : '活动课程';
               }
             },
+                        {
+              prop: 'atname',
+              label: '签到老师'
+            },
             {
               prop: 'signtime',
               label: '签到时间',
               formatter(row) {
-                return row.signtime ? row.signtime.slice(0, -2) : '尚未签到';
+                return row.signtime ? row.signtime.slice(0, -5) : '尚未签到';
               }
             },
             {
               prop: 'period_need',
-              label: '课时'
+              label: '消耗课时'
             },
           ]
         };

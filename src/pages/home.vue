@@ -32,7 +32,7 @@
             path: '/home/personal',
             childData: [
               {
-                name: '学员管理',
+                name: '会员管理',
                 id: '2-1',
                 path: '/home/personal/students'
               },
