@@ -89,7 +89,7 @@
               活动人员:
             </div>
             <div>
-              <span>{{detail.allsname}}</span>
+              <span>{{detail.sname}}</span>
             </div>
         </div>
         <div class="activity-img-wrap">
