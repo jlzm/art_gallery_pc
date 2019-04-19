@@ -298,14 +298,18 @@
        */
       exportExcel() {
         if(!this.tableData.length) return;
+      //   let json = {
+      //   sname: this.detail.sname,
+      //   clasz: this.detail.clasz,
+      //   sex: this.detail.sex
+      // };
         let json = {
-        sname: this.detail.sname,
-        clasz: this.detail.clasz,
-        sex: this.detail.sex
+        sid: this.detail.sid,
+       
       };
 
         this.$axios
-        .get("/getStudentExcel", {
+        .get("/getCourseExcel", {
           params: json
         })
         .then(res => {

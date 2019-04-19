@@ -551,7 +551,7 @@ export default {
       this.activeForm.period_need = row.period_need,
       this.activeForm.preview = row.cdesc,
       this.activeForm.crid = row.crid,
-      this.activeForm.previewImgUrl = row.cpicture,
+      this.activeForm.previewImgUrl = global.IMGURL + row.cpicture,
       this.activeForm.imageUrl = row.cpicture
     },
 
