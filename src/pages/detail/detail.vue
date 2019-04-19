@@ -364,7 +364,7 @@
               }
             },
                         {
-              prop: 'atname',
+              prop: 'signtname',
               label: '签到老师'
             },
             {
