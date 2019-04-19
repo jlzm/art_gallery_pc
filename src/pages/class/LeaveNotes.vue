@@ -165,7 +165,7 @@ export default {
             prop: "status",
             label: "请假状态",
             formatter(row) {
-              return row.status == 0 ? "审批中" : "审批通过";
+              return row.status == 1 ? "审批中" : "已同意";
             }
           },
           {
