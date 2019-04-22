@@ -145,11 +145,13 @@
               ></el-option>
             </el-select>
           </el-form-item>
+          {{assignForm.treeValue}}
           <el-form-item label="上课学员" prop="treeValue">
             <treeselect
               placeholder="请选择上课学员"
               v-model="assignForm.treeValue"
               :multiple="true"
+              :clearOnSelect="true"
               :options="assignForm.studentOption"
               :value-consists-of="'LEAF_PRIORITY'"
               size="small"
