@@ -145,7 +145,6 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          {{assignForm.treeValue}}
           <el-form-item label="上课学员" prop="treeValue">
             <treeselect
               placeholder="请选择上课学员"
