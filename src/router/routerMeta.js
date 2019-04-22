@@ -6,19 +6,19 @@ let indexMeta = [{
 let personal = {
   personal: [{
     title: '人员管理管理',
-      path: '/home/personal/personal1',
+      path: '/home/personal1/student',
   }],
   student : [{
     title: '会员管理',
-      path: '/home/personal/student',
+      path: '/home/personal1/student',
   }],
   teacher : [{
     title: '教师管理',
-      path: '/home/personal/teacher',
+      path: '/home/personal1/teacher',
   }],
   testMember : [{
     title: '试听人员',
-      path: '/home/personal/testMember',
+      path: '/home/personal1/testMember',
   }]
 };
 
