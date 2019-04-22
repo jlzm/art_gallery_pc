@@ -96,8 +96,15 @@
               <el-option :value="2" label="女"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="年龄" required prop="age" size="small">
-            <el-input-number v-model="newStudentForm.age" :min="1"></el-input-number>
+          {{newStudentForm.birthday}}
+          <el-form-item label="生日" required prop="birthday" size="small">
+            <el-date-picker
+              v-model="newStudentForm.birthday"
+              align="right"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期">
+          </el-date-picker>
           </el-form-item>
           <el-form-item label="购买课时" required prop="period_total">
             <el-input-number v-model="newStudentForm.period_total" :min="1" size="small"></el-input-number>
@@ -190,7 +197,7 @@ export default {
         period_total: 0,
         school: "",
         willingTime: [],
-        age: 1,
+        birthday: "",
         train_class: "",
         clasz: "",
         claszOption: []
@@ -222,6 +229,13 @@ export default {
             trigger: "blur",
             required: true,
             message: "家长姓名必填"
+          }
+        ],
+        birthday: [
+          {
+            trigger: "blur",
+            required: true,
+            message: "学生生日必填"
           }
         ],
         sex: [
@@ -407,7 +421,7 @@ export default {
         period_total: 0,
         school: "",
         willingTime: [],
-        age: 1,
+        birthday: "",
         train_class: "",
         clasz: ""
       };
@@ -505,7 +519,7 @@ export default {
       let json = {
         sname: this.newStudentForm.studentName,
         sex: this.newStudentForm.sex,
-        age: this.newStudentForm.age,
+        birthday: this.newStudentForm.birthday,
         period_total: this.newStudentForm.period_total,
         period_surplus: this.newStudentForm.period_total,
         parent: this.newStudentForm.parentName,

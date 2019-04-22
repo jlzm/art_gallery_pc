@@ -157,14 +157,14 @@
             </div>
             <div v-if="editable" class="info">
               <div lass="inline-label">
-                购买课时：
+                增减课时：
               </div>
               <div>
                 <el-input-number
                   placeholder="请输入内容"
                   v-model="detail.addPeriod"
                   size="small"
-                  :min="0"
+                  :min="-detail.period_surplus"
                   >
                 </el-input-number>
               </div>

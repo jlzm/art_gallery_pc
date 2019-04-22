@@ -67,12 +67,12 @@
           <el-form-item label="姓名" prop="teacherName">
             <el-input v-model="newTeacherForm.teacherName" size="small"></el-input>
           </el-form-item>
-          <el-form-item label="角色" prop="trole">
+          <!-- <el-form-item label="角色" prop="trole">
             <el-select v-model="newTeacherForm.trole" placeholder="请选择" size="small">
               <el-option value="0" label="主教"></el-option>
               <el-option value="1" label="助教"></el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="性别" prop="gender">
             <el-select v-model="newTeacherForm.gender" placeholder="请选择" size="small">
               <el-option value="1" label="男"></el-option>
@@ -441,7 +441,7 @@ export default {
             tage: this.newTeacherForm.teacherAge,
             tphone: this.newTeacherForm.teacherTel,
             home_address: this.newTeacherForm.address,
-            trole: this.newTeacherForm.trole
+            // trole: this.newTeacherForm.trole
           };
           console.log("json", json);
           let url;
