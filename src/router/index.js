@@ -44,15 +44,44 @@ const router = new Router({
         }
       },
         {
-          name: 'personal',
-          path: 'personal/:type',
-          component: resolve => require(['../pages/personal/personal'], resolve),
-          meta: {
-            // title: 面包屑名称
-            // path: 面包屑路径
-            // type用于判断当前类型,不写就一定会渲染
-            breadList: meta.personal
-          }
+          name: 'personal1',
+          path: 'personal1',
+          component: resolve => require(['../pages/personal/Personal1'], resolve),
+          children: [
+            {
+              name: 'student',
+              path: 'student',
+              component: resolve => require(['../pages/personal/Student'], resolve),
+              meta: {
+                // title: 面包屑名称
+                // path: 面包屑路径
+                // type用于判断当前类型,不写就一定会渲染
+                breadList: meta.personalMeta.student
+              }
+            },
+            {
+              name: 'student',
+              path: 'teacher',
+              component: resolve => require(['../pages/personal/Teacher'], resolve),
+              meta: {
+                // title: 面包屑名称
+                // path: 面包屑路径
+                // type用于判断当前类型,不写就一定会渲染
+                breadList: meta.personalMeta.teacher
+              }
+            },
+            {
+              name: 'testMember',
+              path: 'testMember',
+              component: resolve => require(['../pages/personal/TestMember'], resolve),
+              meta: {
+                // title: 面包屑名称
+                // path: 面包屑路径
+                // type用于判断当前类型,不写就一定会渲染
+                breadList: meta.personalMeta.testMember
+              }
+            },
+          ],
         },
         {
           name: 'detail',

@@ -3,21 +3,26 @@ let indexMeta = [{
   path: '/home/index'
 }];
 // 人员管理
-let personal = [{
-  title: '人员管理',
-  path: '/home/personal/students'
-},
-  {
+let personal = {
+  personal: [{
+    title: '人员管理管理',
+      path: '/home/personal/personal1',
+  }],
+  student : [{
     title: '会员管理',
-    path: '/home/personal/students',
-    type: 'students'
-  },
-  {
+      path: '/home/personal/student',
+  }],
+  teacher : [{
     title: '教师管理',
-    path: '/home/personal/teachers',
-    type: 'teachers'
-  }
-];
+      path: '/home/personal/teacher',
+  }],
+  testMember : [{
+    title: '试听人员',
+      path: '/home/personal/testMember',
+  }]
+};
+
+
 // 学生详情
 let detailMeta = [{
   title: '学生详情',
@@ -113,13 +118,22 @@ let oprMeta = [{
   title: '操作记录',
   path: '/home/system/oprRecord'
 }];
-personal = indexMeta.concat(personal);
+
+
+let personalMeta =  {};
+personalMeta.personal = indexMeta.concat(personal.personal);
+let _personalMeta = [];
+_personalMeta = personalMeta.personal;
+personalMeta.student = _personalMeta.concat(personal.student);
+personalMeta.teacher = _personalMeta.concat(personal.teacher);
+personalMeta.testMember = _personalMeta.concat(personal.testMember);
+
 classMeta = indexMeta.concat(classMeta);
 activeMeta = indexMeta.concat(activeMeta);
 attenceMeta = indexMeta.concat(attenceMeta);
 systemMeta = indexMeta.concat(systemMeta);
 
-detailMeta = personal.concat(detailMeta);
+detailMeta = personal.student.concat(detailMeta);
 
 classMetaRecordMeta = classMeta.concat(classMetaRecordMeta);
 classMetaClassAssignMeta = classMeta.concat(classMetaClassAssignMeta);
@@ -139,7 +153,7 @@ accountMeta = systemMeta.concat(accountMeta);
 oprMeta = systemMeta.concat(oprMeta);
 export default {
   indexMeta,
-  personal,
+  personalMeta,
   classMeta,
   activeMeta,
   attenceMeta,

@@ -29,18 +29,23 @@
             icon: 'el-icon-personal',
             name: '人员管理',
             id: '2',
-            path: '/home/personal',
+            path: '/home/personal1',
             childData: [
               {
                 name: '会员管理',
                 id: '2-1',
-                path: '/home/personal/students'
+                path: '/home/personal1/student'
               },
               {
                 name: '教师管理',
                 id: '2-2',
-                path: '/home/personal/teachers'
-              }
+                path: '/home/personal1/teacher'
+              },
+              {
+                name: '试听会员',
+                id: '2-3',
+                path: '/home/personal1/testMember'
+              },
             ]
           },
           {
