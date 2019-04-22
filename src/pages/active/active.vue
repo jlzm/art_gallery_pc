@@ -144,13 +144,13 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="助教老师" prop="assistantTheater">
-              <el-select v-model="activeForm.assistantTheater" filterable placeholder="请选择上课老师" size="small">
+            <el-form-item label="助教老师">
+              <el-select v-model="activeForm.assistantTheater" multiple placeholder="请选择上课老师" size="small">
                 <el-option
                   v-for="item in activeForm.assistantTheaterOption"
                   :key="item.tid"
                   :label="item.tname"
-                  :value="item.tid + ',' + item.tname"
+                  :value="item.tid"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -280,7 +280,7 @@ export default {
         preview: "",
         crid: "",
         mainTheater: "",
-        assistantTheater: '',
+        assistantTheater: [],
         mainTheaterOption: [],
         assistantTheaterOption: [],
       },
@@ -300,13 +300,6 @@ export default {
         mainTheater: [
           {
             message: "请选择主教老师",
-            required: true,
-            trigger: "blur"
-          }
-        ],
-        assistantTheater: [
-          {
-            message: "请选择助教老师",
             required: true,
             trigger: "blur"
           }
@@ -540,9 +533,11 @@ export default {
      * 填充编辑数据
      */
     editDetailData(row) {
+      this.assignForm.assistantTheater = row.atid.split(",").filter(item => {
+        return item;
+      });
       this.activeForm.room = row.room,
       this.activeForm.mainTheater = row.tid + "," + row.tname,
-      this.activeForm.assistantTheater = row.atid + "," + row.atname,
       this.activeForm.date = row.cdate,
       this.activeForm.startTime = row.begintime,
       this.activeForm.endTime = row.endtime,
@@ -637,7 +632,7 @@ export default {
       this.activeForm.imageUrl = "";
       this.activeForm.room = "";
       this.activeForm.mainTheater = "";
-      this.activeForm.assistantTheater = "";
+      this.activeForm.assistantTheater = [];
       this.activeForm.date = "";
       this.activeForm.startTime = "";
       this.activeForm.endTime = "";
@@ -695,8 +690,7 @@ export default {
             endtime: this.activeForm.endTime,
             tid: this.activeForm.mainTheater.split(",")[0],
             tname: this.activeForm.mainTheater.split(",")[1],
-            atid: this.activeForm.assistantTheater.split(",")[0],
-            atname: this.activeForm.assistantTheater.split(",")[1],
+            atid: this.activeForm.assistantTheater.join(","),
             period_need: this.activeForm.period_need,
             maxnum: this.activeForm.maxnum,
             ctype: 2,

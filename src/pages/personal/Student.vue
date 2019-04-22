@@ -96,7 +96,6 @@
               <el-option :value="2" label="女"></el-option>
             </el-select>
           </el-form-item>
-          {{newStudentForm.birthday}}
           <el-form-item label="生日" required prop="birthday" size="small">
             <el-date-picker
               v-model="newStudentForm.birthday"

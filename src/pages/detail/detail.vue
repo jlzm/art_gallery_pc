@@ -44,18 +44,18 @@
           <div class="info-ctn">
             <div class="info">
               <div class="inline-label">
-                年龄:
+                生日:
               </div>
               <div>
-                <el-input-number
-                  placeholder="请输入内容"
-                  v-model="detail.age"
-                  size="small"
-                  :min="0"
-                  :max="60"
-                  v-if="editable">
-                </el-input-number>
-                <span v-else>{{detail.age}}</span>
+                <el-date-picker
+                v-if="editable"
+                v-model="detail.birthday"
+                align="right"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="选择日期">
+          </el-date-picker>
+                <span v-else>{{detail.birthday}}</span>
               </div>
             </div>
             <div class="info">
@@ -270,7 +270,7 @@
           sid: '',
           sname: '',
           sex: '',
-          age: '',
+          birthday: '',
           parent: '',
           sphone: '',
           home_address: '',

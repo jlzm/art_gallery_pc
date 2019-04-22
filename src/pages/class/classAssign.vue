@@ -129,11 +129,10 @@
               ></el-option>
             </el-select>
           </el-form-item>
-
-          <el-form-item label="助教老师" prop="assistantTheater">
+          <el-form-item label="助教老师">
             <el-select
+              multiple 
               v-model="assignForm.assistantTheater"
-              filterable
               placeholder="请选择助教老师"
               size="small"
             >
@@ -141,13 +140,24 @@
                 v-for="item in assignForm.assistantTheaterOption"
                 :key="item.value"
                 :label="item.tname"
-                :value="item.tid + ',' + item.tname"
+                :value="item.tid"
               ></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="上课学员" prop="treeValue">
             <treeselect
               placeholder="请选择上课学员"
+              v-model="assignForm.treeValue"
+              :multiple="true"
+              :clearOnSelect="true"
+              :options="assignForm.studentOption"
+              :value-consists-of="'LEAF_PRIORITY'"
+              size="small"
+            />
+          </el-form-item>
+          <el-form-item label="试听人员" prop="treeValue">
+            <treeselect
+              placeholder="请选择试听人员"
               v-model="assignForm.treeValue"
               :multiple="true"
               :clearOnSelect="true"
@@ -261,7 +271,7 @@ export default {
         date: "",
         times: "",
         mainTheater: "",
-        assistantTheater: "",
+        assistantTheater: [],
         mainTheaterOption: [],
         assistantTheaterOption: [],
         classNumber: "",
@@ -321,13 +331,6 @@ export default {
           {
             trigger: "blur",
             message: "请选择主教老师",
-            required: true
-          }
-        ],
-        assistantTheater: [
-          {
-            trigger: "blur",
-            message: "请选择助教老师",
             required: true
           }
         ],
@@ -588,7 +591,7 @@ export default {
       this.assignForm.week = "";
       this.assignForm.date = "";
       this.assignForm.times = "";
-      this.assignForm.assistantTheater = "";
+      this.assignForm.assistantTheater = [];
       this.assignForm.mainTheater = "";
       this.assignForm.classNumber = "";
       this.assignForm.preview = "";
@@ -601,9 +604,11 @@ export default {
       this.assignForm.treeValue = row.sid.split(",").filter(item => {
         return item;
       });
+      this.assignForm.assistantTheater = row.atid.split(",").filter(item => {
+        return item;
+      });
       this.assignForm.room = row.room;
       this.assignForm.mainTheater = row.tid + "," + row.tname;
-      this.assignForm.assistantTheater = row.atid + "," + row.atname;
       this.assignForm.preview = row.cdesc;
       this.assignForm.startTime = row.begintime;
       this.assignForm.endTime = row.endtime;
@@ -645,8 +650,7 @@ export default {
             room: this.assignForm.room,
             tid: this.assignForm.mainTheater.split(",")[0],
             tname: this.assignForm.mainTheater.split(",")[1],
-            atid: this.assignForm.assistantTheater.split(",")[0],
-            atname: this.assignForm.assistantTheater.split(",")[1],
+            atid: this.assignForm.assistantTheater.join(","),
             sid: this.assignForm.treeValue.join(","),
             period_need: this.assignForm.classNumber,
             cdate: dateJson.year + "-" + dateJson.month + "-" + dateJson.day,
