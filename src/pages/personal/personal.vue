@@ -821,6 +821,7 @@ export default {
       this.$axios
         .post("/getStudentsByPage", propsData)
         .then(res => {
+          console.log('sres', res);
           this.loading = false;
           this.total = res.data.total;
           this.tableData = res.data.rows;
@@ -830,15 +831,18 @@ export default {
     getTeacherData() {
       this.tableData = [];
       this.loading = true;
-      this.$axios
-        .post("/getTeachersByPage", {
+      let propsData = {
           page: this.pageJSON.currentPage,
           rows: this.pageJSON.pageSize,
           tname: this.teacherForm.teacherName
-        })
+        }
+      this.$axios
+        .post("/getTeachersByPage", propsData)
         .then(res => {
+          console.log('tres', res);
           this.loading = false;
           if (res && res.data.rows && res.data.rows.length) {
+            this.total = res.data.total;
             this.tableData = res.data.rows;
           }
         });
