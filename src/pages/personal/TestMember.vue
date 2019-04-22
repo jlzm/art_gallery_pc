@@ -72,7 +72,7 @@
     </div>
     <div class="dialogs">
       <el-dialog
-        :title="'新增学生'"
+        :title="'新增试听人员'"
         :visible.sync="newStudentForm.visible"
         :close-on-click-modal="false"
         width="550px"
@@ -98,19 +98,6 @@
           </el-form-item>
           <el-form-item label="年龄" required prop="age" size="small">
             <el-input-number v-model="newStudentForm.age" :min="1"></el-input-number>
-          </el-form-item>
-          <el-form-item label="购买课时" required prop="period_total">
-            <el-input-number v-model="newStudentForm.period_total" :min="1" size="small"></el-input-number>
-          </el-form-item>
-          <el-form-item label="所属班级" prop="clasz">
-            <el-select v-model="newStudentForm.clasz" placeholder="请选择" size="small">
-              <el-option
-                v-for="item in newStudentForm.claszOption"
-                :key="item.clid"
-                :value="item.clid"
-                :label="item.clname"
-              ></el-option>
-            </el-select>
           </el-form-item>
 
           <el-form-item label="家长姓名" prop="parentName">
