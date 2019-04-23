@@ -60,13 +60,18 @@
                 path: '/home/class/classRecords'
               },
               {
-                name: '上课排班',
+                name: '试听记录',
                 id: '3-2',
+                path: '/home/class/classTestNotes'
+              },
+              {
+                name: '上课排班',
+                id: '3-3',
                 path: '/home/class/classAssign'
               },
               {
                 name: '请假记录',
-                id: '3-3',
+                id: '3-4',
                 path: '/home/class/classLeaveNotes'
               },
             ]
