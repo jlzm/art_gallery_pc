@@ -96,9 +96,11 @@
 import mixin from "../../mixins/tableMixin";
 import util from "@/util/util";
 
+import exportExcel from '../../mixins/exportExcel.js'
+
 export default {
   name: "teacher",
-  mixins: [mixin],
+  mixins: [mixin, exportExcel],
   mounted() {
     // 只有没有id的时候才需要初始化
     this.getClass();
@@ -194,6 +196,14 @@ export default {
     };
   },
   methods: {
+    exportExcel() {
+      const url = 'exportTrylistenExcel';
+      let propsData = {
+        sname: this.newTestForm.sname
+      }
+
+      this.getStudentExcel(url, propsData)
+    },
 
     studengtTest(row) {
       let statusTxt = "";
@@ -282,7 +292,7 @@ export default {
             this.oprType = "edit";
           },
           delete: scope => {
-            this.$confirm("此操作将删除该教师, 是否继续?", "提示", {
+            this.$confirm("此操作将删除该试听人员, 是否继续?", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
               type: "warning"
