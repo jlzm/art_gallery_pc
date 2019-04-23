@@ -2,40 +2,17 @@
   <div>
     <div class="personal-content">
       <div class="search">
-        <!-- 学生查询表格 -->
-        <el-form
-          :inline="true"
-          :model="studentForm"
-          class="form-inline"
-          ref
-        >
-          <el-form-item label="学员姓名">
-            <el-input v-model="studentForm.studentName" placeholder="输入学员姓名" size="small" clearable></el-input>
+        <!-- 老师查询表格 -->
+        <el-form :inline="true" :model="teacherForm" class="form-inline" ref>
+          <el-form-item label="老师姓名">
+            <el-input v-model="teacherForm.teacherName" placeholder="请输入" size="small" clearable></el-input>
           </el-form-item>
-
-          <el-form-item label="班级">
-            <el-select v-model="studentForm.classes" placeholder="请选择" size="small" clearable>
-              <el-option
-                v-for="item in studentForm.claszOption"
-                :key="item.clid"
-                :label="item.clname"
-                :value="item.clid"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="性别">
-            <el-select v-model="studentForm.sex" placeholder="请选择" size="small" clearable>
-              <el-option :value="1" label="男"></el-option>
-              <el-option :value="2" label="女"></el-option>
-            </el-select>
-          </el-form-item>
-
           <el-form-item>
             <el-button
               type="primary"
               icon="el-icon-search"
               size="small"
-              @click="getStudentData()"
+              @click="getTeacherData()"
             >查询</el-button>
           </el-form-item>
         </el-form>
@@ -71,54 +48,35 @@
       ></tables>
     </div>
     <div class="dialogs">
+      <!-- 新建试听会员  -->
       <el-dialog
-        :title="'新增试听人员'"
-        :visible.sync="newStudentForm.visible"
+        :title="newTeacherForm.title"
+        :visible.sync="newTeacherForm.visible"
         :close-on-click-modal="false"
-        width="550px"
-        top="5vh"
+        width="400px"
       >
         <el-form
-          :model="newStudentForm"
+          :disabled="newTeacherForm.disabled"
+          :model="newTeacherForm"
           class="form-inline"
-          ref="newStudentForm"
-          label-position="right"
-          label-width="90px"
-          :rules="newStudentRule"
+          ref="newTeacherForm"
+          label-position="left"
+          label-width="80px"
+          :rules="teacherRule"
         >
-          <el-form-item label="姓名" prop="studentName">
-            <el-input v-model="newStudentForm.studentName" size="small"></el-input>
+          <el-form-item label="姓名" prop="teacherName">
+            <el-input v-model="newTeacherForm.teacherName" size="small"></el-input>
           </el-form-item>
-
-          <el-form-item label="性别" prop="sex">
-            <el-select v-model="newStudentForm.sex" placeholder="请选择" size="small">
-              <el-option :value="1" label="男"></el-option>
-              <el-option :value="2" label="女"></el-option>
-            </el-select>
+          <el-form-item label="生日" prop="teacherAge">
+            <el-input-number v-model="newTeacherForm.teacherAge" :max="90" :min="10"></el-input-number>
           </el-form-item>
-          <el-form-item label="年龄" required prop="age" size="small">
-            <el-input-number v-model="newStudentForm.age" :min="1"></el-input-number>
-          </el-form-item>
-
-          <el-form-item label="家长姓名" prop="parentName">
-            <el-input v-model="newStudentForm.parentName" size="small"></el-input>
-          </el-form-item>
-          <el-form-item label="联系电话" required prop="tel">
-            <el-input v-model="newStudentForm.tel" size="small"></el-input>
-          </el-form-item>
-          <el-form-item label="联系地址" prop="address">
-            <el-input v-model="newStudentForm.address" size="small"></el-input>
-          </el-form-item>
-          <el-form-item label="就读学校" prop="school">
-            <el-input v-model="newStudentForm.school" size="small"></el-input>
-          </el-form-item>
-          <el-form-item label="就读培训班" prop="train_class">
-            <el-input v-model="newStudentForm.train_class" size="small"></el-input>
+          <el-form-item label="联系电话" prop="teacherTel">
+            <el-input v-model="newTeacherForm.teacherTel" size="small"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="newStudentForm.visible = false">取 消</el-button>
-          <el-button type="primary" @click="confirm()">确 定</el-button>
+          <el-button @click="resetForm('newTeacherForm')">取 消</el-button>
+          <el-button type="primary" @click="editTeacher()">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -130,7 +88,7 @@ import mixin from "../../mixins/tableMixin";
 import util from "@/util/util";
 
 export default {
-  name: "student",
+  name: "teacher",
   mixins: [mixin],
   mounted() {
     // 只有没有id的时候才需要初始化
@@ -166,23 +124,28 @@ export default {
         sex: ""
       },
 
-      // 新建学生
       newStudentForm: {
-        studentName: "",
-        parentName: "",
-        sex: 1,
-        tel: "",
-        visible: false,
-        address: "",
-        period_total: 0,
-        school: "",
-        willingTime: [],
-        age: 1,
-        train_class: "",
-        clasz: "",
-        claszOption: []
+        claszOption: [],
+      },
+      teacherForm: {
+        teacherName: ""
       },
 
+      // 新建老师
+      newTeacherForm: {
+        educationalBackground: "",
+        teacherName: "",
+        teacherAge: "",
+        gender: "",
+        teacherTel: "",
+        visible: false,
+        address: "",
+        title: "新增试听会员",
+        id: "",
+        sale_total: 0,
+        course_total: 0,
+        trole: ""
+      },
       selectedId: [],
       tableData: [],
       // 用于多选框
@@ -194,48 +157,23 @@ export default {
       loading: false,
       // 用于判断当前操作状态
       oprType: "new",
-
-      // 学生表格验证
-      newStudentRule: {
-        studentName: [
+      // 教师表格验证
+      teacherRule: {
+        teacherName: [
           {
-            trigger: "blur",
+            // trigger: 'blur',
             required: true,
-            message: "学生姓名必填"
+            message: "老师姓名必填"
           }
         ],
-        parentName: [
+        teacherTel: [
           {
-            trigger: "blur",
+            // trigger: 'blur',
             required: true,
-            message: "家长姓名必填"
-          }
-        ],
-        sex: [
+            message: "联系电话必填"
+          },
           {
-            trigger: "blur",
-            required: true,
-            message: "学生性别必选"
-          }
-        ],
-        tel: [
-          {
-            trigger: "blur",
             validator: telValidate
-          }
-        ],
-        willingTime: [
-          {
-            trigger: "blur",
-            required: true,
-            message: "意愿时间必选"
-          }
-        ],
-        clasz: [
-          {
-            trigger: "blur",
-            required: true,
-            message: "报名班级必选"
           }
         ]
       },
@@ -248,43 +186,32 @@ export default {
     };
   },
   methods: {
-    /**
-     * 导出excel
-     */
-    exportExcel() {
-      if(!this.tableData.length) return;
-      if (this.type != "students") {
-        return false;
+
+    studengtTest(row) {
+      let statusTxt = "";
+      switch (row) {
+        case "1":
+          statusTxt = "高中";
+          break;
+        case "2":
+          statusTxt = "大专";
+          break;
+        case "3":
+          statusTxt = "本科";
+          break;
+        case "4":
+          statusTxt = "研究生";
+          break;
+
+        default:
+          break;
       }
-      let json = {
-        sname: this.studentForm.studentName,
-        clasz: this.studentForm.classes,
-        sex: this.studentForm.sex
-      };
-      this.getStudentExcel(json);
+      return statusTxt;
     },
-
-    /**
-     * 导出学生列表方法
-     */
-    getStudentExcel(json) {
-      this.$axios
-        .get("/getStudentExcel", {
-          params: json
-        })
-        .then(res => {
-          console.log("res", res);
-          // console.log('res', res.request.responseURL);
-          /**
-           * 脱了裤子放屁.。。.
-           */
-          window.open(res.request.responseURL);
-        });
-    },
-
 
     initOpt(type) {
       this.tableData = [];
+
         this.tableOption = {
           isMutiple: true,
           showOpr: true,
@@ -293,7 +220,7 @@ export default {
           showEditBtn: true,
           column: [
             // {
-            //   prop: 'sid',
+            //   prop: 'tid',
             //   label: 'id'
             // },
             {
@@ -301,34 +228,8 @@ export default {
               label: "姓名"
             },
             {
-              prop: "sex",
-              label: "性别",
-              formatter: row => {
-                return parseInt(row.sex) === 1 ? "男" : "女";
-              }
-            },
-            {
-              prop: "clasz",
-              label: "所属班级",
-              formatter: row => {
-                return util.getArrVal(
-                  this.studentForm.claszOption,
-                  "clid",
-                  "clname",
-                  row.clasz
-                );
-              }
-            },
-            {
-              prop: "period_total",
-              label: "已买课时",
-              formatter: row => {
-                return row.period_total + "";
-              }
-            },
-            {
-              prop: "period_surplus",
-              label: "剩余课时"
+              prop: "age",
+              label: "年龄"
             },
             {
               prop: "parent",
@@ -336,51 +237,65 @@ export default {
             },
             {
               prop: "sphone",
-              label: "联系电话"
+              label: "电话号码"
             },
-            {
-              prop: "nvitation_code",
-              label: "邀请码"
-            }
           ],
           // 查看详情事件
           showDetail: scope => {
-            const id = scope.row.sid;
-            this.$router.push({
-              path: "/home/detail/students/" + id + "?type=view"
-            });
+            this.newTeacherForm = {
+              title: "详情",
+              visible: true,
+              teacherName: scope.row.sname,
+              teacherAge: scope.row.age,
+              teacherTel: scope.row.sphone,
+              disabled: true
+            };
+            this.oprType = "show";
           },
-
           editDetail: scope => {
-            const id = scope.row.sid;
-            this.$router.push({
-              path: "/home/detail/students/" + id + "?type=edit"
-            });
+            console.log('scope', scope);
+            this.newTeacherForm = {
+              title: "编辑详情",
+              visible: true,
+              teacherName: scope.row.sname,
+              teacherAge: scope.row.age,
+              teacherTel: scope.row.sphone,
+              id: scope.row.tlid,
+              disabled: false,
+              educationalBackground: scope.row.educationalbg
+            };
+            this.oprType = "edit";
           },
-
           delete: scope => {
-            const id = scope.row.sid;
-
-            this.$confirm("此操作将删除该学员, 是否继续?", "提示", {
+            this.$confirm("此操作将删除该教师, 是否继续?", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
               type: "warning"
             }).then(() => {
-              this.deleteStudent(id);
+              this.deleteTeacher(scope.row.tid);
             });
           }
         };
-        this.getStudentData();
+        this.getTeacherData();
     },
 
     // 打开新建弹窗
     newItem() {
       console.log(1);
-        if (this.$refs.studentForm) {
-          this.$refs.studentForm.resetFields();
+        this.oprType = "new";
+        if (this.$refs.newTeacherForm) {
+          this.$refs.newTeacherForm.resetFields();
         }
-        this.resetNewStudents();
-        this.getClass();
+        this.newTeacherForm = {
+          teacherName: "",
+          teacherAge: "",
+          gender: "1",
+          teacherTel: "",
+          visible: true,
+          address: "",
+          title: "新增老师"
+        };
+      
     },
 
     resetNewStudents() {
@@ -414,25 +329,50 @@ export default {
     // 批量删除
     deleteAll() {
       console.log("this.selectedId", this.selectedId);
-      if (this.selectedId.length && this.type === "students") {
-        this.$confirm("此操作将删除学员, 是否确认?", "提示", {
+ if (this.selectedId.length) {
+        this.$confirm("此操作将删除教师, 是否确认?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(() => {
-          this.deleteStudent(this.selectedId.join(","));
-          console.log("删除学生");
+          this.deleteTeacher(this.selectedId.join(","));
+          console.log("删除老师");
         });
       } else {
         this.$message("请至少选择一项");
       }
     },
 
-    // 学生dialog确认
-    confirm() {
-      this.$refs.newStudentForm.validate(validate => {
+
+
+    // 操作老师
+    editTeacher() {
+      this.$refs.newTeacherForm.validate(validate => {
         if (validate) {
-          this.newStudent();
+          let json = {
+            educationalbg: this.newTeacherForm.educationalBackground,
+            tname: this.newTeacherForm.teacherName,
+            tsex: this.newTeacherForm.gender,
+            tage: this.newTeacherForm.teacherAge,
+            tphone: this.newTeacherForm.teacherTel,
+            home_address: this.newTeacherForm.address,
+            // trole: this.newTeacherForm.trole
+          };
+          console.log("json", json);
+          let url;
+          switch (this.oprType) {
+            case "new":
+              url = "/insertOneTeacher";
+              break;
+            case "edit":
+              url = "/updateOneTeacher";
+              json.tid = this.newTeacherForm.id;
+              break;
+            case "show":
+            default:
+              this.newTeacherForm.visible = false;
+          }
+          this.postTeacher(json, url);
         }
       });
     },
@@ -453,6 +393,23 @@ export default {
       }
     },
 
+    /** API */
+    // 新建老师api
+    postTeacher(json, url) {
+      this.$axios.post(url, json).then(res => {
+        if (res && parseInt(res.data.code) === 1) {
+          this.$message({
+            message: "操作成功",
+            type: "success"
+          });
+          this.getTeacherData();
+          this.newTeacherForm.visible = false;
+        } else {
+          this.$message.error(res.data.msg);
+        }
+      });
+    },
+
     // 获取班级信息
     getClass() {
       this.$axios.post("/getClass").then(res => {
@@ -464,65 +421,33 @@ export default {
       });
     },
 
-    // 获取学生
-    getStudentData() {
-      // this.tableData = []
+
+    // 获取老师
+    getTeacherData() {
+      this.tableData = [];
       this.loading = true;
       let propsData = {
           page: this.pageJSON.currentPage,
           rows: this.pageJSON.pageSize,
-          sname: this.studentForm.studentName,
-          clasz: this.studentForm.classes,
-          sex: this.studentForm.sex
+          sname: this.teacherForm.teacherName
         }
-        console.log('propsData', propsData);
       this.$axios
-        .post("/getStudentsByPage", propsData)
+        .post("/getTrylistenByPage", propsData)
         .then(res => {
-          console.log('sres', res);
+          console.log('tres', res);
           this.loading = false;
-          this.total = res.data.total;
-          this.tableData = res.data.rows;
+          if (res && res.data.rows && res.data.rows.length) {
+            this.total = res.data.total;
+            this.tableData = res.data.rows;
+          }
         });
     },
 
 
-    // 新建会员
-    newStudent() {
-      let json = {
-        sname: this.newStudentForm.studentName,
-        sex: this.newStudentForm.sex,
-        age: this.newStudentForm.age,
-        period_total: this.newStudentForm.period_total,
-        period_surplus: this.newStudentForm.period_total,
-        parent: this.newStudentForm.parentName,
-        sphone: this.newStudentForm.tel,
-        school: this.newStudentForm.school,
-        home_address: this.newStudentForm.address,
-        studytime: this.newStudentForm.willingTime.join(","),
-        train_class: this.newStudentForm.train_class,
-        clasz: this.newStudentForm.clasz
-      };
-
-      this.$axios.post("/insertOneStudent", json).then(res => {
-        if (res && res.data) {
-          if (parseInt(res.data.code) === 1) {
-            this.$message({
-              message: "新增成功",
-              type: "success"
-            });
-            this.getStudentData();
-            this.newStudentForm.visible = false;
-          } else {
-            this.$message.error(res.data.msg);
-          }
-        }
-      });
-    },
-
-    // 删除会员
-    deleteStudent(id) {
-      this.$axios.post("/deleteStudent", { sid: id }).then(res => {
+    /** 删除老师 */
+    deleteTeacher(id) {
+      console.log("id", id);
+      this.$axios.post("/deleteTeacher", { tid: id }).then(res => {
         if (res && parseInt(res.data.code) === 1) {
           this.$message({
             message: "删除成功",
@@ -531,16 +456,15 @@ export default {
         } else {
           this.$message.error(res.data.msg);
         }
-        this.getStudentData();
+        this.getTeacherData();
       });
-    },
-
+    }
   },
-
   watch: {
     $route: {
       deep: true,
       handler(route) {
+        this.type = route.params.type;
         this.id = route.params.id;
       },
       immediate: true
