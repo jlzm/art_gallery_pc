@@ -4,8 +4,8 @@
       <div class="search">
         <!-- 老师查询表格 -->
         <el-form :inline="true" :model="teacherForm" class="form-inline" ref>
-          <el-form-item label="老师姓名">
-            <el-input v-model="teacherForm.teacherName" placeholder="请输入" size="small" clearable></el-input>
+          <el-form-item label="试听人员姓名">
+            <el-input v-model="teacherForm.sname" placeholder="请输入" size="small" clearable></el-input>
           </el-form-item>
           <el-form-item>
             <el-button
@@ -20,7 +20,7 @@
           <el-form-item class="oprator">
             <el-button type="primary" icon="el-icon-plus" size="small" @click="newItem()">新建</el-button>
             <el-button
-              v-if="type==='students' && tableData.length"
+              v-if="tableData.length"
               type="primary"
               icon="el-icon-document"
               size="small"
@@ -50,32 +50,41 @@
     <div class="dialogs">
       <!-- 新建试听会员  -->
       <el-dialog
-        :title="newTeacherForm.title"
-        :visible.sync="newTeacherForm.visible"
+        :title="newTestForm.title"
+        :visible.sync="newTestForm.visible"
         :close-on-click-modal="false"
         width="400px"
       >
         <el-form
-          :disabled="newTeacherForm.disabled"
-          :model="newTeacherForm"
+          :disabled="newTestForm.disabled"
+          :model="newTestForm"
           class="form-inline"
-          ref="newTeacherForm"
+          ref="newTestForm"
           label-position="left"
           label-width="80px"
           :rules="teacherRule"
         >
-          <el-form-item label="姓名" prop="teacherName">
-            <el-input v-model="newTeacherForm.teacherName" size="small"></el-input>
+          <el-form-item label="姓名" prop="sname">
+            <el-input v-model="newTestForm.sname" size="small"></el-input>
           </el-form-item>
-          <el-form-item label="生日" prop="teacherAge">
-            <el-input-number v-model="newTeacherForm.teacherAge" :max="90" :min="10"></el-input-number>
+          <el-form-item label="生日" prop="birthday">
+            <el-date-picker
+              v-model="newTestForm.birthday"
+              align="right"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期">
+          </el-date-picker>
           </el-form-item>
-          <el-form-item label="联系电话" prop="teacherTel">
-            <el-input v-model="newTeacherForm.teacherTel" size="small"></el-input>
+          <el-form-item label="家长姓名" prop="parent">
+            <el-input v-model="newTestForm.parent" size="small"></el-input>
+          </el-form-item>
+          <el-form-item label="联系电话" prop="sphone">
+            <el-input v-model="newTestForm.sphone" size="small"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="resetForm('newTeacherForm')">取 消</el-button>
+          <el-button @click="resetForm('newTestForm')">取 消</el-button>
           <el-button type="primary" @click="editTeacher()">确 定</el-button>
         </span>
       </el-dialog>
@@ -128,18 +137,17 @@ export default {
         claszOption: [],
       },
       teacherForm: {
-        teacherName: ""
+        sname: ""
       },
 
-      // 新建老师
-      newTeacherForm: {
-        educationalBackground: "",
-        teacherName: "",
-        teacherAge: "",
-        gender: "",
-        teacherTel: "",
+      // 新建试听会员
+      newTestForm: {
+        parent: '',
+        tlid: '',
+        sphone: "",
         visible: false,
-        address: "",
+        birthday: '',
+        sname: '',
         title: "新增试听会员",
         id: "",
         sale_total: 0,
@@ -159,14 +167,14 @@ export default {
       oprType: "new",
       // 教师表格验证
       teacherRule: {
-        teacherName: [
+        sname: [
           {
             // trigger: 'blur',
             required: true,
             message: "老师姓名必填"
           }
         ],
-        teacherTel: [
+        sphone: [
           {
             // trigger: 'blur',
             required: true,
@@ -231,6 +239,10 @@ export default {
               prop: "age",
               label: "年龄"
             },
+            // {
+            //   prop: "birthday",
+            //   label: "生日"
+            // },
             {
               prop: "parent",
               label: "家长姓名"
@@ -242,27 +254,30 @@ export default {
           ],
           // 查看详情事件
           showDetail: scope => {
-            this.newTeacherForm = {
+            this.newTestForm = {
               title: "详情",
               visible: true,
-              teacherName: scope.row.sname,
-              teacherAge: scope.row.age,
-              teacherTel: scope.row.sphone,
+              sname: scope.row.sname,
+              birthday: scope.row.birthday,
+              age: scope.row.age,
+              sphone: scope.row.sphone,
+              parent: scope.row.parent,
               disabled: true
             };
             this.oprType = "show";
           },
           editDetail: scope => {
             console.log('scope', scope);
-            this.newTeacherForm = {
+            this.newTestForm = {
               title: "编辑详情",
               visible: true,
-              teacherName: scope.row.sname,
-              teacherAge: scope.row.age,
-              teacherTel: scope.row.sphone,
-              id: scope.row.tlid,
+              birthday: scope.row.birthday,
+              sname: scope.row.sname,
+              parent: scope.row.parent,
+              age: scope.row.age,
+              sphone: scope.row.sphone,
+              tlid: scope.row.tlid,
               disabled: false,
-              educationalBackground: scope.row.educationalbg
             };
             this.oprType = "edit";
           },
@@ -272,7 +287,7 @@ export default {
               cancelButtonText: "取消",
               type: "warning"
             }).then(() => {
-              this.deleteTeacher(scope.row.tid);
+              this.deleteTeacher(scope.row.tlid);
             });
           }
         };
@@ -283,17 +298,17 @@ export default {
     newItem() {
       console.log(1);
         this.oprType = "new";
-        if (this.$refs.newTeacherForm) {
-          this.$refs.newTeacherForm.resetFields();
+        if (this.$refs.newTestForm) {
+          this.$refs.newTestForm.resetFields();
         }
-        this.newTeacherForm = {
-          teacherName: "",
-          teacherAge: "",
+        this.newTestForm = {
+          sname: "",
+          age: "",
           gender: "1",
-          teacherTel: "",
+          sphone: "",
           visible: true,
           address: "",
-          title: "新增老师"
+          title: "新增试听人员"
         };
       
     },
@@ -345,32 +360,30 @@ export default {
 
 
 
-    // 操作老师
+    // 编辑试听会员
     editTeacher() {
-      this.$refs.newTeacherForm.validate(validate => {
+      this.$refs.newTestForm.validate(validate => {
         if (validate) {
           let json = {
-            educationalbg: this.newTeacherForm.educationalBackground,
-            tname: this.newTeacherForm.teacherName,
-            tsex: this.newTeacherForm.gender,
-            tage: this.newTeacherForm.teacherAge,
-            tphone: this.newTeacherForm.teacherTel,
-            home_address: this.newTeacherForm.address,
-            // trole: this.newTeacherForm.trole
+            tlid: this.newTestForm.tlid,
+            birthday: this.newTestForm.birthday,
+            sname: this.newTestForm.sname,
+            parent: this.newTestForm.parent,
+            sphone: this.newTestForm.sphone,
           };
           console.log("json", json);
           let url;
           switch (this.oprType) {
             case "new":
-              url = "/insertOneTeacher";
+              url = "/insertOneTrylisten";
               break;
             case "edit":
-              url = "/updateOneTeacher";
-              json.tid = this.newTeacherForm.id;
+              url = "/updateOneTrylisten";
+              json.tlid = this.newTestForm.tlid;
               break;
             case "show":
             default:
-              this.newTeacherForm.visible = false;
+              this.newTestForm.visible = false;
           }
           this.postTeacher(json, url);
         }
@@ -403,7 +416,7 @@ export default {
             type: "success"
           });
           this.getTeacherData();
-          this.newTeacherForm.visible = false;
+          this.newTestForm.visible = false;
         } else {
           this.$message.error(res.data.msg);
         }
@@ -422,14 +435,14 @@ export default {
     },
 
 
-    // 获取老师
+    // 获取试听会员列表
     getTeacherData() {
       this.tableData = [];
       this.loading = true;
       let propsData = {
           page: this.pageJSON.currentPage,
           rows: this.pageJSON.pageSize,
-          sname: this.teacherForm.teacherName
+          sname: this.teacherForm.sname
         }
       this.$axios
         .post("/getTrylistenByPage", propsData)
@@ -447,7 +460,7 @@ export default {
     /** 删除老师 */
     deleteTeacher(id) {
       console.log("id", id);
-      this.$axios.post("/deleteTeacher", { tid: id }).then(res => {
+      this.$axios.post("/deleteTrylisten", { tlid: id }).then(res => {
         if (res && parseInt(res.data.code) === 1) {
           this.$message({
             message: "删除成功",
