@@ -131,7 +131,7 @@
           </el-form-item>
           <el-form-item label="助教老师">
             <el-select
-              multiple 
+              multiple
               v-model="assignForm.assistantTheater"
               placeholder="请选择助教老师"
               size="small"
@@ -156,12 +156,7 @@
             />
           </el-form-item>
           <el-form-item label="试听人员">
-            <el-select
-              multiple 
-              v-model="tryListen.currentData"
-              placeholder="请选择试听人员"
-              size="small"
-            >
+            <el-select multiple v-model="tryListen.currentData" placeholder="请选择试听人员" size="small">
               <el-option
                 v-for="item in tryListen.currentDataOption"
                 :key="item.value"
@@ -232,9 +227,9 @@ export default {
     };
     return {
       tryListen: {
-        currentData: '',
+        currentData: "",
         currentDataOption: [],
-        sname: ''
+        sname: ""
       },
       thisWeekDate: [],
       downWeekDate: [],
@@ -493,15 +488,19 @@ export default {
      */
     funDate(currentTime, dayNum) {
       let month = null,
-          day = null;
+        day = null;
 
       let date = new Date(currentTime);
-      console.log('date', date);
+      console.log("date", date);
       date.setDate(date.getDate() + dayNum);
-      date.getMonth() + 1 < 10 ? month = "0" + (date.getMonth() + 1) : month = (date.getMonth() + 1);
-      date.getDate() < 10 ? day = "0" + (date.getDate()) : day = (date.getDate());
+      date.getMonth() + 1 < 10
+        ? (month = "0" + (date.getMonth() + 1))
+        : (month = date.getMonth() + 1);
+      date.getDate() < 10
+        ? (day = "0" + date.getDate())
+        : (day = date.getDate());
       let time2 = `${date.getFullYear()}-${month}-${day}`;
-      console.log('time2', time2);
+      console.log("time2", time2);
       return time2;
     },
 
@@ -509,38 +508,37 @@ export default {
      * 下周课程
      */
     downWeek() {
-      if(this.thisWeekDateBtn == 'downWeek') return;
-      
+      if (this.thisWeekDateBtn == "downWeek") return;
+
       let downWeekDate = this.downWeekDate;
       downWeekDate[0] = this.funDate(this.thisWeekDate[0], 7);
       downWeekDate[1] = this.funDate(this.thisWeekDate[1], 7);
       this.form.week = downWeekDate;
       this.getCourseRecordByWeek(this.form.week);
-      this.thisWeekDateBtn = 'downWeek';
+      this.thisWeekDateBtn = "downWeek";
     },
 
-    afterWeek(){
-      if(this.thisWeekDateBtn == 'afterWeek') return;
-      
+    afterWeek() {
+      if (this.thisWeekDateBtn == "afterWeek") return;
+
       let afterWeekDate = this.afterWeekDate;
       afterWeekDate[0] = this.funDate(this.thisWeekDate[0], 14);
       afterWeekDate[1] = this.funDate(this.thisWeekDate[1], 14);
       this.form.week = afterWeekDate;
       this.getCourseRecordByWeek(this.form.week);
-      this.thisWeekDateBtn = 'afterWeek';
+      this.thisWeekDateBtn = "afterWeek";
     },
 
     /**
      * 本周课程
      */
     thisWeek() {
-      if(this.thisWeekDateBtn == 'thisWeek') return;
+      if (this.thisWeekDateBtn == "thisWeek") return;
       this.thisWeekDateBtn = false;
       this.form.week = this.thisWeekDate;
       this.getCourseRecordByWeek(this.form.week);
-      this.thisWeekDateBtn = 'thisWeek';
+      this.thisWeekDateBtn = "thisWeek";
     },
-
 
     /** API */
     getCourseRecordByWeek(data) {
@@ -730,21 +728,20 @@ export default {
         return dateJson.year + "-" + dateJson.month + "-" + dateJson.day;
       };
       // 计算一周剩余时间
-      
+
       minusTime = ((6 + today.weeknum) % 7) * ONEDAYTIME;
       plusTime = ((7 - today.weeknum) % 7) * ONEDAYTIME;
       // 周一和周日的时间戳
       weekStart = new Date(todayTime - minusTime);
 
-
       weekEnd = new Date(todayTime + plusTime);
-      console.log('weekStart', weekStart);
-      console.log('weekEnd', weekEnd);
+      console.log("weekStart", weekStart);
+      console.log("weekEnd", weekEnd);
       // 周一和周日的日期
       let startDateJson = util.getTime(weekStart);
       let endDateJson = util.getTime(weekEnd);
       let date = [formatStr(startDateJson), formatStr(endDateJson)];
-      console.log('date', date);
+      console.log("date", date);
       this.thisWeekDate = this.form.week = date;
       this.getCourseRecordByWeek(date);
     },
@@ -765,11 +762,10 @@ export default {
       let propsData = {
         sname: this.tryListen.sanme
       };
-      this.$axios.post('/getAllTrylisten', propsData)
-        .then(res => {
-          console.log('tryRes', res.data);
-          this.tryListen.currentDataOption = res.data || [];
-        })
+      this.$axios.post("/getAllTrylisten", propsData).then(res => {
+        console.log("tryRes", res.data);
+        this.tryListen.currentDataOption = res.data || [];
+      });
     },
 
     // 获取学生二级下拉
@@ -903,6 +899,4 @@ export default {
 .form-item {
   margin-right: 30px;
 }
-
-
 </style>

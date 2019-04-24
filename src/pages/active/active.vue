@@ -135,22 +135,47 @@
               <el-input size="small" v-model="activeForm.cname"></el-input>
             </el-form-item>
             <el-form-item label="主教老师" prop="mainTheater">
-              <el-select v-model="activeForm.mainTheater" filterable placeholder="请选择上课老师" size="small">
+              <el-select
+                v-model="activeForm.mainTheater"
+                filterable
+                placeholder="请选择主教老师"
+                size="small"
+              >
                 <el-option
                   v-for="item in activeForm.mainTheaterOption"
                   :key="item.tid"
                   :label="item.tname"
-                  :value="item.tid + ',' + item.tname"
+                  :value="item.tid"
                 ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="助教老师">
-              <el-select v-model="activeForm.assistantTheater" multiple placeholder="请选择上课老师" size="small">
+              <el-select
+                v-model="activeForm.assistantTheater"
+                multiple
+                placeholder="请选择助教老师"
+                size="small"
+              >
                 <el-option
-                  v-for="item in activeForm.assistantTheaterOption"
+                  v-for="item in activeForm.mainTheaterOption"
                   :key="item.tid"
                   :label="item.tname"
                   :value="item.tid"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="试听人员">
+              <el-select
+                multiple
+                v-model="activeForm.tryListen"
+                placeholder="请选择试听人员"
+                size="small"
+              >
+                <el-option
+                  v-for="item in activeForm.tryListenOption"
+                  :key="item.value"
+                  :label="item.sname"
+                  :value="item.tlid"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -242,11 +267,16 @@ export default {
   name: "activity",
   mixins: [mixin, publicFn],
   mounted() {
+    this.getAllTrylisten();
     // this.getTeacherData(this.activeForm)
     this.initWatingTable();
   },
   data() {
     return {
+      tryListen: {
+        currentData: [],
+        currentDataOption: []
+      },
       global: global,
       activeNav: "wating",
       watingCourseForm: {
@@ -275,6 +305,7 @@ export default {
         startTime: "",
         endTime: "",
         cname: "",
+        tlanme: '',
         maxnum: 0,
         period_need: 0,
         preview: "",
@@ -282,7 +313,8 @@ export default {
         mainTheater: "",
         assistantTheater: [],
         mainTheaterOption: [],
-        assistantTheaterOption: [],
+        tryListenOption: [],
+        assistantTheaterOption: []
       },
       // 批量删除数据
       deleteStr: "",
@@ -368,6 +400,17 @@ export default {
     };
   },
   methods: {
+    //获取试听人员
+    getAllTrylisten() {
+      let propsData = {
+        sname: this.activeForm.tlanme
+      };
+      this.$axios.post("/getAllTrylisten", propsData).then(res => {
+        console.log("tryRes", res.data);
+        this.activeForm.tryListenOption = res.data || [];
+      });
+    },
+
     /** 图片相关 start*/
     beforeAvatarUpload(file) {
       // const isJPG = file.type === 'image/jpeg';
@@ -506,8 +549,8 @@ export default {
         editDetail: scope => {
           let row = scope.row;
           console.log(row);
-            this.editDetailData(row);
-            this.eidtActiveCourse();
+          this.editDetailData(row);
+          this.eidtActiveCourse();
         },
 
         delete: scope => {
@@ -522,8 +565,8 @@ export default {
         }
       };
 
-      this.getTeacherData(this.activeForm).then(res=> {
-        console.log('aaaaaaaaaaaa', res);
+      this.getTeacherData(this.activeForm).then(res => {
+        console.log("aaaaaaaaaaaa", res);
       });
       this.watingTableData = [];
       this.getActiveData();
@@ -536,18 +579,22 @@ export default {
       this.assignForm.assistantTheater = row.atid.split(",").filter(item => {
         return item;
       });
-      this.activeForm.room = row.room,
-      this.activeForm.mainTheater = row.tid + "," + row.tname,
-      this.activeForm.date = row.cdate,
-      this.activeForm.startTime = row.begintime,
-      this.activeForm.endTime = row.endtime,
-      this.activeForm.cname = row.cname,
-      this.activeForm.maxnum = row.maxnum,
-      this.activeForm.period_need = row.period_need,
-      this.activeForm.preview = row.cdesc,
-      this.activeForm.crid = row.crid,
-      this.activeForm.previewImgUrl = global.IMGURL + row.cpicture,
-      this.activeForm.imageUrl = row.cpicture
+      this.assignForm.tryListen = row.tlid.split(",").filter(item => {
+        return item;
+      });
+      this.activeForm.room = row.room;
+        this.activeForm.mainTheater = row.tid + "," + row.tname;
+        this.activeForm.date = row.cdate;
+        this.activeForm.startTime = row.begintime;
+        this.activeForm.endTime = row.endtime;
+        this.activeForm.cname = row.cname;
+        this.activeForm.maxnum = row.maxnum;
+        this.activeForm.period_need = row.period_need;
+        this.activeForm.preview = row.cdesc;
+        this.activeForm.crid = row.crid;
+        this.activeForm.previewImgUrl = global.IMGURL + row.cpicture;
+        this.activeForm.imageUrl = row.cpicture;
+        
     },
 
     initDoneTable() {
@@ -693,6 +740,7 @@ export default {
             atid: this.activeForm.assistantTheater.join(","),
             period_need: this.activeForm.period_need,
             maxnum: this.activeForm.maxnum,
+            tlid: this.activeForm.tryListen.join(','),
             ctype: 2,
             status: 0
           };

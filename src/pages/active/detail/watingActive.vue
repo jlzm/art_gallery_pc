@@ -92,6 +92,14 @@
               <span>{{detail.sname}}</span>
             </div>
         </div>
+        <div class="all-student info">
+          <div class="inline-label">
+              试听人员:
+            </div>
+            <div>
+              <span>{{detail.tlname}}</span>
+            </div>
+        </div>
         <div class="activity-img-wrap">
           <span class="dib vat">活动图片：</span>
           <div class="dib vat activity-img">
