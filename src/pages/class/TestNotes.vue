@@ -227,11 +227,8 @@ export default {
       let json = Object.assign(
         {},
         {
-          ctype: 1,
           cname: this.recordForm.cname,
           tid: this.recordForm.tid,
-          sid: this.recordForm.sid,
-          status: this.recordForm.status
         }
       );
       if (this.recordForm.date) {
@@ -241,7 +238,7 @@ export default {
         json.begindate = "";
         json.enddate = "";
       }
-      this.$axios.get("/getCourseExcel", {
+      this.$axios.get("/getTryListenCourseExcel", {
         params: json
       }).then(res => {
         console.log('res', res);
