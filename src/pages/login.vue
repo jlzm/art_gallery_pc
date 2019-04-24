@@ -70,12 +70,12 @@ import global from '../global/global.js'
           console.log('res', res);
           if(!res.data) return;
           // blob :
-          // let blob = new Blob([res.data], {type: 'video/*'})
-          // let url =  window.URL.createObjectURL(blob);
+          let blob = new Blob([res.data], {type: 'video/*'})
+          let url =  window.URL.createObjectURL(blob);
 
           //base64:
-          let sF = String.fromCharCode(...new Uint8Array(res.data))
-          let url = 'data:image/jpeg;base64,' + btoa(sF);
+          // let sF = String.fromCharCode(...new Uint8Array(res.data))
+          // let url = 'data:image/jpeg;base64,' + btoa(sF);
           console.log('url', url);
           this.codeImg = url;
 
@@ -88,9 +88,12 @@ import global from '../global/global.js'
             let propsData = {
               name: this.loginForm.name,
               pwd: this.loginForm.pwd,
-              verCode: this.loginForm.verCode
+              verCode: this.loginForm.verCode,
             }
-            this.$axios.post('/loginUser', propsData)
+            console.log("propsData", propsData);
+            this.$axios.post('/loginUser', propsData, {
+              withCredentials: true
+            })
               .then(res => {
                 console.log('res', res);
                 if (res.data && parseInt(res.data.code) === 1) {
@@ -99,6 +102,7 @@ import global from '../global/global.js'
                   this.$router.push('/home');
                 } else {
                   this.$message.error(res.data.msg);
+                  this.getPcCode();
                 }
               });
           }

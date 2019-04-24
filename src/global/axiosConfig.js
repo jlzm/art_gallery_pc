@@ -5,6 +5,8 @@ import {
   Message
 } from 'element-ui';
 
+
+// axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = global.CONTENTTYPE;
 axios.defaults.baseURL = global.BASEURL;
 axios.interceptors.request.use(
