@@ -18,7 +18,7 @@
           </i>
         </div>
         <el-form-item>
-          <el-button native-type="submit" type="primary" @click.native="login()">登录</el-button>
+          <el-button native-type="submit" type="primary">登录</el-button>
         </el-form-item>
       </el-form>
     </div>

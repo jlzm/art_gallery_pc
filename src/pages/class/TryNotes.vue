@@ -168,14 +168,9 @@ export default {
             prop: "room",
             label: "上课教室"
           },
-
           {
-            prop: "allarrive",
-            label: "应到人数"
-          },
-          {
-            prop: "realarrive",
-            label: "签到人数"
+            prop: 'tlname',
+            label: '试听学员'
           },
           {
             prop: "status",

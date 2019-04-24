@@ -42,7 +42,7 @@
                 path: '/home/personal1/teacher'
               },
               {
-                name: '试听会员',
+                name: '试听学员',
                 id: '2-3',
                 path: '/home/personal1/testMember'
               },
@@ -62,7 +62,7 @@
               {
                 name: '试听记录',
                 id: '3-2',
-                path: '/home/class/classTestNotes'
+                path: '/home/class/classTryNotes'
               },
               {
                 name: '上课排班',
