@@ -617,6 +617,9 @@ export default {
       this.assignForm.assistantTheater = row.atid.split(",").filter(item => {
         return item;
       });
+      this.tryListen.currentData = row.tlid.split(",").filter(item => {
+        return item;
+      });
       this.assignForm.room = row.room;
       this.assignForm.mainTheater = row.tid + "," + row.tname;
       this.assignForm.preview = row.cdesc;
@@ -666,6 +669,7 @@ export default {
             cdate: dateJson.year + "-" + dateJson.month + "-" + dateJson.day,
             weeknum: dateJson.weekLabel,
             crid: this.assignForm.crid,
+            tlid: this.tryListen.currentData.join(","),
             ctype: "1"
           };
           if (this.dialog.type === "new") {
