@@ -58,7 +58,7 @@ let classMetaClassLeaveNotes = [{
   title: '请假记录'
 }];
 
-let classMetaClassTestNotes = [{
+let classMetaClassTryNotes = [{
   title: '试听记录'
 }];
 
@@ -143,7 +143,7 @@ detailMeta = personal.student.concat(detailMeta);
 classMetaRecordMeta = classMeta.concat(classMetaRecordMeta);
 classMetaClassAssignMeta = classMeta.concat(classMetaClassAssignMeta);
 classMetaClassLeaveNotes = classMeta.concat(classMetaClassLeaveNotes);
-classMetaClassTestNotes = classMeta.concat(classMetaClassTestNotes);
+classMetaClassTryNotes = classMeta.concat(classMetaClassTryNotes);
 
 recordsDetailMeta = classMeta.concat(recordsDetailMeta);
 activeDetailMeta = activeMeta.concat(activeDetailMeta);
@@ -171,7 +171,7 @@ export default {
   classMetaRecordMeta,
   classMetaClassAssignMeta,
   classMetaClassLeaveNotes,
-  classMetaClassTestNotes,
+  classMetaClassTryNotes,
   recordsDetailMeta,
   activeDetailMeta,
   attenceRecordMeta,

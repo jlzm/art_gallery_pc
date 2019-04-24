@@ -19,18 +19,26 @@ export default {
      */
     getTeacherData(data, concat) {
 
-      data.mainTheaterOption = [];
-      data.assistantTheaterOption = [];
-      return this.$axios.post("/getTeacherSelectVul").then(res => {
-        if (res) {
-          data.mainTheaterOption = res.data.mainTheater;
-          data.assistantTheaterOption = res.data.assistantTheater;
-        }
+      // data.mainTheaterOption = [];
+      // data.assistantTheaterOption = [];
+      // return this.$axios.post("/getTeacherSelectVul").then(res => {
+      //   if (res) {
+      //     data.mainTheaterOption = res.data.mainTheater;
+      //     data.assistantTheaterOption = res.data.assistantTheater;
+      //   }
 
-        if (concat) {
-          data.teacherOption = (res.data.mainTheater).concat(res.data.assistantTheater);
+      //   if (concat) {
+      //     data.teacherOption = (res.data.mainTheater).concat(res.data.assistantTheater);
+      //   }
+      //   console.log('data', data);
+      //   return res;
+      // });
+      data.mainTheaterOption = [];
+      return this.$axios.post("/getTeacherSelectVul").then(res => {
+        console.log('res', res);
+        if (res.data && res.data.length) {
+          data.mainTheaterOption = res.data;
         }
-        console.log('data', data);
         return res;
       });
     }

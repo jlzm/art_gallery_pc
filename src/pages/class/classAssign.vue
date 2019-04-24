@@ -137,7 +137,7 @@
               size="small"
             >
               <el-option
-                v-for="item in assignForm.assistantTheaterOption"
+                v-for="item in assignForm.mainTheaterOption"
                 :key="item.value"
                 :label="item.tname"
                 :value="item.tid"
@@ -155,16 +155,20 @@
               size="small"
             />
           </el-form-item>
-          <el-form-item label="试听人员" prop="treeValue">
-            <treeselect
+          <el-form-item label="试听人员">
+            <el-select
+              multiple 
+              v-model="tryListen.currentData"
               placeholder="请选择试听人员"
-              v-model="assignForm.treeValue"
-              :multiple="true"
-              :clearOnSelect="true"
-              :options="assignForm.studentOption"
-              :value-consists-of="'LEAF_PRIORITY'"
               size="small"
-            />
+            >
+              <el-option
+                v-for="item in tryListen.currentDataOption"
+                :key="item.value"
+                :label="item.sname"
+                :value="item.tlid"
+              ></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="上课教室" prop="room">
             <el-select v-model="assignForm.room" filterable placeholder="请选择上课教室" size="small">
@@ -211,6 +215,7 @@ export default {
     // 页面加载获取学生
     this.getStudentByCstep();
     this.getClassRoom();
+    this.getAllTrylisten();
 
     // 获取老师
     this.getTeacherData(this.assignForm);
@@ -226,6 +231,11 @@ export default {
       }
     };
     return {
+      tryListen: {
+        currentData: '',
+        currentDataOption: [],
+        sname: ''
+      },
       thisWeekDate: [],
       downWeekDate: [],
       afterWeekDate: [],
@@ -746,6 +756,18 @@ export default {
       });
     },
 
+    //获取试听人员
+    getAllTrylisten() {
+      let propsData = {
+        sname: this.tryListen.sanme
+      };
+      this.$axios.post('/getAllTrylisten', propsData)
+        .then(res => {
+          console.log('tryRes', res.data);
+          this.tryListen.currentDataOption = res.data || [];
+        })
+    },
+
     // 获取学生二级下拉
     getStudentByCstep() {
       this.$axios.post("/getStudentByClasz").then(res => {
@@ -841,7 +863,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style lang="less" scope>
 .tables /deep/ thead {
   background: #eee;
 }

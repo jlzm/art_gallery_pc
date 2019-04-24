@@ -121,11 +121,11 @@ const router = new Router({
               },
             },
             {
-              name: 'testNotes',
-              path: 'classTestNotes',
-              component: resolve => require(['../pages/class/TestNotes'], resolve),
+              name: 'tryNotes',
+              path: 'classTryNotes',
+              component: resolve => require(['../pages/class/TryNotes'], resolve),
               meta: {
-                breadList: meta.classMetaClassTestNotes
+                breadList: meta.classMetaClassTryNotes
               },
             },
           ]

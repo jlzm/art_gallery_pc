@@ -76,7 +76,7 @@ import mixin from "../../mixins/tableMixin";
 import publicFn from "../../mixins/pubilc";
 
 export default {
-  name: "records",
+  name: "tryNotes",
   mixins: [mixin, publicFn],
   components: {
     Treeselect
