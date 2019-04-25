@@ -279,9 +279,6 @@ export default {
      */
     exportExcel() {
       if(!this.tableData.length) return;
-      if (this.type != "students") {
-        return false;
-      }
       let json = {
         sname: this.studentForm.studentName,
         clasz: this.studentForm.classes,
@@ -440,7 +437,7 @@ export default {
     // 批量删除
     deleteAll() {
       console.log("this.selectedId", this.selectedId);
-      if (this.selectedId.length && this.type === "students") {
+      if (this.selectedId.length) {
         this.$confirm("此操作将删除学员, 是否确认?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",

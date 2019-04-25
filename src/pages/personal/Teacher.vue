@@ -269,13 +269,6 @@ export default {
               label: "姓名"
             },
             {
-              prop: "trole",
-              label: "角色",
-              formatter(value) {
-                return parseInt(value.trole) == 0 ? "主教" : "助教";
-              }
-            },
-            {
               prop: "tsex",
               label: "性别",
               formatter(value) {

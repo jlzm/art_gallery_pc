@@ -1,5 +1,6 @@
 <template>
   <div class="records">
+    {{recordForm.cname}}
     <div class="search">
       <el-form :inline="true" :model="recordForm" class="form-inline" ref>
         <el-form-item label="选择日期">

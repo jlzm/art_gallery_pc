@@ -311,15 +311,7 @@ export default {
         if (this.$refs.newTestForm) {
           this.$refs.newTestForm.resetFields();
         }
-        this.newTestForm = {
-          sname: "",
-          age: "",
-          gender: "1",
-          sphone: "",
-          visible: true,
-          address: "",
-          title: "新增试听人员"
-        };
+        this.resetNewStudents();
       
     },
 
@@ -417,7 +409,7 @@ export default {
     },
 
     /** API */
-    // 新建老师api
+    // 新建学生api
     postTeacher(json, url) {
       this.$axios.post(url, json).then(res => {
         if (res && parseInt(res.data.code) === 1) {
@@ -427,6 +419,7 @@ export default {
           });
           this.getTeacherData();
           this.newTestForm.visible = false;
+          this.resetForm('newTestForm')
         } else {
           this.$message.error(res.data.msg);
         }
