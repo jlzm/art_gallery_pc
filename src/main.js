@@ -20,7 +20,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'vue-photo-preview/dist/skin.css';
 import './assets/css/common.css';
 import './assets/css/rewriteMint.css';
-
+axios.axios.defaults.withCredentials = true;
+axios.axios.defaults.allowCredentials = true;
 Vue.config.productionTip = false;
 Vue.use(elementUi);
 Vue.use(preview);

@@ -13,8 +13,8 @@
         </el-form-item>
         <div>
           <i @click="getPcCode()" class="dib code-img hv-cp">
-            <!-- <img src="http://172.16.10.184:8080/HappyMomaArt/getPcCode" alt=""> -->
-            <img :src="codeImg " alt="">
+            <img :src="codeImg" alt="">
+            <!-- <img :src="codeImg " alt=""> -->
           </i>
         </div>
         <el-form-item>
@@ -58,13 +58,16 @@ import global from '../global/global.js'
       };
     },
     mounted() {
-      this.getPcCode();
+      setTimeout(() => {
+        this.getPcCode();
+        
+      }, 1000);
     },
     methods: {
       /**获取验证码 */
       getPcCode() {
         this.$axios.post('/getPcCode', {}, {
-          responseType: 'arraybuffer'
+          responseType: 'blob'
         })
         .then(res => {
           console.log('res', res);
@@ -80,20 +83,19 @@ import global from '../global/global.js'
           this.codeImg = url;
 
         })
+        
+        // this.codeImg = global.BASEURL + '/getPcCode?' + Math.ceil(Math.random()*10);
       },
 
       login() {
         this.$refs.login.validate((validate) => {
           if (validate) {
             let propsData = {
-              name: this.loginForm.name,
-              pwd: this.loginForm.pwd,
-              verCode: this.loginForm.verCode,
+              "name": this.loginForm.name,
+              "pwd": this.loginForm.pwd,
+              "verCode": this.loginForm.verCode,
             }
-            console.log("propsData", propsData);
-            this.$axios.post('/loginUser', propsData, {
-              withCredentials: true
-            })
+            this.$axios.post('/loginUser', propsData)
               .then(res => {
                 console.log('res', res);
                 if (res.data && parseInt(res.data.code) === 1) {

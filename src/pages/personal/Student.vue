@@ -43,7 +43,7 @@
           <el-form-item class="oprator">
             <el-button type="primary" icon="el-icon-plus" size="small" @click="newItem()">新建</el-button>
             <el-button
-              v-if="type==='students' && tableData.length"
+              v-if="tableData.length"
               type="primary"
               icon="el-icon-document"
               size="small"
