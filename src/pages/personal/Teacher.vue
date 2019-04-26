@@ -396,11 +396,7 @@ export default {
     // 多选表格
     selectChange(val) {
       this.selectedId = val.map(item => {
-        if (this.type === "students") {
-          return item.sid;
-        } else {
           return item.tid;
-        }
       });
     },
     

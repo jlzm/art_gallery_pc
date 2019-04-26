@@ -331,6 +331,10 @@ export default {
               }
             },
             {
+              prop: "age",
+              label: "年龄",
+            },
+            {
               prop: "clasz",
               label: "所属班级",
               formatter: row => {
