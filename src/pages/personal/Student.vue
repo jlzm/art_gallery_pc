@@ -473,11 +473,7 @@ export default {
     // 后台分页事件监听
     pageChange(val) {
       this.pageJSON = val;
-      if (this.type === "students") {
         this.getStudentData();
-      } else {
-        this.getTeacherData();
-      }
     },
 
     // 获取班级信息

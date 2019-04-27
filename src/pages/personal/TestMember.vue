@@ -12,7 +12,7 @@
               type="primary"
               icon="el-icon-search"
               size="small"
-              @click="getTeacherData()"
+              @click="getTryData()"
             >查询</el-button>
           </el-form-item>
         </el-form>
@@ -301,12 +301,11 @@ export default {
             });
           }
         };
-        this.getTeacherData();
+        this.getTryData();
     },
 
     // 打开新建弹窗
     newItem() {
-      console.log(1);
         this.oprType = "new";
         if (this.$refs.newTestForm) {
           this.$refs.newTestForm.resetFields();
@@ -316,7 +315,7 @@ export default {
     },
 
     resetNewStudents() {
-      this.newStudentForm = {
+      this.newTestForm = {
         studentName: "",
         parentName: "",
         sex: 1,
@@ -401,11 +400,7 @@ export default {
     // 后台分页事件监听
     pageChange(val) {
       this.pageJSON = val;
-      if (this.type === "students") {
-        this.getStudentData();
-      } else {
-        this.getTeacherData();
-      }
+        this.getTryData();
     },
 
     /** API */
@@ -417,7 +412,7 @@ export default {
             message: "操作成功",
             type: "success"
           });
-          this.getTeacherData();
+          this.getTryData();
           this.newTestForm.visible = false;
           this.resetForm('newTestForm')
         } else {
@@ -439,7 +434,7 @@ export default {
 
 
     // 获取试听会员列表
-    getTeacherData() {
+    getTryData() {
       this.tableData = [];
       this.loading = true;
       let propsData = {
@@ -472,7 +467,7 @@ export default {
         } else {
           this.$message.error(res.data.msg);
         }
-        this.getTeacherData();
+        this.getTryData();
       });
     }
   },
