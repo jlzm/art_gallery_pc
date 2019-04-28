@@ -157,10 +157,6 @@ export default {
         birthday: "",
         sname: "",
         title: "新增试听会员",
-        id: "",
-        sale_total: 0,
-        course_total: 0,
-        trole: ""
       },
       selectedId: [],
       tableData: [],
@@ -295,23 +291,15 @@ export default {
         this.$refs.newTryForm.resetFields();
       }
       this.resetNewStudents();
+      this.newTryForm.visible = true;
     },
 
     resetNewStudents() {
-      this.newTryForm = {
-        studentName: "",
-        parentName: "",
-        sex: 1,
-        visible: true,
-        tel: "",
-        address: "",
-        period_total: 0,
-        school: "",
-        willingTime: [],
-        age: 1,
-        train_class: "",
-        clasz: ""
-      };
+      this.newTryForm.tlid = '';
+      this.newTryForm.birthday = '';
+      this.newTryForm.sname = '';
+      this.newTryForm.parent = '';
+      this.newTryForm.sphone = '';
     },
 
     // 多选表格
