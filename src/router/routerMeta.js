@@ -16,9 +16,9 @@ let personal = {
     title: '教师管理',
       path: '/home/personal1/teacher',
   }],
-  testMember : [{
+  tryMember : [{
     title: '试听人员',
-      path: '/home/personal1/testMember',
+      path: '/home/personal1/tryMember',
   }]
 };
 
@@ -131,7 +131,7 @@ let _personalMeta = [];
 _personalMeta = personalMeta.personal;
 personalMeta.student = _personalMeta.concat(personal.student);
 personalMeta.teacher = _personalMeta.concat(personal.teacher);
-personalMeta.testMember = _personalMeta.concat(personal.testMember);
+personalMeta.tryMember = _personalMeta.concat(personal.tryMember);
 
 classMeta = indexMeta.concat(classMeta);
 activeMeta = indexMeta.concat(activeMeta);

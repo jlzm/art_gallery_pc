@@ -44,7 +44,7 @@
               {
                 name: '试听学员',
                 id: '2-3',
-                path: '/home/personal1/testMember'
+                path: '/home/personal1/tryMember'
               },
             ]
           },

@@ -71,14 +71,14 @@ const router = new Router({
               }
             },
             {
-              name: 'testMember',
-              path: 'testMember',
-              component: resolve => require(['../pages/personal/TestMember'], resolve),
+              name: 'tryMember',
+              path: 'tryMember',
+              component: resolve => require(['../pages/personal/TryMember'], resolve),
               meta: {
                 // title: 面包屑名称
                 // path: 面包屑路径
                 // type用于判断当前类型,不写就一定会渲染
-                breadList: meta.personalMeta.testMember
+                breadList: meta.personalMeta.tryMember
               }
             },
           ],
