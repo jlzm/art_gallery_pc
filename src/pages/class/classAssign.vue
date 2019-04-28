@@ -604,6 +604,7 @@ export default {
       this.assignForm.classNumber = "";
       this.assignForm.preview = "";
       this.assignForm.treeValue = [];
+      this.tryListen.currentData = '';
     },
 
     // 编辑单个教室
@@ -723,10 +724,12 @@ export default {
       let todayTime = new Date(
         today.year + "-" + today.month + "-" + today.day
       ).getTime();
+      
       let weekStart, weekEnd;
       let formatStr = dateJson => {
         return dateJson.year + "-" + dateJson.month + "-" + dateJson.day;
       };
+
       // 计算一周剩余时间
 
       minusTime = ((6 + today.weeknum) % 7) * ONEDAYTIME;
