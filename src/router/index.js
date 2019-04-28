@@ -44,9 +44,9 @@ const router = new Router({
         }
       },
         {
-          name: 'personal1',
-          path: 'personal1',
-          component: resolve => require(['../pages/personal/Personal1'], resolve),
+          name: 'personal',
+          path: 'personal',
+          component: resolve => require(['../pages/personal/Personal'], resolve),
           children: [
             {
               name: 'student',

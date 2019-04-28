@@ -29,22 +29,22 @@
             icon: 'el-icon-personal',
             name: '人员管理',
             id: '2',
-            path: '/home/personal1',
+            path: '/home/personal',
             childData: [
               {
                 name: '会员管理',
                 id: '2-1',
-                path: '/home/personal1/student'
+                path: '/home/personal/student'
               },
               {
                 name: '教师管理',
                 id: '2-2',
-                path: '/home/personal1/teacher'
+                path: '/home/personal/teacher'
               },
               {
                 name: '试听学员',
                 id: '2-3',
-                path: '/home/personal1/tryMember'
+                path: '/home/personal/tryMember'
               },
             ]
           },

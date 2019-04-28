@@ -26,7 +26,7 @@
             clearable
           >
             <el-option
-              v-for="item in recordForm.teacherOption"
+              v-for="item in recordForm.mainTheaterOption"
               :key="item.value"
               :label="item.tname"
               :value="item.tid "
@@ -51,7 +51,7 @@
       </el-form>
       <el-form v-if="tableData.length" :inline="true">
         <el-form-item class="oprator">
-          <el-button type="primary" icon="el-icon-delete" size="small" @click="exportExcel()">导出</el-button>
+          <el-button type="primary" icon="el-icon-document" size="small" @click="exportExcel()">导出</el-button>
         </el-form-item>
       </el-form>
     </div>
