@@ -3,7 +3,13 @@
     <div class="personal-content">
       <div class="search">
         <!-- 试听人员查询表格 -->
-        <el-form @submit.native.prevent="getTryData()" :inline="true" :model="newTryForm" class="form-inline" ref>
+        <el-form
+          @submit.native.prevent="getTryData()"
+          :inline="true"
+          :model="newTryForm"
+          class="form-inline"
+          ref
+        >
           <el-form-item label="试听人员姓名">
             <el-input v-model="newTryForm.sname" placeholder="请输入" size="small" clearable></el-input>
           </el-form-item>
@@ -73,8 +79,8 @@
               align="right"
               type="date"
               value-format="yyyy-MM-dd"
-              placeholder="选择日期">
-          </el-date-picker>
+              placeholder="选择日期"
+            ></el-date-picker>
           </el-form-item>
           <el-form-item label="家长姓名" prop="parent">
             <el-input v-model="newTryForm.parent" size="small"></el-input>
@@ -96,7 +102,7 @@
 import mixin from "../../mixins/tableMixin";
 import util from "@/util/util";
 
-import exportExcel from '../../mixins/exportExcel.js'
+import exportExcel from "../../mixins/exportExcel.js";
 
 export default {
   name: "teacher",
@@ -136,7 +142,7 @@ export default {
       },
 
       newStudentForm: {
-        claszOption: [],
+        claszOption: []
       },
       teacherForm: {
         sname: ""
@@ -144,12 +150,12 @@ export default {
 
       // 新建试听会员
       newTryForm: {
-        parent: '',
-        tlid: '',
+        parent: "",
+        tlid: "",
         sphone: "",
         visible: false,
-        birthday: '',
-        sname: '',
+        birthday: "",
+        sname: "",
         title: "新增试听会员",
         id: "",
         sale_total: 0,
@@ -197,100 +203,98 @@ export default {
   },
   methods: {
     exportExcel() {
-      const url = 'exportTrylistenExcel';
+      const url = "exportTrylistenExcel";
       let propsData = {
         sname: this.newTryForm.sname
-      }
+      };
 
-      this.getStudentExcel(url, propsData)
+      this.getStudentExcel(url, propsData);
     },
-
 
     initOpt(type) {
       this.tableData = [];
 
-        this.tableOption = {
-          isMutiple: true,
-          showOpr: true,
-          showDetailBtn: true,
-          showDelBtn: true,
-          showEditBtn: true,
-          column: [
-            // {
-            //   prop: 'tid',
-            //   label: 'id'
-            // },
-            {
-              prop: "sname",
-              label: "姓名"
-            },
-            {
-              prop: "age",
-              label: "年龄"
-            },
-            // {
-            //   prop: "birthday",
-            //   label: "生日"
-            // },
-            {
-              prop: "parent",
-              label: "家长姓名"
-            },
-            {
-              prop: "sphone",
-              label: "电话号码"
-            },
-          ],
-          // 查看详情事件
-          showDetail: scope => {
-            this.newTryForm = {
-              title: "详情",
-              visible: true,
-              sname: scope.row.sname,
-              birthday: scope.row.birthday,
-              age: scope.row.age,
-              sphone: scope.row.sphone,
-              parent: scope.row.parent,
-              disabled: true
-            };
-            this.oprType = "show";
+      this.tableOption = {
+        isMutiple: true,
+        showOpr: true,
+        showDetailBtn: true,
+        showDelBtn: true,
+        showEditBtn: true,
+        column: [
+          // {
+          //   prop: 'tid',
+          //   label: 'id'
+          // },
+          {
+            prop: "sname",
+            label: "姓名"
           },
-          editDetail: scope => {
-            console.log('scope', scope);
-            this.newTryForm = {
-              title: "编辑详情",
-              visible: true,
-              birthday: scope.row.birthday,
-              sname: scope.row.sname,
-              parent: scope.row.parent,
-              age: scope.row.age,
-              sphone: scope.row.sphone,
-              tlid: scope.row.tlid,
-              disabled: false,
-            };
-            this.oprType = "edit";
+          {
+            prop: "age",
+            label: "年龄"
           },
-          delete: scope => {
-            this.$confirm("此操作将删除该试听人员, 是否继续?", "提示", {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning"
-            }).then(() => {
-              this.deleteTeacher(scope.row.tlid);
-            });
+          // {
+          //   prop: "birthday",
+          //   label: "生日"
+          // },
+          {
+            prop: "parent",
+            label: "家长姓名"
+          },
+          {
+            prop: "sphone",
+            label: "电话号码"
           }
-        };
-        this.getTryData();
+        ],
+        // 查看详情事件
+        showDetail: scope => {
+          this.newTryForm = {
+            title: "详情",
+            visible: true,
+            sname: scope.row.sname,
+            birthday: scope.row.birthday,
+            age: scope.row.age,
+            sphone: scope.row.sphone,
+            parent: scope.row.parent,
+            disabled: true
+          };
+          this.oprType = "show";
+        },
+        editDetail: scope => {
+          console.log("scope", scope);
+          this.newTryForm = {
+            title: "编辑详情",
+            visible: true,
+            birthday: scope.row.birthday,
+            sname: scope.row.sname,
+            parent: scope.row.parent,
+            age: scope.row.age,
+            sphone: scope.row.sphone,
+            tlid: scope.row.tlid,
+            disabled: false
+          };
+          this.oprType = "edit";
+        },
+        delete: scope => {
+          this.$confirm("此操作将删除该试听人员, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(() => {
+            this.deleteTeacher(scope.row.tlid);
+          });
+        }
+      };
+      this.getTryData();
     },
 
     // 打开新建弹窗
     newItem() {
-        this.oprType = "new";
-        if (this.$refs.newTryForm) {
-          this.$refs.newTryForm.resetFields();
-        }
-        this.resetNewStudents();
-      
+      this.oprType = "new";
+      if (this.$refs.newTryForm) {
+        this.$refs.newTryForm.resetFields();
+      }
+      this.resetNewStudents();
     },
 
     resetNewStudents() {
@@ -312,16 +316,15 @@ export default {
 
     // 多选表格
     selectChange(val) {
-      console.log('selectedId', this.selectedId);
+      console.log("selectedId", this.selectedId);
       this.selectedId = val.map(item => {
-          return item.tlid;
+        return item.tlid;
       });
     },
-    
+
     // 批量删除
     deleteAll() {
-      
- if (this.selectedId.length) {
+      if (this.selectedId.length) {
         this.$confirm("此操作将删除教师, 是否确认?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -335,8 +338,6 @@ export default {
       }
     },
 
-
-
     // 编辑试听会员
     editTeacher() {
       this.$refs.newTryForm.validate(validate => {
@@ -346,7 +347,7 @@ export default {
             birthday: this.newTryForm.birthday,
             sname: this.newTryForm.sname,
             parent: this.newTryForm.parent,
-            sphone: this.newTryForm.sphone,
+            sphone: this.newTryForm.sphone
           };
           console.log("json", json);
           let url;
@@ -363,7 +364,7 @@ export default {
               this.newTryForm.visible = false;
           }
           this.postTeacher(json, url);
-          this.resetForm('newTryForm');
+          this.resetForm("newTryForm");
         }
       });
     },
@@ -377,7 +378,7 @@ export default {
     // 后台分页事件监听
     pageChange(val) {
       this.pageJSON = val;
-        this.getTryData();
+      this.getTryData();
     },
 
     /** API */
@@ -391,7 +392,7 @@ export default {
           });
           this.getTryData();
           this.newTryForm.visible = false;
-          this.resetForm('newTryForm')
+          this.resetForm("newTryForm");
         } else {
           this.$message.error(res.data.msg);
         }
@@ -409,28 +410,24 @@ export default {
       });
     },
 
-
     // 获取试听会员列表
     getTryData() {
       this.tableData = [];
       this.loading = true;
       let propsData = {
-          page: this.pageJSON.currentPage,
-          rows: this.pageJSON.pageSize,
-          sname: this.newTryForm.sname
+        page: this.pageJSON.currentPage,
+        rows: this.pageJSON.pageSize,
+        sname: this.newTryForm.sname
+      };
+      this.$axios.post("/getTrylistenByPage", propsData).then(res => {
+        console.log("tres", res);
+        this.loading = false;
+        if (res && res.data.rows && res.data.rows.length) {
+          this.total = res.data.total;
+          this.tableData = res.data.rows;
         }
-      this.$axios
-        .post("/getTrylistenByPage", propsData)
-        .then(res => {
-          console.log('tres', res);
-          this.loading = false;
-          if (res && res.data.rows && res.data.rows.length) {
-            this.total = res.data.total;
-            this.tableData = res.data.rows;
-          }
-        });
+      });
     },
-
 
     /** 删除试听人员 */
     deleteTeacher(id) {
