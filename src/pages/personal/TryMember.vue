@@ -312,18 +312,15 @@ export default {
 
     // 多选表格
     selectChange(val) {
+      console.log('selectedId', this.selectedId);
       this.selectedId = val.map(item => {
-        if (this.type === "students") {
-          return item.sid;
-        } else {
-          return item.tid;
-        }
+          return item.tlid;
       });
     },
     
     // 批量删除
     deleteAll() {
-      console.log("this.selectedId", this.selectedId);
+      
  if (this.selectedId.length) {
         this.$confirm("此操作将删除教师, 是否确认?", "提示", {
           confirmButtonText: "确定",
