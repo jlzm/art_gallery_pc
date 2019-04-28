@@ -211,7 +211,7 @@
         </div>
         <el-form v-if="tableData.length" :inline="true">
           <el-form-item class="oprator">
-            <el-button type="primary" icon="el-icon-edit" size="small" class="sys-corlor" @click="exportExcel()">导出</el-button>
+            <el-button type="primary" icon="el-icon-document" size="small" class="sys-corlor" @click="exportExcel()">导出</el-button>
           </el-form-item>
         </el-form>
         <div class="tables">
