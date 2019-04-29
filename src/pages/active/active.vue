@@ -851,6 +851,8 @@ export default {
           if (res.data && res.data.total > 0) {
             this.watingTableData = res.data.rows;
             this.total = res.data.total;
+          } else {
+            this.doneTableData = [];
           }
         });
       } else {
@@ -873,6 +875,8 @@ export default {
           if (res.data && res.data.total > 0) {
             this.doneTableData = res.data.rows;
             this.total = res.data.total;
+          } else {
+            this.doneTableData = [];
           }
         });
       }
