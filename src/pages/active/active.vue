@@ -885,7 +885,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style lang="less" scope>
 .dialogs /deep/ .el-dialog .el-select {
   width: 100%;
 }
