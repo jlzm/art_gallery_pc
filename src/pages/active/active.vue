@@ -33,7 +33,7 @@
                   type="primary"
                   icon="el-icon-search"
                   size="small"
-                  @click="getActiveData"
+                  @click="getActiveData()"
                 >查询</el-button>
               </el-form-item>
             </el-form>
@@ -845,6 +845,7 @@ export default {
           json.begindate = this.watingCourseForm.date[0];
           json.enddate = this.watingCourseForm.date[1];
         }
+        console.log('json', json);
         this.$axios.post("/getCourseByPage", json).then(res => {
           console.log("res.data", res.data);
           if (res.data && res.data.total > 0) {
@@ -867,6 +868,7 @@ export default {
           json.begindate = this.doneCourseForm.date[0];
           json.enddate = this.doneCourseForm.date[1];
         }
+        console.log('json', json);
         this.$axios.post("/getCourseByPage", json).then(res => {
           if (res.data && res.data.total > 0) {
             this.doneTableData = res.data.rows;
