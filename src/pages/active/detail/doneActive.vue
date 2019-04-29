@@ -91,18 +91,18 @@
         课堂动态(图片)
       </div>
       <div class="ctn-img">
-        <div class="img-item" v-for="item in trend.imgList" :key="item.crid">
-          <img :src="imgUrl + item.src" alt="" :preview="item.crid">
+        <div class="img-item" v-for="(item, index) in trend.imgList" :key="index">
+          <img :src="imgUrl + item.src" alt="" :preview="index">
         </div>
       </div>
-      <div class="title">
+      <!-- <div class="title">
         课堂动态(视频)
       </div>
       <div class="ctn-img video">
         <div class="img-item " v-for="item in trend.videoList" :key="item.crid">
           <video :src="videoUrl + item.src" controls></video>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="ctn">
       <div class="title">
