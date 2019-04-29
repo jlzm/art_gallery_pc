@@ -47,7 +47,7 @@
               filterable
             >
               <el-option
-                v-for="item in addForm.teacherOption"
+                v-for="item in addForm.mainTheaterOption"
                 :key="item.tid"
                 :label="item.tname"
                 :value="item.tid"
@@ -102,7 +102,7 @@ export default {
     // 获取班次名称及id
     this.getResort();
     // 获取老师
-    this.getTeacherData(this.addForm, true);
+    this.getTeacherData(this.addForm);
     // 获取表格信息
     this.getData();
 
@@ -148,7 +148,7 @@ export default {
         className: "",
         classNameOptions: [],
         fitPeople: [],
-        teacherOption: [],
+        mainTheaterOption: [],
         circle: "",
         rest: []
       },
