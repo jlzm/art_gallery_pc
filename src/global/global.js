@@ -10,8 +10,8 @@ const imgUrl = baseurl + 'getImgUrl?ftype=photo&imgurl=';
 const videoUrl = baseurl + 'getImgUrl?ftype=view&imgurl=';
 export default {
   CONTENTTYPE: contentType,
-  // BASEURL: baseurl,
-  BASEURL: proxy,
+  BASEURL: baseurl,
+  // BASEURL: proxy,
   IMGURL: imgUrl,
   VIDEOURL: videoUrl,
   APIKEY
