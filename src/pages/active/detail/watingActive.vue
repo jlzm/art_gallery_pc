@@ -69,7 +69,7 @@
           </div>
           <div class="info">
             <div class="inline-label">
-              活动人数:
+              上限人数:
             </div>
             <div>
               <span>{{detail.maxnum}}人</span>
@@ -86,7 +86,7 @@
         </div>
         <div class="all-student info">
           <div class="inline-label">
-              活动人员:
+              报名学员:
             </div>
             <div>
               <span>{{detail.sname}}</span>
@@ -94,7 +94,7 @@
         </div>
         <div class="all-student info">
           <div class="inline-label">
-              试听人员:
+              试听学员:
             </div>
             <div>
               <span>{{detail.tlname}}</span>
