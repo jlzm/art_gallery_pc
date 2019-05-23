@@ -576,10 +576,11 @@ export default {
      * 填充编辑数据
      */
     editDetailData(row) {
-      this.assignForm.assistantTheater = row.atid.split(",").filter(item => {
+      console.log('this.activeForm', this.activeForm);
+      this.activeForm.assistantTheater = row.atid.split(",").filter(item => {
         return item;
       });
-      this.assignForm.tryListen = row.tlid.split(",").filter(item => {
+      this.activeForm.tryListen = row.tlid.split(",").filter(item => {
         return item;
       });
       this.activeForm.room = row.room;
