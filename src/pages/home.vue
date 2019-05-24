@@ -65,7 +65,7 @@
                 path: '/home/class/classTryNotes'
               },
               {
-                name: '上课排班',
+                name: '我要排课',
                 id: '3-3',
                 path: '/home/class/classAssign'
               },
