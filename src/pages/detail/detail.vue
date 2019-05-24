@@ -425,7 +425,7 @@
 
       // 更新学生信息
       updateStudent() {
-        this.detail.period_total += this.detail.addPeriod;
+        this.detail.addPeriod > 0 ? this.detail.period_total += this.detail.addPeriod : '';
         this.detail.period_surplus += this.detail.addPeriod;
         this.$axios.post('/updateStudent', this.detail)
           .then((res) => {
