@@ -75,7 +75,7 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      // this.getPcCode();
+      this.getPcCode();
     }, 1000);
   },
   methods: {
@@ -112,7 +112,7 @@ export default {
           let propsData = {
             name: this.loginForm.name,
             pwd: this.loginForm.pwd,
-            // verCode: this.loginForm.verCode
+            verCode: this.loginForm.verCode
           };
           this.$axios.post("/loginUser", propsData).then(res => {
             console.log("res", res);
@@ -122,7 +122,7 @@ export default {
               this.$router.push("/home");
             } else {
               this.$message.error(res.data.msg);
-              // this.getPcCode();
+              this.getPcCode();
             }
           });
         }
