@@ -19,9 +19,9 @@
           </el-tooltip>
         </el-form-item>
         <el-form-item class="dib form-item">
-          <el-button type="primary" size="small" @click="thisWeek()">本周排课</el-button>
-          <el-button type="primary" size="small" @click="downWeek()">下周排课</el-button>
-          <el-button type="primary" size="small" @click="afterWeek()">后周排课</el-button>
+          <el-button :type="thisWeekDateBtn == 'thisWeek' ? 'primary' : ''" size="small" @click="thisWeek()">本周排课</el-button>
+          <el-button :type="thisWeekDateBtn == 'downWeek' ? 'primary' : ''"  size="small" @click="downWeek()">下周排课</el-button>
+          <el-button :type="thisWeekDateBtn == 'afterWeek' ? 'primary' : ''"  size="small" @click="afterWeek()">后周排课</el-button>
         </el-form-item>
       </el-form>
       <div class="right">
@@ -230,7 +230,7 @@ export default {
       thisWeekDate: [],
       downWeekDate: [],
       afterWeekDate: [],
-      thisWeekDateBtn: null,
+      thisWeekDateBtn: 'thisWeek',
       form: {
         week: []
       },
