@@ -37,7 +37,6 @@
         <el-table-column label="crid" align="center" v-if="false"></el-table-column>
         <el-table-column prop="cdate" label="日期" align="center"></el-table-column>
         <el-table-column prop="weeknum" label="星期" align="center"></el-table-column>
-
         <el-table-column prop="room" label="上课教室" align="center"></el-table-column>
         <el-table-column prop="cname" label="课程名" align="center"></el-table-column>
         <el-table-column prop="time" label="上课时间" align="center" :formatter="timeformatter"></el-table-column>
@@ -77,12 +76,9 @@
               type="date"
               placeholder="选择日期"
               size="small"
-              :picker-options="{
-                          disabledDate(time) {
-                            return dialog.type === 'new' && time.getTime() < Date.now() - 8.64e7;
-                          }
-                        }"
+              
             ></el-date-picker>
+
           </el-form-item>
           <el-form-item label="上课时间" required>
             <el-col :span="11">

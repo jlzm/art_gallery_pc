@@ -185,12 +185,14 @@
                 type="date"
                 placeholder="选择日期"
                 size="small"
-                :picker-options="{
+              ></el-date-picker>
+                          <!-- 之前日期禁用 start -->
+            <!-- ::picker-options="{
                     disabledDate(time) {
                       return dialog.type === 'new' && time.getTime() < Date.now() - 8.64e7;
                     }
-                  }"
-              ></el-date-picker>
+                  }" -->
+            <!-- 之前日期禁用 end -->
             </el-form-item>
             <el-form-item label="上课时间段" required>
               <el-col :span="11">
