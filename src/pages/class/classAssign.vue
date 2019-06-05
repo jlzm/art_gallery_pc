@@ -335,13 +335,6 @@ export default {
             required: true
           }
         ],
-        treeValue: [
-          {
-            trigger: "blur",
-            message: "请选择上课学生",
-            required: true
-          }
-        ],
         preview: [
           {
             trigger: "change",
